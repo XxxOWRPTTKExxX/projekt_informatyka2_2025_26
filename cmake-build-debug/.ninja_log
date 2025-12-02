@@ -1,0 +1,62 @@
+# ninja log v6
+3	320	7863702721411992	build.ninja	f5b9e8edef7362b0
+3667	3997	7831899849882819	sfml.exe	ad13aff7ed97966d
+24	1001	7863832447635481	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+3681	4067	7856818037705960	sfml1.exe	cdb832446f0d01a2
+490	533	7856818005797180	C:/Users/oliwi/CLionProjects/sfml1/cmake-build-debug/CMakeFiles/sfml1.dir/CXXModules.json	47718428ca56e25d
+1027	6714	7863685713820258	CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj	eafea137937b11f2
+35	883	7863685703897588	CMakeFiles/projekt_informatyka2_2025_26.dir/gamestate.cpp.obj.ddi	52e2b018557d747c
+22	884	7863685703767566	CMakeFiles/projekt_informatyka2_2025_26.dir/Game.cpp.obj.ddi	4ae86c30b47cb66a
+898	1005	7863685713531032	CMakeFiles/projekt_informatyka2_2025_26.dir/gamestate.cpp.obj.modmap	2f688c13c70f257f
+28	898	7863685703827877	CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj.ddi	5cea3c268d9eba44
+1001	1123	7863832457404847	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+1001	1123	7863832457404847	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+1001	1123	7863832457404847	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+898	1005	7863685713531032	CMakeFiles/projekt_informatyka2_2025_26.dir/Game.cpp.obj.modmap	2f688c13c70f257f
+898	1005	7863685713531032	CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj.modmap	2f688c13c70f257f
+1033	6098	7863685713880129	CMakeFiles/projekt_informatyka2_2025_26.dir/gamestate.cpp.obj	e251b5cafd174179
+1126	8652	7863832458649708	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+1022	6459	7863685713770395	CMakeFiles/projekt_informatyka2_2025_26.dir/Game.cpp.obj	b067753fde66ea54
+8653	9433	7863832533916986	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c
+29	917	7863833272288821	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+917	971	7863833281173150	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+917	971	7863833281173150	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+917	971	7863833281173150	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+974	9096	7863833281734132	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+9097	9689	7863833362963660	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c
+22	1549	7863834201699533	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+1550	1627	7863834216975035	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+1550	1627	7863834216975035	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+1550	1627	7863834216975035	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+1631	8264	7863834217802460	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+8266	9145	7863834284138026	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c
+25	905	7863834408416601	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+906	985	7863834417239647	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+906	985	7863834417239647	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+906	985	7863834417239647	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+989	7325	7863834418052297	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+7326	7961	7863834481427419	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c
+23	1154	7863834597847455	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+1155	1253	7863834609164719	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+1155	1253	7863834609164719	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+1155	1253	7863834609164719	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+1258	9462	7863834610203802	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+9463	10045	7863834692252710	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c
+24	1237	7863834917904956	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+1237	1296	7863834930037191	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+1237	1296	7863834930037191	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+1237	1296	7863834930037191	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+1299	8489	7863834930655587	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+8490	9204	7863835002562806	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c
+51	1320	7863835141687277	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+1321	1395	7863835154387128	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+1321	1395	7863835154387128	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+1321	1395	7863835154387128	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+1398	7241	7863835155153012	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+7242	7872	7863835213582935	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c
+19	821	7863835339466070	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi	ec27b376b0620f44
+822	911	7863835347499107	CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd	720a0cde93476296
+822	911	7863835347499107	C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json	720a0cde93476296
+822	911	7863835347499107	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap	720a0cde93476296
+917	8713	7863835348450959	CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj	a2421ab5d8078a6
+8714	9310	7863835426418099	projekt_informatyka2_2025_26.exe	1bc88ff3ee77bf4c

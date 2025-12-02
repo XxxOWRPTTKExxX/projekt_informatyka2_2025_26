@@ -1,0 +1,3 @@
+C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir
+C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/rebuild_cache.dir
