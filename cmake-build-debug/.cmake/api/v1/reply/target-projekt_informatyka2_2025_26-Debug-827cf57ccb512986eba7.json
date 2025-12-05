@@ -34,7 +34,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 21,
+				"line" : 22,
 				"parent" : 0
 			}
 		]
@@ -128,7 +128,8 @@
 			"sourceIndexes" : 
 			[
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -148,6 +149,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "ship.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "meteoryt.h",
 			"sourceGroupIndex" : 1
 		}
 	],

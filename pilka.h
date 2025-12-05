@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "paletka.h"
+#include "ship.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -15,18 +15,23 @@ private:
     float radius;
 
 public:
+    sf::Texture texture;
     sf::CircleShape shape;
     Pilka(float startX, float startY, float velX, float velY, float r)
         :x(startX), y(startY), vx(velX), vy(velY), radius(r) {
+        if (!texture.loadFromFile("../assets/kometa.png")) {
+            std::cerr << "Blad: nie mozna zaladowac komety.png\n";
+        }
         shape.setRadius(radius);
         shape.setOrigin(sf::Vector2f(radius, radius));
         shape.setPosition(sf::Vector2f(x,y));
         shape.setFillColor(sf::Color::White);
+        shape.setTexture(&texture);
     }
 
-    void move() {
-        x+= vx;
-        y+= vy;
+    void move(float dt) {
+        x+= vx*dt;
+        y+= vy*dt;
         shape.setPosition(sf::Vector2f(x,y));
     }
 
@@ -35,9 +40,6 @@ public:
     }
     void bounceY() {
         vy=-vy;
-    }
-    void setColor(const sf::Color& color) {
-        shape.setFillColor(color);
     }
 void collideWalls(float width, float height) {
         if (x-radius<= 0) {
@@ -53,20 +55,29 @@ void collideWalls(float width, float height) {
             y=radius;
             bounceY();
         }
+        else if (y+ radius >= height) {
+            y= height - radius;
+            bounceY();
+        }
+        shape.setPosition(sf::Vector2f(x,y));
     }
-    bool collidePaddle(const Paletka& p) {
-        float palX=p.getX();
-        float palY=p.getY();
-        float palW=p.getSzerokosc();
-        float palH=p.getWysokosc();
+    bool collideShip( Ship& s) {
+        float palX=s.getX();
+        float palY=s.getY();
+        float palW=s.getSzerokosc();
+        float palH=s.getWysokosc();
         bool overlappedX = (x >= palX - palW / 2) && (x <= palX + palW / 2);
         bool touchedY = (y + radius >= palY - palH / 2) && (y - radius <= palY + palH / 2);
 
         if (overlappedX && touchedY) {
-            vy = -std::abs(vy);
-            y= (palY-palH/2) - radius;
-            shape.setPosition(sf::Vector2f(x,y));
+            s.odejmijZycie(1);
+            if (vy > 0) {
+                y = palY + palH / 2 + radius;
+            } else {
+                y = palY - palH / 2 - radius;
+            }
             return true;
+
         }
         return false;
     }

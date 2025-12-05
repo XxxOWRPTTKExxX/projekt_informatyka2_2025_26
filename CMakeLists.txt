@@ -15,6 +15,7 @@ add_executable(${PROJECT_NAME} main.cpp
         main.cpp
         pilka.h
         ship.h
+        meteoryt.h
 )
 
 # Linkujemy wszystkie potrzebne komponenty SFML
