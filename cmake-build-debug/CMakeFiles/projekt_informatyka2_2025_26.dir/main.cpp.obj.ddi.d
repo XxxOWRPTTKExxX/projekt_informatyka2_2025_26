@@ -1,5 +1,6 @@
 CMakeFiles\projekt_informatyka2_2025_26.dir\main.cpp.obj.ddi: \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/main.cpp \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/game.h \
  C:/SFML/include/SFML/Graphics.hpp \
  C:/SFML/include/SFML/Graphics/BlendMode.hpp \
  C:/SFML/include/SFML/Graphics/Export.hpp C:/SFML/include/SFML/Config.hpp \

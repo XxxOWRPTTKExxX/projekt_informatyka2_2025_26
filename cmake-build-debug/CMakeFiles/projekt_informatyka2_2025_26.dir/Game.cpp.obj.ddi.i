@@ -1,12 +1,8 @@
-# 0 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.cpp"
+# 0 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp"
 # 1 "C:\\Users\\oliwi\\Documents\\PROJEKTY INF\\projekt_informatyka2_2025_26\\cmake-build-debug//"
 # 0 "<built-in>"
 # 0 "<command-line>"
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.cpp"
-
-
-
-
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp"
 # 1 "C:/SFML/include/SFML/Graphics.hpp" 1 3 4
 # 25 "C:/SFML/include/SFML/Graphics.hpp" 3 4
        
@@ -107259,7 +107255,4379 @@ void __attribute__((dllimport)) sleep(Time duration);
 # 41 "C:/SFML/include/SFML/System.hpp" 2 3 4
 # 47 "C:/SFML/include/SFML/Window.hpp" 2 3 4
 # 60 "C:/SFML/include/SFML/Graphics.hpp" 2 3 4
-# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.cpp" 2
+# 2 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/SFML/include/SFML/Audio.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio.hpp" 3 4
+       
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+       
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/Export.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Export.hpp" 3 4
+       
+# 31 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 2 3 4
+
+# 1 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+       
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundChannel.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundChannel.hpp" 3 4
+       
+
+namespace sf
+{
+# 41 "C:/SFML/include/SFML/Audio/SoundChannel.hpp" 3 4
+enum class SoundChannel
+{
+    Unspecified,
+    Mono,
+    FrontLeft,
+    FrontRight,
+    FrontCenter,
+    FrontLeftOfCenter,
+    FrontRightOfCenter,
+    LowFrequencyEffects,
+    BackLeft,
+    BackRight,
+    BackCenter,
+    SideLeft,
+    SideRight,
+    TopCenter,
+    TopFrontLeft,
+    TopFrontRight,
+    TopFrontCenter,
+    TopBackLeft,
+    TopBackRight,
+    TopBackCenter
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 2 3 4
+
+
+
+
+
+
+
+namespace sf
+{
+class InputStream;
+
+
+
+
+
+class __attribute__((dllimport)) SoundFileReader
+{
+public:
+
+
+
+
+    struct Info
+    {
+        std::uint64_t sampleCount{};
+        unsigned int channelCount{};
+        unsigned int sampleRate{};
+        std::vector<SoundChannel> channelMap;
+    };
+
+
+
+
+
+    virtual ~SoundFileReader() = default;
+# 81 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+    [[nodiscard]] virtual std::optional<Info> open(InputStream& stream) = 0;
+# 96 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+    virtual void seek(std::uint64_t sampleOffset) = 0;
+# 107 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+    [[nodiscard]] virtual std::uint64_t read(std::int16_t* samples, std::uint64_t maxCount) = 0;
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 2 3 4
+# 42 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+namespace sf
+{
+class Time;
+class InputStream;
+
+
+
+
+
+class __attribute__((dllimport)) InputSoundFile
+{
+public:
+
+
+
+
+
+
+
+    InputSoundFile() = default;
+# 79 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    explicit InputSoundFile(const std::filesystem::path& filename);
+# 93 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    InputSoundFile(const void* data, std::size_t sizeInBytes);
+# 106 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    explicit InputSoundFile(InputStream& stream);
+# 124 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromFile(const std::filesystem::path& filename);
+# 138 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromMemory(const void* data, std::size_t sizeInBytes);
+# 151 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromStream(InputStream& stream);
+
+
+
+
+
+
+
+    [[nodiscard]] std::uint64_t getSampleCount() const;
+
+
+
+
+
+
+
+    [[nodiscard]] unsigned int getChannelCount() const;
+
+
+
+
+
+
+
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 188 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] const std::vector<SoundChannel>& getChannelMap() const;
+# 199 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] Time getDuration() const;
+
+
+
+
+
+
+
+    [[nodiscard]] Time getTimeOffset() const;
+
+
+
+
+
+
+
+    [[nodiscard]] std::uint64_t getSampleOffset() const;
+# 234 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    void seek(std::uint64_t sampleOffset);
+# 248 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    void seek(Time timeOffset);
+# 259 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] std::uint64_t read(std::int16_t* samples, std::uint64_t maxCount);
+
+
+
+
+
+    void close();
+
+private:
+
+
+
+
+    struct __attribute__((dllimport)) StreamDeleter
+    {
+        StreamDeleter(bool theOwned);
+
+
+        template <typename T>
+        StreamDeleter(const std::default_delete<T>&);
+
+        void operator()(InputStream* ptr) const;
+
+        bool owned{true};
+    };
+
+
+
+
+    std::unique_ptr<SoundFileReader> m_reader;
+    std::unique_ptr<InputStream, StreamDeleter> m_stream{nullptr, false};
+    std::uint64_t m_sampleOffset{};
+    std::uint64_t m_sampleCount{};
+    unsigned int m_sampleRate{};
+    std::vector<SoundChannel> m_channelMap;
+};
+
+}
+# 32 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/Listener.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+       
+# 41 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+namespace sf::Listener
+{
+# 54 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+struct Cone
+{
+    Angle innerAngle;
+    Angle outerAngle;
+    float outerGain{};
+};
+# 73 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setGlobalVolume(float volume);
+# 83 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) float getGlobalVolume();
+# 95 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setPosition(const Vector3f& position);
+# 105 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getPosition();
+# 122 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setDirection(const Vector3f& direction);
+# 132 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getDirection();
+# 144 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setVelocity(const Vector3f& velocity);
+# 154 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getVelocity();
+# 167 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setCone(const Listener::Cone& cone);
+# 177 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Listener::Cone getCone();
+# 194 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setUpVector(const Vector3f& upVector);
+# 204 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getUpVector();
+}
+# 33 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/Music.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+       
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+       
+
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+       
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/AudioResource.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/AudioResource.hpp" 3 4
+       
+# 35 "C:/SFML/include/SFML/Audio/AudioResource.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) AudioResource
+{
+public:
+
+
+
+
+    AudioResource(const AudioResource&) = default;
+
+
+
+
+
+    AudioResource& operator=(const AudioResource&) = default;
+
+
+
+
+
+    AudioResource(AudioResource&&) noexcept = default;
+
+
+
+
+
+    AudioResource& operator=(AudioResource&&) noexcept = default;
+
+protected:
+
+
+
+
+    AudioResource();
+
+private:
+
+
+
+    std::shared_ptr<void> m_device;
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 2 3 4
+
+
+
+
+# 1 "C:/mingw64/include/c++/14.2.0/functional" 1 3 4
+# 46 "C:/mingw64/include/c++/14.2.0/functional" 3 4
+       
+# 47 "C:/mingw64/include/c++/14.2.0/functional" 3
+# 59 "C:/mingw64/include/c++/14.2.0/functional" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 1 3
+# 33 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+       
+# 34 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+# 45 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+namespace std
+{
+
+
+
+
+
+
+
+  class bad_function_call : public std::exception
+  {
+  public:
+    virtual ~bad_function_call() noexcept;
+
+    const char* what() const noexcept;
+  };
+
+
+
+
+
+
+
+  template<typename _Tp>
+    struct __is_location_invariant
+    : is_trivially_copyable<_Tp>::type
+    { };
+
+  class _Undefined_class;
+
+  union _Nocopy_types
+  {
+    void* _M_object;
+    const void* _M_const_object;
+    void (*_M_function_pointer)();
+    void (_Undefined_class::*_M_member_pointer)();
+  };
+
+  union [[gnu::may_alias]] _Any_data
+  {
+    void* _M_access() noexcept { return &_M_pod_data[0]; }
+    const void* _M_access() const noexcept { return &_M_pod_data[0]; }
+
+    template<typename _Tp>
+      _Tp&
+      _M_access() noexcept
+      { return *static_cast<_Tp*>(_M_access()); }
+
+    template<typename _Tp>
+      const _Tp&
+      _M_access() const noexcept
+      { return *static_cast<const _Tp*>(_M_access()); }
+
+    _Nocopy_types _M_unused;
+    char _M_pod_data[sizeof(_Nocopy_types)];
+  };
+
+  enum _Manager_operation
+  {
+    __get_type_info,
+    __get_functor_ptr,
+    __clone_functor,
+    __destroy_functor
+  };
+
+  template<typename _Signature>
+    class function;
+
+
+  class _Function_base
+  {
+  public:
+    static const size_t _M_max_size = sizeof(_Nocopy_types);
+    static const size_t _M_max_align = __alignof__(_Nocopy_types);
+
+    template<typename _Functor>
+      class _Base_manager
+      {
+      protected:
+ static const bool __stored_locally =
+ (__is_location_invariant<_Functor>::value
+  && sizeof(_Functor) <= _M_max_size
+  && __alignof__(_Functor) <= _M_max_align
+  && (_M_max_align % __alignof__(_Functor) == 0));
+
+ using _Local_storage = integral_constant<bool, __stored_locally>;
+
+
+ static _Functor*
+ _M_get_pointer(const _Any_data& __source) noexcept
+ {
+   if constexpr (__stored_locally)
+     {
+       const _Functor& __f = __source._M_access<_Functor>();
+       return const_cast<_Functor*>(std::__addressof(__f));
+     }
+   else
+     return __source._M_access<_Functor*>();
+ }
+
+      private:
+
+
+ template<typename _Fn>
+   static void
+   _M_create(_Any_data& __dest, _Fn&& __f, true_type)
+   {
+     ::new (__dest._M_access()) _Functor(std::forward<_Fn>(__f));
+   }
+
+
+ template<typename _Fn>
+   static void
+   _M_create(_Any_data& __dest, _Fn&& __f, false_type)
+   {
+     __dest._M_access<_Functor*>()
+       = new _Functor(std::forward<_Fn>(__f));
+   }
+
+
+ static void
+ _M_destroy(_Any_data& __victim, true_type)
+ {
+   __victim._M_access<_Functor>().~_Functor();
+ }
+
+
+ static void
+ _M_destroy(_Any_data& __victim, false_type)
+ {
+   delete __victim._M_access<_Functor*>();
+ }
+
+      public:
+ static bool
+ _M_manager(_Any_data& __dest, const _Any_data& __source,
+     _Manager_operation __op)
+ {
+   switch (__op)
+     {
+     case __get_type_info:
+
+       __dest._M_access<const type_info*>() = &typeid(_Functor);
+
+
+
+       break;
+
+     case __get_functor_ptr:
+       __dest._M_access<_Functor*>() = _M_get_pointer(__source);
+       break;
+
+     case __clone_functor:
+       _M_init_functor(__dest,
+    *const_cast<const _Functor*>(_M_get_pointer(__source)));
+       break;
+
+     case __destroy_functor:
+       _M_destroy(__dest, _Local_storage());
+       break;
+     }
+   return false;
+ }
+
+ template<typename _Fn>
+   static void
+   _M_init_functor(_Any_data& __functor, _Fn&& __f)
+   noexcept(__and_<_Local_storage,
+     is_nothrow_constructible<_Functor, _Fn>>::value)
+   {
+     _M_create(__functor, std::forward<_Fn>(__f), _Local_storage());
+   }
+
+ template<typename _Signature>
+   static bool
+   _M_not_empty_function(const function<_Signature>& __f) noexcept
+   { return static_cast<bool>(__f); }
+
+ template<typename _Tp>
+   static bool
+   _M_not_empty_function(_Tp* __fp) noexcept
+   { return __fp != nullptr; }
+
+ template<typename _Class, typename _Tp>
+   static bool
+   _M_not_empty_function(_Tp _Class::* __mp) noexcept
+   { return __mp != nullptr; }
+
+ template<typename _Tp>
+   static bool
+   _M_not_empty_function(const _Tp&) noexcept
+   { return true; }
+      };
+
+    _Function_base() = default;
+
+    ~_Function_base()
+    {
+      if (_M_manager)
+ _M_manager(_M_functor, _M_functor, __destroy_functor);
+    }
+
+    bool _M_empty() const { return !_M_manager; }
+
+    using _Manager_type
+      = bool (*)(_Any_data&, const _Any_data&, _Manager_operation);
+
+    _Any_data _M_functor{};
+    _Manager_type _M_manager{};
+  };
+
+  template<typename _Signature, typename _Functor>
+    class _Function_handler;
+
+  template<typename _Res, typename _Functor, typename... _ArgTypes>
+    class _Function_handler<_Res(_ArgTypes...), _Functor>
+    : public _Function_base::_Base_manager<_Functor>
+    {
+      using _Base = _Function_base::_Base_manager<_Functor>;
+
+    public:
+      static bool
+      _M_manager(_Any_data& __dest, const _Any_data& __source,
+   _Manager_operation __op)
+      {
+ switch (__op)
+   {
+
+   case __get_type_info:
+     __dest._M_access<const type_info*>() = &typeid(_Functor);
+     break;
+
+   case __get_functor_ptr:
+     __dest._M_access<_Functor*>() = _Base::_M_get_pointer(__source);
+     break;
+
+   default:
+     _Base::_M_manager(__dest, __source, __op);
+   }
+ return false;
+      }
+
+      static _Res
+      _M_invoke(const _Any_data& __functor, _ArgTypes&&... __args)
+      {
+ return std::__invoke_r<_Res>(*_Base::_M_get_pointer(__functor),
+         std::forward<_ArgTypes>(__args)...);
+      }
+
+      template<typename _Fn>
+ static constexpr bool
+ _S_nothrow_init() noexcept
+ {
+   return __and_<typename _Base::_Local_storage,
+   is_nothrow_constructible<_Functor, _Fn>>::value;
+ }
+    };
+
+
+  template<>
+    class _Function_handler<void, void>
+    {
+    public:
+      static bool
+      _M_manager(_Any_data&, const _Any_data&, _Manager_operation)
+      { return false; }
+    };
+
+
+
+
+
+  template<typename _Signature, typename _Functor,
+    bool __valid = is_object<_Functor>::value>
+    struct _Target_handler
+    : _Function_handler<_Signature, typename remove_cv<_Functor>::type>
+    { };
+
+  template<typename _Signature, typename _Functor>
+    struct _Target_handler<_Signature, _Functor, false>
+    : _Function_handler<void, void>
+    { };
+
+
+
+
+
+
+  template<typename _Res, typename... _ArgTypes>
+    class function<_Res(_ArgTypes...)>
+    : public _Maybe_unary_or_binary_function<_Res, _ArgTypes...>,
+      private _Function_base
+    {
+
+
+      template<typename _Func,
+        bool _Self = is_same<__remove_cvref_t<_Func>, function>::value>
+ using _Decay_t
+   = typename __enable_if_t<!_Self, decay<_Func>>::type;
+
+      template<typename _Func,
+        typename _DFunc = _Decay_t<_Func>,
+        typename _Res2 = __invoke_result<_DFunc&, _ArgTypes...>>
+ struct _Callable
+ : __is_invocable_impl<_Res2, _Res>::type
+ { };
+
+      template<typename _Cond, typename _Tp = void>
+ using _Requires = __enable_if_t<_Cond::value, _Tp>;
+
+      template<typename _Functor>
+ using _Handler
+   = _Function_handler<_Res(_ArgTypes...), __decay_t<_Functor>>;
+
+    public:
+      typedef _Res result_type;
+
+
+
+
+
+
+
+      function() noexcept
+      : _Function_base() { }
+
+
+
+
+
+      function(nullptr_t) noexcept
+      : _Function_base() { }
+# 386 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function(const function& __x)
+      : _Function_base()
+      {
+ if (static_cast<bool>(__x))
+   {
+     __x._M_manager(_M_functor, __x._M_functor, __clone_functor);
+     _M_invoker = __x._M_invoker;
+     _M_manager = __x._M_manager;
+   }
+      }
+# 404 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function(function&& __x) noexcept
+      : _Function_base(), _M_invoker(__x._M_invoker)
+      {
+ if (static_cast<bool>(__x))
+   {
+     _M_functor = __x._M_functor;
+     _M_manager = __x._M_manager;
+     __x._M_manager = nullptr;
+     __x._M_invoker = nullptr;
+   }
+      }
+# 433 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      template<typename _Functor,
+        typename _Constraints = _Requires<_Callable<_Functor>>>
+ function(_Functor&& __f)
+ noexcept(_Handler<_Functor>::template _S_nothrow_init<_Functor>())
+ : _Function_base()
+ {
+   static_assert(is_copy_constructible<__decay_t<_Functor>>::value,
+       "std::function target must be copy-constructible");
+   static_assert(is_constructible<__decay_t<_Functor>, _Functor>::value,
+       "std::function target must be constructible from the "
+       "constructor argument");
+
+   using _My_handler = _Handler<_Functor>;
+
+   if (_My_handler::_M_not_empty_function(__f))
+     {
+       _My_handler::_M_init_functor(_M_functor,
+        std::forward<_Functor>(__f));
+       _M_invoker = &_My_handler::_M_invoke;
+       _M_manager = &_My_handler::_M_manager;
+     }
+ }
+# 468 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function&
+      operator=(const function& __x)
+      {
+ function(__x).swap(*this);
+ return *this;
+      }
+# 486 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function&
+      operator=(function&& __x) noexcept
+      {
+ function(std::move(__x)).swap(*this);
+ return *this;
+      }
+# 500 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function&
+      operator=(nullptr_t) noexcept
+      {
+ if (_M_manager)
+   {
+     _M_manager(_M_functor, _M_functor, __destroy_functor);
+     _M_manager = nullptr;
+     _M_invoker = nullptr;
+   }
+ return *this;
+      }
+# 529 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      template<typename _Functor>
+ _Requires<_Callable<_Functor>, function&>
+ operator=(_Functor&& __f)
+ noexcept(_Handler<_Functor>::template _S_nothrow_init<_Functor>())
+ {
+   function(std::forward<_Functor>(__f)).swap(*this);
+   return *this;
+ }
+
+
+      template<typename _Functor>
+ function&
+ operator=(reference_wrapper<_Functor> __f) noexcept
+ {
+   function(__f).swap(*this);
+   return *this;
+ }
+# 556 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      void swap(function& __x) noexcept
+      {
+ std::swap(_M_functor, __x._M_functor);
+ std::swap(_M_manager, __x._M_manager);
+ std::swap(_M_invoker, __x._M_invoker);
+      }
+# 573 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      explicit operator bool() const noexcept
+      { return !_M_empty(); }
+# 586 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      _Res
+      operator()(_ArgTypes... __args) const
+      {
+ if (_M_empty())
+   __throw_bad_function_call();
+ return _M_invoker(_M_functor, std::forward<_ArgTypes>(__args)...);
+      }
+# 605 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      const type_info&
+      target_type() const noexcept
+      {
+ if (_M_manager)
+   {
+     _Any_data __typeinfo_result;
+     _M_manager(__typeinfo_result, _M_functor, __get_type_info);
+     if (auto __ti = __typeinfo_result._M_access<const type_info*>())
+       return *__ti;
+   }
+ return typeid(void);
+      }
+# 630 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      template<typename _Functor>
+ _Functor*
+ target() noexcept
+ {
+   const function* __const_this = this;
+   const _Functor* __func = __const_this->template target<_Functor>();
+
+
+   return *const_cast<_Functor**>(&__func);
+ }
+
+      template<typename _Functor>
+ const _Functor*
+ target() const noexcept
+ {
+   if constexpr (is_object<_Functor>::value)
+     {
+
+
+       using _Handler = _Target_handler<_Res(_ArgTypes...), _Functor>;
+
+       if (_M_manager == &_Handler::_M_manager
+
+    || (_M_manager && typeid(_Functor) == target_type())
+
+   )
+  {
+    _Any_data __ptr;
+    _M_manager(__ptr, _M_functor, __get_functor_ptr);
+    return __ptr._M_access<const _Functor*>();
+  }
+     }
+   return nullptr;
+ }
+
+
+    private:
+      using _Invoker_type = _Res (*)(const _Any_data&, _ArgTypes&&...);
+      _Invoker_type _M_invoker = nullptr;
+    };
+
+
+  template<typename>
+    struct __function_guide_helper
+    { };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) & noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) const noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) const & noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+# 721 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+  template<typename _Fn, typename _Op>
+    using __function_guide_t = typename __function_guide_helper<_Op>::type;
+
+
+  template<typename _Res, typename... _ArgTypes>
+    function(_Res(*)(_ArgTypes...)) -> function<_Res(_ArgTypes...)>;
+
+  template<typename _Fn, typename _Signature
+      = __function_guide_t<_Fn, decltype(&_Fn::operator())>>
+    function(_Fn) -> function<_Signature>;
+# 741 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+  template<typename _Res, typename... _Args>
+    inline bool
+    operator==(const function<_Res(_Args...)>& __f, nullptr_t) noexcept
+    { return !static_cast<bool>(__f); }
+# 780 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+  template<typename _Res, typename... _Args>
+    inline void
+    swap(function<_Res(_Args...)>& __x, function<_Res(_Args...)>& __y) noexcept
+    { __x.swap(__y); }
+
+
+  namespace __detail::__variant
+  {
+    template<typename> struct _Never_valueless_alt;
+
+
+
+    template<typename _Signature>
+      struct _Never_valueless_alt<std::function<_Signature>>
+      : std::true_type
+      { };
+  }
+
+
+
+}
+# 60 "C:/mingw64/include/c++/14.2.0/functional" 2 3
+# 88 "C:/mingw64/include/c++/14.2.0/functional" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/version.h" 1 3
+# 47 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+       
+# 48 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+# 89 "C:/mingw64/include/c++/14.2.0/functional" 2 3
+
+
+
+namespace std
+{
+
+
+
+
+
+
+  template<int _Num> struct _Placeholder { };
+# 115 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Callable, typename... _Args>
+    inline constexpr invoke_result_t<_Callable, _Args...>
+    invoke(_Callable&& __fn, _Args&&... __args)
+    noexcept(is_nothrow_invocable_v<_Callable, _Args...>)
+    {
+      return std::__invoke(std::forward<_Callable>(__fn),
+      std::forward<_Args>(__args)...);
+    }
+# 148 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _MemFunPtr,
+    bool __is_mem_fn = is_member_function_pointer<_MemFunPtr>::value>
+    class _Mem_fn_base
+    : public _Mem_fn_traits<_MemFunPtr>::__maybe_type
+    {
+      using _Traits = _Mem_fn_traits<_MemFunPtr>;
+
+      using _Arity = typename _Traits::__arity;
+      using _Varargs = typename _Traits::__vararg;
+
+      template<typename _Func, typename... _BoundArgs>
+ friend struct _Bind_check_arity;
+
+      _MemFunPtr _M_pmf;
+
+    public:
+
+      using result_type = typename _Traits::__result_type;
+
+      explicit constexpr
+      _Mem_fn_base(_MemFunPtr __pmf) noexcept : _M_pmf(__pmf) { }
+
+      template<typename... _Args>
+ constexpr
+ auto
+ operator()(_Args&&... __args) const
+ noexcept(noexcept(
+       std::__invoke(_M_pmf, std::forward<_Args>(__args)...)))
+ -> decltype(std::__invoke(_M_pmf, std::forward<_Args>(__args)...))
+ { return std::__invoke(_M_pmf, std::forward<_Args>(__args)...); }
+    };
+
+
+  template<typename _MemObjPtr>
+    class _Mem_fn_base<_MemObjPtr, false>
+    {
+      using _Arity = integral_constant<size_t, 0>;
+      using _Varargs = false_type;
+
+      template<typename _Func, typename... _BoundArgs>
+ friend struct _Bind_check_arity;
+
+      _MemObjPtr _M_pm;
+
+    public:
+      explicit constexpr
+      _Mem_fn_base(_MemObjPtr __pm) noexcept : _M_pm(__pm) { }
+
+      template<typename _Tp>
+ constexpr
+ auto
+ operator()(_Tp&& __obj) const
+ noexcept(noexcept(std::__invoke(_M_pm, std::forward<_Tp>(__obj))))
+ -> decltype(std::__invoke(_M_pm, std::forward<_Tp>(__obj)))
+ { return std::__invoke(_M_pm, std::forward<_Tp>(__obj)); }
+    };
+
+  template<typename _MemberPointer>
+    struct _Mem_fn;
+
+  template<typename _Res, typename _Class>
+    struct _Mem_fn<_Res _Class::*>
+    : _Mem_fn_base<_Res _Class::*>
+    {
+      using _Mem_fn_base<_Res _Class::*>::_Mem_fn_base;
+    };
+# 241 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Tp, typename _Class>
+    constexpr
+    inline _Mem_fn<_Tp _Class::*>
+    mem_fn(_Tp _Class::* __pm) noexcept
+    {
+      return _Mem_fn<_Tp _Class::*>(__pm);
+    }
+# 260 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Tp>
+    struct is_bind_expression
+    : public false_type { };
+# 272 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Tp>
+    struct is_placeholder
+    : public integral_constant<int, 0>
+    { };
+
+
+  template <typename _Tp> inline constexpr bool is_bind_expression_v
+    = is_bind_expression<_Tp>::value;
+  template <typename _Tp> inline constexpr int is_placeholder_v
+    = is_placeholder<_Tp>::value;
+
+
+
+
+
+
+
+  namespace placeholders
+  {
+# 301 "C:/mingw64/include/c++/14.2.0/functional" 3
+    inline const _Placeholder<1> _1;
+    inline const _Placeholder<2> _2;
+    inline const _Placeholder<3> _3;
+    inline const _Placeholder<4> _4;
+    inline const _Placeholder<5> _5;
+    inline const _Placeholder<6> _6;
+    inline const _Placeholder<7> _7;
+    inline const _Placeholder<8> _8;
+    inline const _Placeholder<9> _9;
+    inline const _Placeholder<10> _10;
+    inline const _Placeholder<11> _11;
+    inline const _Placeholder<12> _12;
+    inline const _Placeholder<13> _13;
+    inline const _Placeholder<14> _14;
+    inline const _Placeholder<15> _15;
+    inline const _Placeholder<16> _16;
+    inline const _Placeholder<17> _17;
+    inline const _Placeholder<18> _18;
+    inline const _Placeholder<19> _19;
+    inline const _Placeholder<20> _20;
+    inline const _Placeholder<21> _21;
+    inline const _Placeholder<22> _22;
+    inline const _Placeholder<23> _23;
+    inline const _Placeholder<24> _24;
+    inline const _Placeholder<25> _25;
+    inline const _Placeholder<26> _26;
+    inline const _Placeholder<27> _27;
+    inline const _Placeholder<28> _28;
+    inline const _Placeholder<29> _29;
+
+
+  }
+
+
+
+
+
+
+
+  template<int _Num>
+    struct is_placeholder<_Placeholder<_Num> >
+    : public integral_constant<int, _Num>
+    { };
+
+  template<int _Num>
+    struct is_placeholder<const _Placeholder<_Num> >
+    : public integral_constant<int, _Num>
+    { };
+
+
+
+
+  template<std::size_t __i, typename _Tuple>
+    using _Safe_tuple_element_t
+      = typename enable_if<(__i < tuple_size<_Tuple>::value),
+      tuple_element<__i, _Tuple>>::type::type;
+# 369 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Arg,
+    bool _IsBindExp = is_bind_expression<_Arg>::value,
+    bool _IsPlaceholder = (is_placeholder<_Arg>::value > 0)>
+    class _Mu;
+
+
+
+
+
+
+  template<typename _Tp>
+    class _Mu<reference_wrapper<_Tp>, false, false>
+    {
+    public:
+
+
+
+
+      template<typename _CVRef, typename _Tuple>
+ constexpr
+ _Tp&
+ operator()(_CVRef& __arg, _Tuple&) const volatile
+ { return __arg.get(); }
+    };
+
+
+
+
+
+
+
+  template<typename _Arg>
+    class _Mu<_Arg, true, false>
+    {
+    public:
+      template<typename _CVArg, typename... _Args>
+ constexpr
+ auto
+ operator()(_CVArg& __arg,
+     tuple<_Args...>& __tuple) const volatile
+ -> decltype(__arg(declval<_Args>()...))
+ {
+
+   typedef typename _Build_index_tuple<sizeof...(_Args)>::__type
+     _Indexes;
+   return this->__call(__arg, __tuple, _Indexes());
+ }
+
+    private:
+
+
+      template<typename _CVArg, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ auto
+ __call(_CVArg& __arg, tuple<_Args...>& __tuple,
+        const _Index_tuple<_Indexes...>&) const volatile
+ -> decltype(__arg(declval<_Args>()...))
+ {
+   return __arg(std::get<_Indexes>(std::move(__tuple))...);
+ }
+    };
+
+
+
+
+
+
+  template<typename _Arg>
+    class _Mu<_Arg, false, true>
+    {
+    public:
+      template<typename _Tuple>
+ constexpr
+ _Safe_tuple_element_t<(is_placeholder<_Arg>::value - 1), _Tuple>&&
+ operator()(const volatile _Arg&, _Tuple& __tuple) const volatile
+ {
+   return
+     ::std::get<(is_placeholder<_Arg>::value - 1)>(std::move(__tuple));
+ }
+    };
+
+
+
+
+
+
+  template<typename _Arg>
+    class _Mu<_Arg, false, false>
+    {
+    public:
+      template<typename _CVArg, typename _Tuple>
+ constexpr
+ _CVArg&&
+ operator()(_CVArg&& __arg, _Tuple&) const volatile
+ { return std::forward<_CVArg>(__arg); }
+    };
+
+
+  template<std::size_t _Ind, typename... _Tp>
+    inline auto
+    __volget(volatile tuple<_Tp...>& __tuple)
+    -> __tuple_element_t<_Ind, tuple<_Tp...>> volatile&
+    { return std::get<_Ind>(const_cast<tuple<_Tp...>&>(__tuple)); }
+
+
+  template<std::size_t _Ind, typename... _Tp>
+    inline auto
+    __volget(const volatile tuple<_Tp...>& __tuple)
+    -> __tuple_element_t<_Ind, tuple<_Tp...>> const volatile&
+    { return std::get<_Ind>(const_cast<const tuple<_Tp...>&>(__tuple)); }
+# 494 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Signature>
+    class _Bind;
+
+   template<typename _Functor, typename... _Bound_args>
+    class _Bind<_Functor(_Bound_args...)>
+    : public _Weak_result_type<_Functor>
+    {
+      typedef typename _Build_index_tuple<sizeof...(_Bound_args)>::__type
+ _Bound_indexes;
+
+      _Functor _M_f;
+      tuple<_Bound_args...> _M_bound_args;
+
+
+      template<typename _Result, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Result
+ __call(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>)
+ {
+   return std::__invoke(_M_f,
+       _Mu<_Bound_args>()(std::get<_Indexes>(_M_bound_args), __args)...
+       );
+ }
+
+
+      template<typename _Result, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Result
+ __call_c(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>) const
+ {
+   return std::__invoke(_M_f,
+       _Mu<_Bound_args>()(std::get<_Indexes>(_M_bound_args), __args)...
+       );
+ }
+# 553 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename _BoundArg, typename _CallArgs>
+ using _Mu_type = decltype(
+     _Mu<typename remove_cv<_BoundArg>::type>()(
+       std::declval<_BoundArg&>(), std::declval<_CallArgs&>()) );
+
+      template<typename _Fn, typename _CallArgs, typename... _BArgs>
+ using _Res_type_impl
+   = __invoke_result_t<_Fn&, _Mu_type<_BArgs, _CallArgs>&&...>;
+
+      template<typename _CallArgs>
+ using _Res_type = _Res_type_impl<_Functor, _CallArgs, _Bound_args...>;
+
+      template<typename _CallArgs>
+ using __dependent = typename
+   enable_if<bool(tuple_size<_CallArgs>::value+1), _Functor>::type;
+
+      template<typename _CallArgs, template<class> class __cv_quals>
+ using _Res_type_cv = _Res_type_impl<
+   typename __cv_quals<__dependent<_CallArgs>>::type,
+   _CallArgs,
+   typename __cv_quals<_Bound_args>::type...>;
+
+     public:
+      template<typename... _Args>
+ explicit constexpr
+ _Bind(const _Functor& __f, _Args&&... __args)
+ : _M_f(__f), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      template<typename... _Args>
+ explicit constexpr
+ _Bind(_Functor&& __f, _Args&&... __args)
+ : _M_f(std::move(__f)), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      _Bind(const _Bind&) = default;
+      _Bind(_Bind&&) = default;
+
+
+      template<typename... _Args,
+        typename _Result = _Res_type<tuple<_Args...>>>
+ constexpr
+ _Result
+ operator()(_Args&&... __args)
+ {
+   return this->__call<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+
+
+      template<typename... _Args,
+        typename _Result = _Res_type_cv<tuple<_Args...>, add_const>>
+ constexpr
+ _Result
+ operator()(_Args&&... __args) const
+ {
+   return this->__call_c<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+# 640 "C:/mingw64/include/c++/14.2.0/functional" 3
+    };
+
+
+  template<typename _Result, typename _Signature>
+    class _Bind_result;
+
+  template<typename _Result, typename _Functor, typename... _Bound_args>
+    class _Bind_result<_Result, _Functor(_Bound_args...)>
+    {
+      typedef typename _Build_index_tuple<sizeof...(_Bound_args)>::__type
+ _Bound_indexes;
+
+      _Functor _M_f;
+      tuple<_Bound_args...> _M_bound_args;
+
+
+      template<typename _Res, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Res
+ __call(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>)
+ {
+   return std::__invoke_r<_Res>(_M_f, _Mu<_Bound_args>()
+        (std::get<_Indexes>(_M_bound_args), __args)...);
+ }
+
+
+      template<typename _Res, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Res
+ __call(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>) const
+ {
+   return std::__invoke_r<_Res>(_M_f, _Mu<_Bound_args>()
+        (std::get<_Indexes>(_M_bound_args), __args)...);
+ }
+# 696 "C:/mingw64/include/c++/14.2.0/functional" 3
+    public:
+      typedef _Result result_type;
+
+      template<typename... _Args>
+ explicit constexpr
+ _Bind_result(const _Functor& __f, _Args&&... __args)
+ : _M_f(__f), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      template<typename... _Args>
+ explicit constexpr
+ _Bind_result(_Functor&& __f, _Args&&... __args)
+ : _M_f(std::move(__f)), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      _Bind_result(const _Bind_result&) = default;
+      _Bind_result(_Bind_result&&) = default;
+
+
+      template<typename... _Args>
+ constexpr
+ result_type
+ operator()(_Args&&... __args)
+ {
+   return this->__call<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+
+
+      template<typename... _Args>
+ constexpr
+ result_type
+ operator()(_Args&&... __args) const
+ {
+   return this->__call<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+# 759 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename... _Args>
+ void operator()(_Args&&...) const volatile = delete;
+
+    };
+# 771 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Signature>
+    struct is_bind_expression<_Bind<_Signature> >
+    : public true_type { };
+
+
+
+
+
+  template<typename _Signature>
+    struct is_bind_expression<const _Bind<_Signature> >
+    : public true_type { };
+
+
+
+
+
+  template<typename _Signature>
+    struct is_bind_expression<volatile _Bind<_Signature> >
+    : public true_type { };
+
+
+
+
+
+  template<typename _Signature>
+    struct is_bind_expression<const volatile _Bind<_Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<_Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<const _Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<volatile _Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<const volatile _Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+  template<typename _Func, typename... _BoundArgs>
+    struct _Bind_check_arity { };
+
+  template<typename _Ret, typename... _Args, typename... _BoundArgs>
+    struct _Bind_check_arity<_Ret (*)(_Args...), _BoundArgs...>
+    {
+      static_assert(sizeof...(_BoundArgs) == sizeof...(_Args),
+                   "Wrong number of arguments for function");
+    };
+
+  template<typename _Ret, typename... _Args, typename... _BoundArgs>
+    struct _Bind_check_arity<_Ret (*)(_Args......), _BoundArgs...>
+    {
+      static_assert(sizeof...(_BoundArgs) >= sizeof...(_Args),
+                   "Wrong number of arguments for function");
+    };
+
+  template<typename _Tp, typename _Class, typename... _BoundArgs>
+    struct _Bind_check_arity<_Tp _Class::*, _BoundArgs...>
+    {
+      using _Arity = typename _Mem_fn<_Tp _Class::*>::_Arity;
+      using _Varargs = typename _Mem_fn<_Tp _Class::*>::_Varargs;
+      static_assert(_Varargs::value
+      ? sizeof...(_BoundArgs) >= _Arity::value + 1
+      : sizeof...(_BoundArgs) == _Arity::value + 1,
+      "Wrong number of arguments for pointer-to-member");
+    };
+
+
+
+
+  template<typename _Tp, typename _Tp2 = typename decay<_Tp>::type>
+    using __is_socketlike = __or_<is_integral<_Tp2>, is_enum<_Tp2>>;
+
+  template<bool _SocketLike, typename _Func, typename... _BoundArgs>
+    struct _Bind_helper
+    : _Bind_check_arity<typename decay<_Func>::type, _BoundArgs...>
+    {
+      typedef typename decay<_Func>::type __func_type;
+      typedef _Bind<__func_type(typename decay<_BoundArgs>::type...)> type;
+    };
+
+
+
+
+  template<typename _Func, typename... _BoundArgs>
+    struct _Bind_helper<true, _Func, _BoundArgs...>
+    { };
+
+
+
+
+
+
+  template<typename _Func, typename... _BoundArgs>
+    inline constexpr typename
+    _Bind_helper<__is_socketlike<_Func>::value, _Func, _BoundArgs...>::type
+    bind(_Func&& __f, _BoundArgs&&... __args)
+    {
+      typedef _Bind_helper<false, _Func, _BoundArgs...> __helper_type;
+      return typename __helper_type::type(std::forward<_Func>(__f),
+       std::forward<_BoundArgs>(__args)...);
+    }
+
+  template<typename _Result, typename _Func, typename... _BoundArgs>
+    struct _Bindres_helper
+    : _Bind_check_arity<typename decay<_Func>::type, _BoundArgs...>
+    {
+      typedef typename decay<_Func>::type __functor_type;
+      typedef _Bind_result<_Result,
+      __functor_type(typename decay<_BoundArgs>::type...)>
+ type;
+    };
+
+
+
+
+
+
+  template<typename _Result, typename _Func, typename... _BoundArgs>
+    inline constexpr
+    typename _Bindres_helper<_Result, _Func, _BoundArgs...>::type
+    bind(_Func&& __f, _BoundArgs&&... __args)
+    {
+      typedef _Bindres_helper<_Result, _Func, _BoundArgs...> __helper_type;
+      return typename __helper_type::type(std::forward<_Func>(__f),
+       std::forward<_BoundArgs>(__args)...);
+    }
+
+
+
+  template<typename _Fd, typename... _BoundArgs>
+    struct _Bind_front
+    {
+      static_assert(is_move_constructible_v<_Fd>);
+      static_assert((is_move_constructible_v<_BoundArgs> && ...));
+
+
+
+      template<typename _Fn, typename... _Args>
+ explicit constexpr
+ _Bind_front(int, _Fn&& __fn, _Args&&... __args)
+ noexcept(__and_<is_nothrow_constructible<_Fd, _Fn>,
+   is_nothrow_constructible<_BoundArgs, _Args>...>::value)
+ : _M_fd(std::forward<_Fn>(__fn)),
+   _M_bound_args(std::forward<_Args>(__args)...)
+ { static_assert(sizeof...(_Args) == sizeof...(_BoundArgs)); }
+# 951 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<_Fd&, _BoundArgs&..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) &
+ noexcept(is_nothrow_invocable_v<_Fd&, _BoundArgs&..., _CallArgs...>)
+ {
+   return _S_call(*this, _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<const _Fd&, const _BoundArgs&..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) const &
+ noexcept(is_nothrow_invocable_v<const _Fd&, const _BoundArgs&...,
+     _CallArgs...>)
+ {
+   return _S_call(*this, _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<_Fd, _BoundArgs..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) &&
+ noexcept(is_nothrow_invocable_v<_Fd, _BoundArgs..., _CallArgs...>)
+ {
+   return _S_call(std::move(*this), _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<const _Fd, const _BoundArgs..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) const &&
+ noexcept(is_nothrow_invocable_v<const _Fd, const _BoundArgs...,
+     _CallArgs...>)
+ {
+   return _S_call(std::move(*this), _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) & = delete;
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) const & = delete;
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) && = delete;
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) const && = delete;
+
+
+    private:
+      using _BoundIndices = index_sequence_for<_BoundArgs...>;
+
+      template<typename _Tp, size_t... _Ind, typename... _CallArgs>
+ static constexpr
+ decltype(auto)
+ _S_call(_Tp&& __g, index_sequence<_Ind...>, _CallArgs&&... __call_args)
+ {
+   return std::invoke(std::forward<_Tp>(__g)._M_fd,
+       std::get<_Ind>(std::forward<_Tp>(__g)._M_bound_args)...,
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      [[no_unique_address]] _Fd _M_fd;
+      [[no_unique_address]] std::tuple<_BoundArgs...> _M_bound_args;
+    };
+
+  template<typename _Fn, typename... _Args>
+    using _Bind_front_t = _Bind_front<decay_t<_Fn>, decay_t<_Args>...>;
+# 1039 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Fn, typename... _Args>
+    constexpr _Bind_front_t<_Fn, _Args...>
+    bind_front(_Fn&& __fn, _Args&&... __args)
+    noexcept(is_nothrow_constructible_v<_Bind_front_t<_Fn, _Args...>,
+     int, _Fn, _Args...>)
+    {
+      return _Bind_front_t<_Fn, _Args...>(0, std::forward<_Fn>(__fn),
+       std::forward<_Args>(__args)...);
+    }
+# 1121 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Fn>
+    class _Not_fn
+    {
+      template<typename _Fn2, typename... _Args>
+ using __inv_res_t = typename __invoke_result<_Fn2, _Args...>::type;
+
+      template<typename _Tp>
+ static decltype(!std::declval<_Tp>())
+ _S_not() noexcept(noexcept(!std::declval<_Tp>()));
+
+    public:
+      template<typename _Fn2>
+ constexpr
+ _Not_fn(_Fn2&& __fn, int)
+ : _M_fn(std::forward<_Fn2>(__fn)) { }
+
+      _Not_fn(const _Not_fn& __fn) = default;
+      _Not_fn(_Not_fn&& __fn) = default;
+      ~_Not_fn() = default;
+# 1161 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn &, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn &, _Args...>>()) operator()(_Args&&... __args) & noexcept(__is_nothrow_invocable<_Fn &, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn &, _Args...>>())) { return !std::__invoke(std::forward< _Fn & >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn &, _Args...>::value>> void operator()(_Args&&... __args) & = delete;
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn const &, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn const &, _Args...>>()) operator()(_Args&&... __args) const & noexcept(__is_nothrow_invocable<_Fn const &, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn const &, _Args...>>())) { return !std::__invoke(std::forward< _Fn const & >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn const &, _Args...>::value>> void operator()(_Args&&... __args) const & = delete;
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn &&, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn &&, _Args...>>()) operator()(_Args&&... __args) && noexcept(__is_nothrow_invocable<_Fn &&, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn &&, _Args...>>())) { return !std::__invoke(std::forward< _Fn && >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn &&, _Args...>::value>> void operator()(_Args&&... __args) && = delete;
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn const &&, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn const &&, _Args...>>()) operator()(_Args&&... __args) const && noexcept(__is_nothrow_invocable<_Fn const &&, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn const &&, _Args...>>())) { return !std::__invoke(std::forward< _Fn const && >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn const &&, _Args...>::value>> void operator()(_Args&&... __args) const && = delete;
+
+
+    private:
+      _Fn _M_fn;
+    };
+
+  template<typename _Tp, typename _Pred>
+    struct __is_byte_like : false_type { };
+
+  template<typename _Tp>
+    struct __is_byte_like<_Tp, equal_to<_Tp>>
+    : __bool_constant<sizeof(_Tp) == 1 && is_integral<_Tp>::value> { };
+
+  template<typename _Tp>
+    struct __is_byte_like<_Tp, equal_to<void>>
+    : __bool_constant<sizeof(_Tp) == 1 && is_integral<_Tp>::value> { };
+
+
+
+  enum class byte : unsigned char;
+
+  template<>
+    struct __is_byte_like<byte, equal_to<byte>>
+    : true_type { };
+
+  template<>
+    struct __is_byte_like<byte, equal_to<void>>
+    : true_type { };
+# 1209 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Fn>
+    constexpr
+    inline auto
+    not_fn(_Fn&& __fn)
+    noexcept(std::is_nothrow_constructible<std::decay_t<_Fn>, _Fn&&>::value)
+    {
+      return _Not_fn<std::decay_t<_Fn>>{std::forward<_Fn>(__fn), 0};
+    }
+
+
+
+
+
+  template<typename _ForwardIterator1, typename _BinaryPredicate = equal_to<>>
+    class default_searcher
+    {
+    public:
+      constexpr
+      default_searcher(_ForwardIterator1 __pat_first,
+         _ForwardIterator1 __pat_last,
+         _BinaryPredicate __pred = _BinaryPredicate())
+      : _M_m(__pat_first, __pat_last, std::move(__pred))
+      { }
+
+      template<typename _ForwardIterator2>
+ constexpr
+ pair<_ForwardIterator2, _ForwardIterator2>
+ operator()(_ForwardIterator2 __first, _ForwardIterator2 __last) const
+ {
+   _ForwardIterator2 __first_ret =
+     std::search(__first, __last, std::get<0>(_M_m), std::get<1>(_M_m),
+   std::get<2>(_M_m));
+   auto __ret = std::make_pair(__first_ret, __first_ret);
+   if (__ret.first != __last)
+     std::advance(__ret.second, std::distance(std::get<0>(_M_m),
+           std::get<1>(_M_m)));
+   return __ret;
+ }
+
+    private:
+      tuple<_ForwardIterator1, _ForwardIterator1, _BinaryPredicate> _M_m;
+    };
+
+
+
+  template<typename _Key, typename _Tp, typename _Hash, typename _Pred>
+    struct __boyer_moore_map_base
+    {
+      template<typename _RAIter>
+ __boyer_moore_map_base(_RAIter __pat, size_t __patlen,
+          _Hash&& __hf, _Pred&& __pred)
+ : _M_bad_char{ __patlen, std::move(__hf), std::move(__pred) }
+ {
+   if (__patlen > 0)
+     for (__diff_type __i = 0; __i < __patlen - 1; ++__i)
+       _M_bad_char[__pat[__i]] = __patlen - 1 - __i;
+ }
+
+      using __diff_type = _Tp;
+
+      __diff_type
+      _M_lookup(_Key __key, __diff_type __not_found) const
+      {
+ auto __iter = _M_bad_char.find(__key);
+ if (__iter == _M_bad_char.end())
+   return __not_found;
+ return __iter->second;
+      }
+
+      _Pred
+      _M_pred() const { return _M_bad_char.key_eq(); }
+
+      std::unordered_map<_Key, _Tp, _Hash, _Pred> _M_bad_char;
+    };
+
+  template<typename _Tp, size_t _Len, typename _Pred>
+    struct __boyer_moore_array_base
+    {
+      template<typename _RAIter, typename _Unused>
+ __boyer_moore_array_base(_RAIter __pat, size_t __patlen,
+     _Unused&&, _Pred&& __pred)
+ : _M_bad_char{ array<_Tp, _Len>{}, std::move(__pred) }
+ {
+   std::get<0>(_M_bad_char).fill(__patlen);
+   if (__patlen > 0)
+     for (__diff_type __i = 0; __i < __patlen - 1; ++__i)
+       {
+  auto __ch = __pat[__i];
+  using _UCh = make_unsigned_t<decltype(__ch)>;
+  auto __uch = static_cast<_UCh>(__ch);
+  std::get<0>(_M_bad_char)[__uch] = __patlen - 1 - __i;
+       }
+ }
+
+      using __diff_type = _Tp;
+
+      template<typename _Key>
+ __diff_type
+ _M_lookup(_Key __key, __diff_type __not_found) const
+ {
+   auto __ukey = static_cast<make_unsigned_t<_Key>>(__key);
+   if (__ukey >= _Len)
+     return __not_found;
+   return std::get<0>(_M_bad_char)[__ukey];
+ }
+
+      const _Pred&
+      _M_pred() const { return std::get<1>(_M_bad_char); }
+
+      tuple<array<_Tp, _Len>, _Pred> _M_bad_char;
+    };
+
+
+
+  template<typename _RAIter, typename _Hash, typename _Pred,
+           typename _Val = typename iterator_traits<_RAIter>::value_type,
+    typename _Diff = typename iterator_traits<_RAIter>::difference_type>
+    using __boyer_moore_base_t
+      = __conditional_t<__is_byte_like<_Val, _Pred>::value,
+   __boyer_moore_array_base<_Diff, 256, _Pred>,
+   __boyer_moore_map_base<_Val, _Diff, _Hash, _Pred>>;
+
+  template<typename _RAIter, typename _Hash
+      = hash<typename iterator_traits<_RAIter>::value_type>,
+    typename _BinaryPredicate = equal_to<>>
+    class boyer_moore_searcher
+    : __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>
+    {
+      using _Base = __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>;
+      using typename _Base::__diff_type;
+
+    public:
+      boyer_moore_searcher(_RAIter __pat_first, _RAIter __pat_last,
+      _Hash __hf = _Hash(),
+      _BinaryPredicate __pred = _BinaryPredicate());
+
+      template<typename _RandomAccessIterator2>
+        pair<_RandomAccessIterator2, _RandomAccessIterator2>
+ operator()(_RandomAccessIterator2 __first,
+     _RandomAccessIterator2 __last) const;
+
+    private:
+      bool
+      _M_is_prefix(_RAIter __word, __diff_type __len,
+     __diff_type __pos)
+      {
+ const auto& __pred = this->_M_pred();
+ __diff_type __suffixlen = __len - __pos;
+ for (__diff_type __i = 0; __i < __suffixlen; ++__i)
+   if (!__pred(__word[__i], __word[__pos + __i]))
+     return false;
+ return true;
+      }
+
+      __diff_type
+      _M_suffix_length(_RAIter __word, __diff_type __len,
+         __diff_type __pos)
+      {
+ const auto& __pred = this->_M_pred();
+ __diff_type __i = 0;
+ while (__pred(__word[__pos - __i], __word[__len - 1 - __i])
+        && __i < __pos)
+   {
+     ++__i;
+   }
+ return __i;
+      }
+
+      template<typename _Tp>
+ __diff_type
+ _M_bad_char_shift(_Tp __c) const
+ { return this->_M_lookup(__c, _M_pat_end - _M_pat); }
+
+      _RAIter _M_pat;
+      _RAIter _M_pat_end;
+      std::vector<__diff_type> _M_good_suffix;
+    };
+
+  template<typename _RAIter, typename _Hash
+      = hash<typename iterator_traits<_RAIter>::value_type>,
+    typename _BinaryPredicate = equal_to<>>
+    class boyer_moore_horspool_searcher
+    : __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>
+    {
+      using _Base = __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>;
+      using typename _Base::__diff_type;
+
+    public:
+      boyer_moore_horspool_searcher(_RAIter __pat,
+        _RAIter __pat_end,
+        _Hash __hf = _Hash(),
+        _BinaryPredicate __pred
+        = _BinaryPredicate())
+      : _Base(__pat, __pat_end - __pat, std::move(__hf), std::move(__pred)),
+ _M_pat(__pat), _M_pat_end(__pat_end)
+      { }
+
+      template<typename _RandomAccessIterator2>
+        pair<_RandomAccessIterator2, _RandomAccessIterator2>
+ operator()(_RandomAccessIterator2 __first,
+     _RandomAccessIterator2 __last) const
+ {
+   const auto& __pred = this->_M_pred();
+   auto __patlen = _M_pat_end - _M_pat;
+   if (__patlen == 0)
+     return std::make_pair(__first, __first);
+   auto __len = __last - __first;
+   while (__len >= __patlen)
+     {
+       for (auto __scan = __patlen - 1;
+     __pred(__first[__scan], _M_pat[__scan]); --__scan)
+  if (__scan == 0)
+    return std::make_pair(__first, __first + __patlen);
+       auto __shift = _M_bad_char_shift(__first[__patlen - 1]);
+       __len -= __shift;
+       __first += __shift;
+     }
+   return std::make_pair(__last, __last);
+ }
+
+    private:
+      template<typename _Tp>
+ __diff_type
+ _M_bad_char_shift(_Tp __c) const
+ { return this->_M_lookup(__c, _M_pat_end - _M_pat); }
+
+      _RAIter _M_pat;
+      _RAIter _M_pat_end;
+    };
+
+  template<typename _RAIter, typename _Hash, typename _BinaryPredicate>
+    boyer_moore_searcher<_RAIter, _Hash, _BinaryPredicate>::
+    boyer_moore_searcher(_RAIter __pat, _RAIter __pat_end,
+    _Hash __hf, _BinaryPredicate __pred)
+    : _Base(__pat, __pat_end - __pat, std::move(__hf), std::move(__pred)),
+      _M_pat(__pat), _M_pat_end(__pat_end), _M_good_suffix(__pat_end - __pat)
+    {
+      auto __patlen = __pat_end - __pat;
+      if (__patlen == 0)
+ return;
+      __diff_type __last_prefix = __patlen - 1;
+      for (__diff_type __p = __patlen - 1; __p >= 0; --__p)
+ {
+   if (_M_is_prefix(__pat, __patlen, __p + 1))
+     __last_prefix = __p + 1;
+   _M_good_suffix[__p] = __last_prefix + (__patlen - 1 - __p);
+ }
+      for (__diff_type __p = 0; __p < __patlen - 1; ++__p)
+ {
+   auto __slen = _M_suffix_length(__pat, __patlen, __p);
+   auto __pos = __patlen - 1 - __slen;
+   if (!__pred(__pat[__p - __slen], __pat[__pos]))
+     _M_good_suffix[__pos] = __patlen - 1 - __p + __slen;
+ }
+    }
+
+  template<typename _RAIter, typename _Hash, typename _BinaryPredicate>
+  template<typename _RandomAccessIterator2>
+    pair<_RandomAccessIterator2, _RandomAccessIterator2>
+    boyer_moore_searcher<_RAIter, _Hash, _BinaryPredicate>::
+    operator()(_RandomAccessIterator2 __first,
+        _RandomAccessIterator2 __last) const
+    {
+      auto __patlen = _M_pat_end - _M_pat;
+      if (__patlen == 0)
+ return std::make_pair(__first, __first);
+      const auto& __pred = this->_M_pred();
+      __diff_type __i = __patlen - 1;
+      auto __stringlen = __last - __first;
+      while (__i < __stringlen)
+ {
+   __diff_type __j = __patlen - 1;
+   while (__j >= 0 && __pred(__first[__i], _M_pat[__j]))
+     {
+       --__i;
+       --__j;
+     }
+   if (__j < 0)
+     {
+       const auto __match = __first + __i + 1;
+       return std::make_pair(__match, __match + __patlen);
+     }
+   __i += std::max(_M_bad_char_shift(__first[__i]),
+     _M_good_suffix[__j]);
+ }
+      return std::make_pair(__last, __last);
+    }
+
+
+
+
+
+
+
+}
+# 38 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 2 3 4
+
+
+namespace sf
+{
+
+
+
+
+
+class __attribute__((dllimport)) SoundSource : protected AudioResource
+{
+public:
+
+
+
+
+    enum class Status
+    {
+        Stopped,
+        Paused,
+        Playing
+    };
+# 72 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    struct Cone
+    {
+        Angle innerAngle;
+        Angle outerAngle;
+        float outerGain{};
+    };
+# 154 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    using EffectProcessor = std::function<
+        void(const float* inputFrames, unsigned int& inputFrameCount, float* outputFrames, unsigned int& outputFrameCount, unsigned int frameChannelCount)>;
+
+
+
+
+
+    SoundSource(const SoundSource&) = default;
+
+
+
+
+
+    SoundSource(SoundSource&&) noexcept = default;
+
+
+
+
+
+    SoundSource& operator=(SoundSource&&) noexcept = default;
+
+
+
+
+
+    virtual ~SoundSource() = default;
+# 195 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setPitch(float pitch);
+# 210 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setPan(float pan);
+# 223 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setVolume(float volume);
+# 238 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setSpatializationEnabled(bool enabled);
+# 252 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setPosition(const Vector3f& position);
+# 267 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setDirection(const Vector3f& direction);
+# 280 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setCone(const Cone& cone);
+# 295 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setVelocity(const Vector3f& velocity);
+# 308 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setDopplerFactor(float factor);
+# 325 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setDirectionalAttenuationFactor(float factor);
+# 341 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setRelativeToListener(bool relative);
+# 358 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMinDistance(float distance);
+# 375 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMaxDistance(float distance);
+# 389 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMinGain(float gain);
+# 403 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMaxGain(float gain);
+# 422 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setAttenuation(float attenuation);
+# 433 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void setEffectProcessor(EffectProcessor effectProcessor);
+# 443 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getPitch() const;
+# 453 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getPan() const;
+# 463 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getVolume() const;
+# 473 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] bool isSpatializationEnabled() const;
+# 483 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Vector3f getPosition() const;
+# 493 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Vector3f getDirection() const;
+# 503 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Cone getCone() const;
+# 513 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Vector3f getVelocity() const;
+# 523 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getDopplerFactor() const;
+# 533 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getDirectionalAttenuationFactor() const;
+# 544 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] bool isRelativeToListener() const;
+# 554 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMinDistance() const;
+# 564 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMaxDistance() const;
+# 574 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMinGain() const;
+# 584 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMaxGain() const;
+# 594 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getAttenuation() const;
+# 604 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    SoundSource& operator=(const SoundSource& right);
+# 616 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void play() = 0;
+# 627 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void pause() = 0;
+# 639 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void stop() = 0;
+
+
+
+
+
+
+
+    [[nodiscard]] virtual Status getStatus() const = 0;
+
+protected:
+
+
+
+
+
+
+    SoundSource() = default;
+
+private:
+
+
+
+
+
+
+    [[nodiscard]] virtual void* getSound() const = 0;
+};
+
+
+}
+# 34 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 2 3 4
+# 45 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) SoundStream : public SoundSource
+{
+public:
+
+
+
+
+    struct Chunk
+    {
+        const std::int16_t* samples{};
+        std::size_t sampleCount{};
+    };
+
+
+
+
+
+    ~SoundStream() override;
+
+
+
+
+
+    SoundStream(SoundStream&&) noexcept;
+
+
+
+
+
+    SoundStream& operator=(SoundStream&&) noexcept;
+# 94 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void play() override;
+# 105 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void pause() override;
+# 117 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void stop() override;
+# 127 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] unsigned int getChannelCount() const;
+# 138 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 149 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] std::vector<SoundChannel> getChannelMap() const;
+
+
+
+
+
+
+
+    [[nodiscard]] Status getStatus() const override;
+# 172 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void setPlayingOffset(Time timeOffset);
+# 182 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] Time getPlayingOffset() const;
+# 197 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void setLooping(bool loop);
+# 207 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] bool isLooping() const;
+# 218 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void setEffectProcessor(EffectProcessor effectProcessor) override;
+
+protected:
+
+
+
+
+
+
+    SoundStream();
+# 244 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void initialize(unsigned int channelCount, unsigned int sampleRate, const std::vector<SoundChannel>& channelMap);
+# 263 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] virtual bool onGetData(Chunk& data) = 0;
+# 274 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    virtual void onSeek(Time timeOffset) = 0;
+# 286 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    virtual std::optional<std::uint64_t> onLoop();
+
+private:
+
+
+
+
+
+
+    [[nodiscard]] void* getSound() const override;
+
+
+
+
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/Music.hpp" 2 3 4
+# 42 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+namespace sf
+{
+class Time;
+class InputStream;
+class InputSoundFile;
+
+
+
+
+
+class __attribute__((dllimport)) Music : public SoundStream
+{
+public:
+
+
+
+
+    template <typename T>
+    struct Span
+    {
+        T offset{};
+        T length{};
+    };
+
+
+    using TimeSpan = Span<Time>;
+
+
+
+
+
+
+
+    Music();
+# 96 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    explicit Music(const std::filesystem::path& filename);
+# 119 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    Music(const void* data, std::size_t sizeInBytes);
+# 140 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    explicit Music(InputStream& stream);
+
+
+
+
+
+    ~Music() override;
+
+
+
+
+
+    Music(Music&&) noexcept;
+
+
+
+
+
+    Music& operator=(Music&&) noexcept;
+# 179 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool openFromFile(const std::filesystem::path& filename);
+# 202 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool openFromMemory(const void* data, std::size_t sizeInBytes);
+# 223 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool openFromStream(InputStream& stream);
+
+
+
+
+
+
+
+    [[nodiscard]] Time getDuration() const;
+# 248 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] TimeSpan getLoopPoints() const;
+# 270 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    void setLoopPoints(TimeSpan timePoints);
+
+protected:
+# 284 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool onGetData(Chunk& data) override;
+
+
+
+
+
+
+
+    void onSeek(Time timeOffset) override;
+# 304 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    std::optional<std::uint64_t> onLoop() override;
+
+private:
+# 315 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] std::uint64_t timeToSamples(Time position) const;
+# 325 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] Time samplesToTime(std::uint64_t samples) const;
+
+
+
+
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 34 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+       
+
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+       
+# 40 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) SoundFileWriter
+{
+public:
+
+
+
+
+    virtual ~SoundFileWriter() = default;
+# 66 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+    [[nodiscard]] virtual bool open(const std::filesystem::path& filename,
+                                    unsigned int sampleRate,
+                                    unsigned int channelCount,
+                                    const std::vector<SoundChannel>& channelMap) = 0;
+# 78 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+    virtual void write(const std::int16_t* samples, std::uint64_t count) = 0;
+};
+
+}
+# 34 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 2 3 4
+# 42 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) OutputSoundFile
+{
+public:
+
+
+
+
+
+
+
+    OutputSoundFile() = default;
+# 73 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+    OutputSoundFile(const std::filesystem::path& filename,
+                    unsigned int sampleRate,
+                    unsigned int channelCount,
+                    const std::vector<SoundChannel>& channelMap);
+# 91 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromFile(const std::filesystem::path& filename,
+                                    unsigned int sampleRate,
+                                    unsigned int channelCount,
+                                    const std::vector<SoundChannel>& channelMap);
+# 103 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+    void write(const std::int16_t* samples, std::uint64_t count);
+
+
+
+
+
+    void close();
+
+private:
+
+
+
+    std::unique_ptr<SoundFileWriter> m_writer;
+};
+
+}
+# 35 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+       
+# 37 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+namespace sf::PlaybackDevice
+{
+# 68 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) std::vector<std::string> getAvailableDevices();
+# 80 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) std::optional<std::string> getDefaultDevice();
+# 100 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) bool setDevice(const std::string& name);
+
+
+
+
+
+
+
+[[nodiscard]] __attribute__((dllimport)) std::optional<std::string> getDevice();
+
+}
+# 36 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/Sound.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+       
+# 36 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+# 1 "C:/mingw64/include/c++/14.2.0/cstdlib" 1 3 4
+# 39 "C:/mingw64/include/c++/14.2.0/cstdlib" 3 4
+       
+# 40 "C:/mingw64/include/c++/14.2.0/cstdlib" 3
+# 37 "C:/SFML/include/SFML/Audio/Sound.hpp" 2 3 4
+
+namespace sf
+{
+class Time;
+class SoundBuffer;
+
+
+
+
+
+class __attribute__((dllimport)) Sound : public SoundSource
+{
+public:
+
+
+
+
+
+
+    explicit Sound(const SoundBuffer& buffer);
+
+
+
+
+
+    Sound(const SoundBuffer&& buffer) = delete;
+
+
+
+
+
+
+
+    Sound(const Sound& copy);
+
+
+
+
+
+    ~Sound() override;
+# 90 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void play() override;
+# 101 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void pause() override;
+# 113 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void stop() override;
+# 127 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setBuffer(const SoundBuffer& buffer);
+
+
+
+
+
+    void setBuffer(const SoundBuffer&& buffer) = delete;
+# 148 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setLooping(bool loop);
+# 163 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setPlayingOffset(Time timeOffset);
+# 174 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setEffectProcessor(EffectProcessor effectProcessor) override;
+
+
+
+
+
+
+
+    [[nodiscard]] const SoundBuffer& getBuffer() const;
+# 192 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    [[nodiscard]] bool isLooping() const;
+# 202 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    [[nodiscard]] Time getPlayingOffset() const;
+
+
+
+
+
+
+
+    [[nodiscard]] Status getStatus() const override;
+# 220 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    Sound& operator=(const Sound& right);
+
+private:
+    friend class SoundBuffer;
+# 232 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void detachBuffer();
+
+
+
+
+
+
+
+    [[nodiscard]] void* getSound() const override;
+
+
+
+
+    struct Impl;
+    const std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 37 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+       
+# 37 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+# 1 "C:/mingw64/include/c++/14.2.0/unordered_set" 1 3 4
+# 32 "C:/mingw64/include/c++/14.2.0/unordered_set" 3 4
+       
+# 33 "C:/mingw64/include/c++/14.2.0/unordered_set" 3
+# 41 "C:/mingw64/include/c++/14.2.0/unordered_set" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 1 3
+# 38 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+namespace std
+{
+
+
+
+
+  template<bool _Cache>
+    using __uset_traits = __detail::_Hashtable_traits<_Cache, true, true>;
+
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = std::equal_to<_Value>,
+      typename _Alloc = std::allocator<_Value>,
+    typename _Tr = __uset_traits<__cache_default<_Value, _Hash>::value>>
+    using __uset_hashtable = _Hashtable<_Value, _Value, _Alloc,
+     __detail::_Identity, _Pred, _Hash,
+     __detail::_Mod_range_hashing,
+     __detail::_Default_ranged_hash,
+     __detail::_Prime_rehash_policy, _Tr>;
+
+
+  template<bool _Cache>
+    using __umset_traits = __detail::_Hashtable_traits<_Cache, true, false>;
+
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = std::equal_to<_Value>,
+    typename _Alloc = std::allocator<_Value>,
+    typename _Tr = __umset_traits<__cache_default<_Value, _Hash>::value>>
+    using __umset_hashtable = _Hashtable<_Value, _Value, _Alloc,
+      __detail::_Identity,
+      _Pred, _Hash,
+      __detail::_Mod_range_hashing,
+      __detail::_Default_ranged_hash,
+      __detail::_Prime_rehash_policy, _Tr>;
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    class unordered_multiset;
+# 100 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = equal_to<_Value>,
+    typename _Alloc = allocator<_Value>>
+    class unordered_set
+    {
+      typedef __uset_hashtable<_Value, _Hash, _Pred, _Alloc> _Hashtable;
+      _Hashtable _M_h;
+
+    public:
+
+
+
+      typedef typename _Hashtable::key_type key_type;
+      typedef typename _Hashtable::value_type value_type;
+      typedef typename _Hashtable::hasher hasher;
+      typedef typename _Hashtable::key_equal key_equal;
+      typedef typename _Hashtable::allocator_type allocator_type;
+
+
+
+
+      typedef typename _Hashtable::pointer pointer;
+      typedef typename _Hashtable::const_pointer const_pointer;
+      typedef typename _Hashtable::reference reference;
+      typedef typename _Hashtable::const_reference const_reference;
+      typedef typename _Hashtable::iterator iterator;
+      typedef typename _Hashtable::const_iterator const_iterator;
+      typedef typename _Hashtable::local_iterator local_iterator;
+      typedef typename _Hashtable::const_local_iterator const_local_iterator;
+      typedef typename _Hashtable::size_type size_type;
+      typedef typename _Hashtable::difference_type difference_type;
+
+
+
+      using node_type = typename _Hashtable::node_type;
+      using insert_return_type = typename _Hashtable::insert_return_type;
+
+
+
+
+
+      unordered_set() = default;
+# 151 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      explicit
+      unordered_set(size_type __n,
+      const hasher& __hf = hasher(),
+      const key_equal& __eql = key_equal(),
+      const allocator_type& __a = allocator_type())
+      : _M_h(__n, __hf, __eql, __a)
+      { }
+# 172 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ unordered_set(_InputIterator __first, _InputIterator __last,
+        size_type __n = 0,
+        const hasher& __hf = hasher(),
+        const key_equal& __eql = key_equal(),
+        const allocator_type& __a = allocator_type())
+ : _M_h(__first, __last, __n, __hf, __eql, __a)
+ { }
+
+
+      unordered_set(const unordered_set&) = default;
+
+
+      unordered_set(unordered_set&&) = default;
+
+
+
+
+
+      explicit
+      unordered_set(const allocator_type& __a)
+      : _M_h(__a)
+      { }
+
+
+
+
+
+
+      unordered_set(const unordered_set& __uset,
+      const allocator_type& __a)
+      : _M_h(__uset._M_h, __a)
+      { }
+
+
+
+
+
+
+      unordered_set(unordered_set&& __uset,
+      const allocator_type& __a)
+ noexcept( noexcept(_Hashtable(std::move(__uset._M_h), __a)) )
+      : _M_h(std::move(__uset._M_h), __a)
+      { }
+# 228 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_set(initializer_list<value_type> __l,
+      size_type __n = 0,
+      const hasher& __hf = hasher(),
+      const key_equal& __eql = key_equal(),
+      const allocator_type& __a = allocator_type())
+      : _M_h(__l, __n, __hf, __eql, __a)
+      { }
+
+      unordered_set(size_type __n, const allocator_type& __a)
+      : unordered_set(__n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_set(size_type __n, const hasher& __hf,
+      const allocator_type& __a)
+      : unordered_set(__n, __hf, key_equal(), __a)
+      { }
+
+      template<typename _InputIterator>
+ unordered_set(_InputIterator __first, _InputIterator __last,
+        size_type __n,
+        const allocator_type& __a)
+ : unordered_set(__first, __last, __n, hasher(), key_equal(), __a)
+ { }
+
+      template<typename _InputIterator>
+ unordered_set(_InputIterator __first, _InputIterator __last,
+        size_type __n, const hasher& __hf,
+        const allocator_type& __a)
+ : unordered_set(__first, __last, __n, __hf, key_equal(), __a)
+ { }
+
+      unordered_set(initializer_list<value_type> __l,
+      size_type __n,
+      const allocator_type& __a)
+      : unordered_set(__l, __n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_set(initializer_list<value_type> __l,
+      size_type __n, const hasher& __hf,
+      const allocator_type& __a)
+      : unordered_set(__l, __n, __hf, key_equal(), __a)
+      { }
+
+
+      unordered_set&
+      operator=(const unordered_set&) = default;
+
+
+      unordered_set&
+      operator=(unordered_set&&) = default;
+# 290 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_set&
+      operator=(initializer_list<value_type> __l)
+      {
+ _M_h = __l;
+ return *this;
+      }
+
+
+      allocator_type
+      get_allocator() const noexcept
+      { return _M_h.get_allocator(); }
+
+
+
+
+      [[__nodiscard__]] bool
+      empty() const noexcept
+      { return _M_h.empty(); }
+
+
+      size_type
+      size() const noexcept
+      { return _M_h.size(); }
+
+
+      size_type
+      max_size() const noexcept
+      { return _M_h.max_size(); }
+# 326 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      begin() noexcept
+      { return _M_h.begin(); }
+
+      const_iterator
+      begin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+
+
+      iterator
+      end() noexcept
+      { return _M_h.end(); }
+
+      const_iterator
+      end() const noexcept
+      { return _M_h.end(); }
+
+
+
+
+
+
+      const_iterator
+      cbegin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+      const_iterator
+      cend() const noexcept
+      { return _M_h.end(); }
+# 382 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ std::pair<iterator, bool>
+ emplace(_Args&&... __args)
+ { return _M_h.emplace(std::forward<_Args>(__args)...); }
+# 408 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ iterator
+ emplace_hint(const_iterator __pos, _Args&&... __args)
+ { return _M_h.emplace_hint(__pos, std::forward<_Args>(__args)...); }
+# 427 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      std::pair<iterator, bool>
+      insert(const value_type& __x)
+      { return _M_h.insert(__x); }
+
+      std::pair<iterator, bool>
+      insert(value_type&& __x)
+      { return _M_h.insert(std::move(__x)); }
+# 456 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      insert(const_iterator __hint, const value_type& __x)
+      { return _M_h.insert(__hint, __x); }
+
+      iterator
+      insert(const_iterator __hint, value_type&& __x)
+      { return _M_h.insert(__hint, std::move(__x)); }
+# 474 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ void
+ insert(_InputIterator __first, _InputIterator __last)
+ { _M_h.insert(__first, __last); }
+# 486 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      insert(initializer_list<value_type> __l)
+      { _M_h.insert(__l); }
+
+
+
+      node_type
+      extract(const_iterator __pos)
+      {
+ do { if (std::__is_constant_evaluated()) if (__builtin_expect(!bool(__pos != end()), false)) std::__glibcxx_assert_fail(); } while (false);
+ return _M_h.extract(__pos);
+      }
+
+
+      node_type
+      extract(const key_type& __key)
+      { return _M_h.extract(__key); }
+
+
+      insert_return_type
+      insert(node_type&& __nh)
+      { return _M_h._M_reinsert_node(std::move(__nh)); }
+
+
+      iterator
+      insert(const_iterator, node_type&& __nh)
+      { return _M_h._M_reinsert_node(std::move(__nh)).position; }
+# 529 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __position)
+      { return _M_h.erase(__position); }
+
+
+      iterator
+      erase(iterator __position)
+      { return _M_h.erase(__position); }
+# 551 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      erase(const key_type& __x)
+      { return _M_h.erase(__x); }
+# 569 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __first, const_iterator __last)
+      { return _M_h.erase(__first, __last); }
+
+
+
+
+
+
+
+      void
+      clear() noexcept
+      { _M_h.clear(); }
+# 592 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      swap(unordered_set& __x)
+      noexcept( noexcept(_M_h.swap(__x._M_h)) )
+      { _M_h.swap(__x._M_h); }
+
+
+      template<typename, typename, typename>
+ friend class std::_Hash_merge_helper;
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper = _Hash_merge_helper<unordered_set, _H2, _P2>;
+   _M_h._M_merge_unique(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper = _Hash_merge_helper<unordered_set, _H2, _P2>;
+   _M_h._M_merge_unique(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+
+
+
+
+
+      hasher
+      hash_function() const
+      { return _M_h.hash_function(); }
+
+
+
+      key_equal
+      key_eq() const
+      { return _M_h.key_eq(); }
+# 656 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      find(const key_type& __x)
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __k)
+ -> decltype(_M_h._M_find_tr(__k))
+ { return _M_h._M_find_tr(__k); }
+
+
+      const_iterator
+      find(const key_type& __x) const
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __k) const
+ -> decltype(_M_h._M_find_tr(__k))
+ { return _M_h._M_find_tr(__k); }
+# 691 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      count(const key_type& __x) const
+      { return _M_h.count(__x); }
+
+
+      template<typename _Kt>
+ auto
+ count(const _Kt& __k) const
+ -> decltype(_M_h._M_count_tr(__k))
+ { return _M_h._M_count_tr(__k); }
+# 711 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      bool
+      contains(const key_type& __x) const
+      { return _M_h.find(__x) != _M_h.end(); }
+
+      template<typename _Kt>
+ auto
+ contains(const _Kt& __k) const
+ -> decltype(_M_h._M_find_tr(__k), void(), true)
+ { return _M_h._M_find_tr(__k) != _M_h.end(); }
+# 732 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      std::pair<iterator, iterator>
+      equal_range(const key_type& __x)
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __k)
+ -> decltype(_M_h._M_equal_range_tr(__k))
+ { return _M_h._M_equal_range_tr(__k); }
+
+
+      std::pair<const_iterator, const_iterator>
+      equal_range(const key_type& __x) const
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __k) const
+ -> decltype(_M_h._M_equal_range_tr(__k))
+ { return _M_h._M_equal_range_tr(__k); }
+
+
+
+
+
+
+      size_type
+      bucket_count() const noexcept
+      { return _M_h.bucket_count(); }
+
+
+      size_type
+      max_bucket_count() const noexcept
+      { return _M_h.max_bucket_count(); }
+
+
+
+
+
+
+      size_type
+      bucket_size(size_type __n) const
+      { return _M_h.bucket_size(__n); }
+
+
+
+
+
+
+      size_type
+      bucket(const key_type& __key) const
+      { return _M_h.bucket(__key); }
+# 794 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      begin(size_type __n)
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      begin(size_type __n) const
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      cbegin(size_type __n) const
+      { return _M_h.cbegin(__n); }
+# 814 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      end(size_type __n)
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      end(size_type __n) const
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      cend(size_type __n) const
+      { return _M_h.cend(__n); }
+
+
+
+
+
+      float
+      load_factor() const noexcept
+      { return _M_h.load_factor(); }
+
+
+
+      float
+      max_load_factor() const noexcept
+      { return _M_h.max_load_factor(); }
+
+
+
+
+
+      void
+      max_load_factor(float __z)
+      { _M_h.max_load_factor(__z); }
+# 855 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      rehash(size_type __n)
+      { _M_h.rehash(__n); }
+# 866 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      reserve(size_type __n)
+      { _M_h.reserve(__n); }
+
+      template<typename _Value1, typename _Hash1, typename _Pred1,
+        typename _Alloc1>
+        friend bool
+        operator==(const unordered_set<_Value1, _Hash1, _Pred1, _Alloc1>&,
+     const unordered_set<_Value1, _Hash1, _Pred1, _Alloc1>&);
+    };
+
+
+
+  template<typename _InputIterator,
+    typename _Hash =
+      hash<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Pred =
+      equal_to<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Allocator =
+      allocator<typename iterator_traits<_InputIterator>::value_type>,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+    unordered_set<int>::size_type = {},
+    _Hash = _Hash(), _Pred = _Pred(), _Allocator = _Allocator())
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+       _Hash, _Pred, _Allocator>;
+
+  template<typename _Tp, typename _Hash = hash<_Tp>,
+    typename _Pred = equal_to<_Tp>,
+    typename _Allocator = allocator<_Tp>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+    unordered_set<int>::size_type = {},
+    _Hash = _Hash(), _Pred = _Pred(), _Allocator = _Allocator())
+    -> unordered_set<_Tp, _Hash, _Pred, _Allocator>;
+
+  template<typename _InputIterator, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+    unordered_set<int>::size_type, _Allocator)
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+       hash<
+         typename iterator_traits<_InputIterator>::value_type>,
+       equal_to<
+         typename iterator_traits<_InputIterator>::value_type>,
+       _Allocator>;
+
+  template<typename _InputIterator, typename _Hash, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+    unordered_set<int>::size_type,
+    _Hash, _Allocator)
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+       _Hash,
+       equal_to<
+         typename iterator_traits<_InputIterator>::value_type>,
+       _Allocator>;
+
+  template<typename _Tp, typename _Allocator,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+    unordered_set<int>::size_type, _Allocator)
+    -> unordered_set<_Tp, hash<_Tp>, equal_to<_Tp>, _Allocator>;
+
+  template<typename _Tp, typename _Hash, typename _Allocator,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+    unordered_set<int>::size_type, _Hash, _Allocator)
+    -> unordered_set<_Tp, _Hash, equal_to<_Tp>, _Allocator>;
+# 968 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = equal_to<_Value>,
+    typename _Alloc = allocator<_Value>>
+    class unordered_multiset
+    {
+      typedef __umset_hashtable<_Value, _Hash, _Pred, _Alloc> _Hashtable;
+      _Hashtable _M_h;
+
+    public:
+
+
+
+      typedef typename _Hashtable::key_type key_type;
+      typedef typename _Hashtable::value_type value_type;
+      typedef typename _Hashtable::hasher hasher;
+      typedef typename _Hashtable::key_equal key_equal;
+      typedef typename _Hashtable::allocator_type allocator_type;
+
+
+
+
+      typedef typename _Hashtable::pointer pointer;
+      typedef typename _Hashtable::const_pointer const_pointer;
+      typedef typename _Hashtable::reference reference;
+      typedef typename _Hashtable::const_reference const_reference;
+      typedef typename _Hashtable::iterator iterator;
+      typedef typename _Hashtable::const_iterator const_iterator;
+      typedef typename _Hashtable::local_iterator local_iterator;
+      typedef typename _Hashtable::const_local_iterator const_local_iterator;
+      typedef typename _Hashtable::size_type size_type;
+      typedef typename _Hashtable::difference_type difference_type;
+
+
+
+      using node_type = typename _Hashtable::node_type;
+
+
+
+
+
+      unordered_multiset() = default;
+# 1018 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      explicit
+      unordered_multiset(size_type __n,
+    const hasher& __hf = hasher(),
+    const key_equal& __eql = key_equal(),
+    const allocator_type& __a = allocator_type())
+      : _M_h(__n, __hf, __eql, __a)
+      { }
+# 1039 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ unordered_multiset(_InputIterator __first, _InputIterator __last,
+      size_type __n = 0,
+      const hasher& __hf = hasher(),
+      const key_equal& __eql = key_equal(),
+      const allocator_type& __a = allocator_type())
+ : _M_h(__first, __last, __n, __hf, __eql, __a)
+ { }
+
+
+      unordered_multiset(const unordered_multiset&) = default;
+
+
+      unordered_multiset(unordered_multiset&&) = default;
+# 1065 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_multiset(initializer_list<value_type> __l,
+    size_type __n = 0,
+    const hasher& __hf = hasher(),
+    const key_equal& __eql = key_equal(),
+    const allocator_type& __a = allocator_type())
+      : _M_h(__l, __n, __hf, __eql, __a)
+      { }
+
+
+      unordered_multiset&
+      operator=(const unordered_multiset&) = default;
+
+
+      unordered_multiset&
+      operator=(unordered_multiset&&) = default;
+
+
+
+
+
+      explicit
+      unordered_multiset(const allocator_type& __a)
+      : _M_h(__a)
+      { }
+
+
+
+
+
+
+      unordered_multiset(const unordered_multiset& __umset,
+    const allocator_type& __a)
+      : _M_h(__umset._M_h, __a)
+      { }
+
+
+
+
+
+
+      unordered_multiset(unordered_multiset&& __umset,
+    const allocator_type& __a)
+ noexcept( noexcept(_Hashtable(std::move(__umset._M_h), __a)) )
+      : _M_h(std::move(__umset._M_h), __a)
+      { }
+
+      unordered_multiset(size_type __n, const allocator_type& __a)
+      : unordered_multiset(__n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_multiset(size_type __n, const hasher& __hf,
+    const allocator_type& __a)
+      : unordered_multiset(__n, __hf, key_equal(), __a)
+      { }
+
+      template<typename _InputIterator>
+ unordered_multiset(_InputIterator __first, _InputIterator __last,
+      size_type __n,
+      const allocator_type& __a)
+ : unordered_multiset(__first, __last, __n, hasher(), key_equal(), __a)
+ { }
+
+      template<typename _InputIterator>
+ unordered_multiset(_InputIterator __first, _InputIterator __last,
+      size_type __n, const hasher& __hf,
+      const allocator_type& __a)
+ : unordered_multiset(__first, __last, __n, __hf, key_equal(), __a)
+ { }
+
+      unordered_multiset(initializer_list<value_type> __l,
+    size_type __n,
+    const allocator_type& __a)
+      : unordered_multiset(__l, __n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_multiset(initializer_list<value_type> __l,
+    size_type __n, const hasher& __hf,
+    const allocator_type& __a)
+      : unordered_multiset(__l, __n, __hf, key_equal(), __a)
+      { }
+# 1157 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_multiset&
+      operator=(initializer_list<value_type> __l)
+      {
+ _M_h = __l;
+ return *this;
+      }
+
+
+      allocator_type
+      get_allocator() const noexcept
+      { return _M_h.get_allocator(); }
+
+
+
+
+      [[__nodiscard__]] bool
+      empty() const noexcept
+      { return _M_h.empty(); }
+
+
+      size_type
+      size() const noexcept
+      { return _M_h.size(); }
+
+
+      size_type
+      max_size() const noexcept
+      { return _M_h.max_size(); }
+# 1193 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      begin() noexcept
+      { return _M_h.begin(); }
+
+      const_iterator
+      begin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+
+
+      iterator
+      end() noexcept
+      { return _M_h.end(); }
+
+      const_iterator
+      end() const noexcept
+      { return _M_h.end(); }
+
+
+
+
+
+
+      const_iterator
+      cbegin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+      const_iterator
+      cend() const noexcept
+      { return _M_h.end(); }
+# 1241 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ iterator
+ emplace(_Args&&... __args)
+ { return _M_h.emplace(std::forward<_Args>(__args)...); }
+# 1263 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ iterator
+ emplace_hint(const_iterator __pos, _Args&&... __args)
+ { return _M_h.emplace_hint(__pos, std::forward<_Args>(__args)...); }
+# 1276 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      insert(const value_type& __x)
+      { return _M_h.insert(__x); }
+
+      iterator
+      insert(value_type&& __x)
+      { return _M_h.insert(std::move(__x)); }
+# 1302 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      insert(const_iterator __hint, const value_type& __x)
+      { return _M_h.insert(__hint, __x); }
+
+      iterator
+      insert(const_iterator __hint, value_type&& __x)
+      { return _M_h.insert(__hint, std::move(__x)); }
+# 1319 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ void
+ insert(_InputIterator __first, _InputIterator __last)
+ { _M_h.insert(__first, __last); }
+# 1331 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      insert(initializer_list<value_type> __l)
+      { _M_h.insert(__l); }
+
+
+
+      node_type
+      extract(const_iterator __pos)
+      {
+ do { if (std::__is_constant_evaluated()) if (__builtin_expect(!bool(__pos != end()), false)) std::__glibcxx_assert_fail(); } while (false);
+ return _M_h.extract(__pos);
+      }
+
+
+      node_type
+      extract(const key_type& __key)
+      { return _M_h.extract(__key); }
+
+
+      iterator
+      insert(node_type&& __nh)
+      { return _M_h._M_reinsert_node_multi(cend(), std::move(__nh)); }
+
+
+      iterator
+      insert(const_iterator __hint, node_type&& __nh)
+      { return _M_h._M_reinsert_node_multi(__hint, std::move(__nh)); }
+# 1375 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __position)
+      { return _M_h.erase(__position); }
+
+
+      iterator
+      erase(iterator __position)
+      { return _M_h.erase(__position); }
+# 1398 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      erase(const key_type& __x)
+      { return _M_h.erase(__x); }
+# 1418 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __first, const_iterator __last)
+      { return _M_h.erase(__first, __last); }
+# 1429 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      clear() noexcept
+      { _M_h.clear(); }
+# 1442 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      swap(unordered_multiset& __x)
+      noexcept( noexcept(_M_h.swap(__x._M_h)) )
+      { _M_h.swap(__x._M_h); }
+
+
+      template<typename, typename, typename>
+ friend class std::_Hash_merge_helper;
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper
+     = _Hash_merge_helper<unordered_multiset, _H2, _P2>;
+   _M_h._M_merge_multi(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper
+     = _Hash_merge_helper<unordered_multiset, _H2, _P2>;
+   _M_h._M_merge_multi(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+
+
+
+
+
+      hasher
+      hash_function() const
+      { return _M_h.hash_function(); }
+
+
+
+      key_equal
+      key_eq() const
+      { return _M_h.key_eq(); }
+# 1508 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      find(const key_type& __x)
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __x)
+ -> decltype(_M_h._M_find_tr(__x))
+ { return _M_h._M_find_tr(__x); }
+
+
+      const_iterator
+      find(const key_type& __x) const
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __x) const
+ -> decltype(_M_h._M_find_tr(__x))
+ { return _M_h._M_find_tr(__x); }
+# 1539 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      count(const key_type& __x) const
+      { return _M_h.count(__x); }
+
+
+      template<typename _Kt>
+ auto
+ count(const _Kt& __x) const -> decltype(_M_h._M_count_tr(__x))
+ { return _M_h._M_count_tr(__x); }
+# 1558 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      bool
+      contains(const key_type& __x) const
+      { return _M_h.find(__x) != _M_h.end(); }
+
+      template<typename _Kt>
+ auto
+ contains(const _Kt& __x) const
+ -> decltype(_M_h._M_find_tr(__x), void(), true)
+ { return _M_h._M_find_tr(__x) != _M_h.end(); }
+# 1577 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      std::pair<iterator, iterator>
+      equal_range(const key_type& __x)
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __x)
+ -> decltype(_M_h._M_equal_range_tr(__x))
+ { return _M_h._M_equal_range_tr(__x); }
+
+
+      std::pair<const_iterator, const_iterator>
+      equal_range(const key_type& __x) const
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __x) const
+ -> decltype(_M_h._M_equal_range_tr(__x))
+ { return _M_h._M_equal_range_tr(__x); }
+
+
+
+
+
+
+      size_type
+      bucket_count() const noexcept
+      { return _M_h.bucket_count(); }
+
+
+      size_type
+      max_bucket_count() const noexcept
+      { return _M_h.max_bucket_count(); }
+
+
+
+
+
+
+      size_type
+      bucket_size(size_type __n) const
+      { return _M_h.bucket_size(__n); }
+
+
+
+
+
+
+      size_type
+      bucket(const key_type& __key) const
+      { return _M_h.bucket(__key); }
+# 1639 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      begin(size_type __n)
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      begin(size_type __n) const
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      cbegin(size_type __n) const
+      { return _M_h.cbegin(__n); }
+# 1659 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      end(size_type __n)
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      end(size_type __n) const
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      cend(size_type __n) const
+      { return _M_h.cend(__n); }
+
+
+
+
+
+      float
+      load_factor() const noexcept
+      { return _M_h.load_factor(); }
+
+
+
+      float
+      max_load_factor() const noexcept
+      { return _M_h.max_load_factor(); }
+
+
+
+
+
+      void
+      max_load_factor(float __z)
+      { _M_h.max_load_factor(__z); }
+# 1700 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      rehash(size_type __n)
+      { _M_h.rehash(__n); }
+# 1711 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      reserve(size_type __n)
+      { _M_h.reserve(__n); }
+
+      template<typename _Value1, typename _Hash1, typename _Pred1,
+        typename _Alloc1>
+        friend bool
+      operator==(const unordered_multiset<_Value1, _Hash1, _Pred1, _Alloc1>&,
+   const unordered_multiset<_Value1, _Hash1, _Pred1, _Alloc1>&);
+    };
+
+
+
+
+  template<typename _InputIterator,
+    typename _Hash =
+      hash<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Pred =
+      equal_to<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Allocator =
+      allocator<typename iterator_traits<_InputIterator>::value_type>,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+         unordered_multiset<int>::size_type = {},
+         _Hash = _Hash(), _Pred = _Pred(),
+         _Allocator = _Allocator())
+    -> unordered_multiset<typename iterator_traits<_InputIterator>::value_type,
+                          _Hash, _Pred, _Allocator>;
+
+  template<typename _Tp, typename _Hash = hash<_Tp>,
+    typename _Pred = equal_to<_Tp>,
+    typename _Allocator = allocator<_Tp>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+         unordered_multiset<int>::size_type = {},
+         _Hash = _Hash(), _Pred = _Pred(),
+         _Allocator = _Allocator())
+    -> unordered_multiset<_Tp, _Hash, _Pred, _Allocator>;
+
+  template<typename _InputIterator, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+         unordered_multiset<int>::size_type, _Allocator)
+    -> unordered_multiset<typename iterator_traits<_InputIterator>::value_type,
+     hash<typename
+          iterator_traits<_InputIterator>::value_type>,
+     equal_to<typename
+       iterator_traits<_InputIterator>::value_type>,
+     _Allocator>;
+
+  template<typename _InputIterator, typename _Hash, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+         unordered_multiset<int>::size_type,
+         _Hash, _Allocator)
+    -> unordered_multiset<typename
+     iterator_traits<_InputIterator>::value_type,
+     _Hash,
+     equal_to<
+       typename
+       iterator_traits<_InputIterator>::value_type>,
+     _Allocator>;
+
+  template<typename _Tp, typename _Allocator,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+         unordered_multiset<int>::size_type, _Allocator)
+    -> unordered_multiset<_Tp, hash<_Tp>, equal_to<_Tp>, _Allocator>;
+
+  template<typename _Tp, typename _Hash, typename _Allocator,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+         unordered_multiset<int>::size_type, _Hash, _Allocator)
+    -> unordered_multiset<_Tp, _Hash, equal_to<_Tp>, _Allocator>;
+
+
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline void
+    swap(unordered_set<_Value, _Hash, _Pred, _Alloc>& __x,
+  unordered_set<_Value, _Hash, _Pred, _Alloc>& __y)
+    noexcept(noexcept(__x.swap(__y)))
+    { __x.swap(__y); }
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline void
+    swap(unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __x,
+  unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __y)
+    noexcept(noexcept(__x.swap(__y)))
+    { __x.swap(__y); }
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline bool
+    operator==(const unordered_set<_Value, _Hash, _Pred, _Alloc>& __x,
+        const unordered_set<_Value, _Hash, _Pred, _Alloc>& __y)
+    { return __x._M_h._M_equal(__y._M_h); }
+# 1825 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline bool
+    operator==(const unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __x,
+        const unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __y)
+    { return __x._M_h._M_equal(__y._M_h); }
+# 1839 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+
+
+
+
+  template<typename _Val, typename _Hash1, typename _Eq1, typename _Alloc,
+    typename _Hash2, typename _Eq2>
+    struct _Hash_merge_helper<
+      std::unordered_set<_Val, _Hash1, _Eq1, _Alloc>, _Hash2, _Eq2>
+    {
+    private:
+      template<typename... _Tp>
+ using unordered_set = std::unordered_set<_Tp...>;
+      template<typename... _Tp>
+ using unordered_multiset = std::unordered_multiset<_Tp...>;
+
+      friend unordered_set<_Val, _Hash1, _Eq1, _Alloc>;
+
+      static auto&
+      _S_get_table(unordered_set<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+
+      static auto&
+      _S_get_table(unordered_multiset<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+    };
+
+
+  template<typename _Val, typename _Hash1, typename _Eq1, typename _Alloc,
+    typename _Hash2, typename _Eq2>
+    struct _Hash_merge_helper<
+      std::unordered_multiset<_Val, _Hash1, _Eq1, _Alloc>,
+      _Hash2, _Eq2>
+    {
+    private:
+      template<typename... _Tp>
+ using unordered_set = std::unordered_set<_Tp...>;
+      template<typename... _Tp>
+ using unordered_multiset = std::unordered_multiset<_Tp...>;
+
+      friend unordered_multiset<_Val, _Hash1, _Eq1, _Alloc>;
+
+      static auto&
+      _S_get_table(unordered_set<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+
+      static auto&
+      _S_get_table(unordered_multiset<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+    };
+
+
+
+}
+# 42 "C:/mingw64/include/c++/14.2.0/unordered_set" 2 3
+# 53 "C:/mingw64/include/c++/14.2.0/unordered_set" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/version.h" 1 3
+# 47 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+       
+# 48 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+# 54 "C:/mingw64/include/c++/14.2.0/unordered_set" 2 3
+
+
+
+namespace std
+{
+
+  namespace pmr
+  {
+    template<typename _Key, typename _Hash = std::hash<_Key>,
+      typename _Pred = std::equal_to<_Key>>
+      using unordered_set
+ = std::unordered_set<_Key, _Hash, _Pred,
+        polymorphic_allocator<_Key>>;
+    template<typename _Key, typename _Hash = std::hash<_Key>,
+      typename _Pred = std::equal_to<_Key>>
+      using unordered_multiset
+ = std::unordered_multiset<_Key, _Hash, _Pred,
+      polymorphic_allocator<_Key>>;
+  }
+
+}
+
+
+
+namespace std
+{
+
+  template<typename _Key, typename _Hash, typename _CPred, typename _Alloc,
+    typename _Predicate>
+    inline typename unordered_set<_Key, _Hash, _CPred, _Alloc>::size_type
+    erase_if(unordered_set<_Key, _Hash, _CPred, _Alloc>& __cont,
+      _Predicate __pred)
+    {
+      std::unordered_set<_Key, _Hash, _CPred, _Alloc>&
+ __ucont = __cont;
+      return __detail::__erase_nodes_if(__cont, __ucont, __pred);
+    }
+
+  template<typename _Key, typename _Hash, typename _CPred, typename _Alloc,
+    typename _Predicate>
+    inline typename unordered_multiset<_Key, _Hash, _CPred, _Alloc>::size_type
+    erase_if(unordered_multiset<_Key, _Hash, _CPred, _Alloc>& __cont,
+      _Predicate __pred)
+    {
+      std::unordered_multiset<_Key, _Hash, _CPred, _Alloc>&
+ __ucont = __cont;
+      return __detail::__erase_nodes_if(__cont, __ucont, __pred);
+    }
+
+}
+# 38 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 2 3 4
+
+
+
+
+
+
+namespace sf
+{
+class Sound;
+class InputSoundFile;
+class InputStream;
+
+
+
+
+
+class __attribute__((dllimport)) SoundBuffer
+{
+public:
+
+
+
+
+
+
+
+    SoundBuffer() = default;
+
+
+
+
+
+
+
+    SoundBuffer(const SoundBuffer& copy);
+# 87 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    explicit SoundBuffer(const std::filesystem::path& filename);
+# 103 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    SoundBuffer(const void* data, std::size_t sizeInBytes);
+# 118 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    explicit SoundBuffer(InputStream& stream);
+# 136 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    SoundBuffer(const std::int16_t* samples,
+                std::uint64_t sampleCount,
+                unsigned int channelCount,
+                unsigned int sampleRate,
+                const std::vector<SoundChannel>& channelMap);
+
+
+
+
+
+    ~SoundBuffer();
+# 161 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromFile(const std::filesystem::path& filename);
+# 177 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromMemory(const void* data, std::size_t sizeInBytes);
+# 192 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromStream(InputStream& stream);
+# 210 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromSamples(const std::int16_t* samples,
+                                       std::uint64_t sampleCount,
+                                       unsigned int channelCount,
+                                       unsigned int sampleRate,
+                                       const std::vector<SoundChannel>& channelMap);
+# 227 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool saveToFile(const std::filesystem::path& filename) const;
+# 241 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] const std::int16_t* getSamples() const;
+# 254 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] std::uint64_t getSampleCount() const;
+# 268 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 281 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] unsigned int getChannelCount() const;
+# 294 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] std::vector<SoundChannel> getChannelMap() const;
+# 304 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] Time getDuration() const;
+# 314 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    SoundBuffer& operator=(const SoundBuffer& right);
+
+private:
+    friend class Sound;
+# 327 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool initialize(InputSoundFile& file);
+# 339 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool update(unsigned int channelCount, unsigned int sampleRate, const std::vector<SoundChannel>& channelMap);
+
+
+
+
+
+
+
+    void attachSound(Sound* sound) const;
+
+
+
+
+
+
+
+    void detachSound(Sound* sound) const;
+
+
+
+
+    using SoundList = std::unordered_set<Sound*>;
+
+
+
+
+    std::vector<std::int16_t> m_samples;
+    unsigned int m_sampleRate{44100};
+    std::vector<SoundChannel> m_channelMap{SoundChannel::Mono};
+    Time m_duration;
+    mutable SoundList m_sounds;
+};
+
+}
+# 38 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 3 4
+       
+
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+       
+# 42 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) SoundRecorder
+{
+public:
+
+
+
+
+    virtual ~SoundRecorder();
+# 79 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] bool start(unsigned int sampleRate = 44100);
+
+
+
+
+
+
+
+    void stop();
+# 99 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 110 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] static std::vector<std::string> getAvailableDevices();
+# 122 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] static std::string getDefaultDevice();
+# 139 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] bool setDevice(const std::string& name);
+
+
+
+
+
+
+
+    [[nodiscard]] const std::string& getDevice() const;
+# 162 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    void setChannelCount(unsigned int channelCount);
+# 175 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] unsigned int getChannelCount() const;
+# 186 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] const std::vector<SoundChannel>& getChannelMap() const;
+# 199 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] static bool isAvailable();
+
+protected:
+
+
+
+
+
+
+    SoundRecorder();
+# 221 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    virtual bool onStart();
+# 237 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] virtual bool onProcessSamples(const std::int16_t* samples, std::size_t sampleCount) = 0;
+# 248 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    virtual void onStop();
+
+private:
+
+
+
+    struct Impl;
+    const std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 34 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 2 3 4
+
+
+
+
+
+
+
+namespace sf
+{
+
+
+
+
+
+class __attribute__((dllimport)) SoundBufferRecorder : public SoundRecorder
+{
+public:
+
+
+
+
+    ~SoundBufferRecorder() override;
+# 68 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 3 4
+    [[nodiscard]] const SoundBuffer& getBuffer() const;
+
+protected:
+
+
+
+
+
+
+    [[nodiscard]] bool onStart() override;
+# 88 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 3 4
+    [[nodiscard]] bool onProcessSamples(const std::int16_t* samples, std::size_t sampleCount) override;
+
+
+
+
+
+    void onStop() override;
+
+private:
+
+
+
+    std::vector<std::int16_t> m_samples;
+    SoundBuffer m_buffer;
+};
+
+}
+# 39 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+       
+# 39 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+namespace sf
+{
+class InputStream;
+class SoundFileReader;
+class SoundFileWriter;
+
+
+
+
+
+class __attribute__((dllimport)) SoundFileFactory
+{
+public:
+
+
+
+
+
+
+    template <typename T>
+    static void registerReader();
+
+
+
+
+
+
+
+    template <typename T>
+    static void unregisterReader();
+
+
+
+
+
+    template <typename T>
+    [[nodiscard]] static bool isReaderRegistered();
+
+
+
+
+
+
+
+    template <typename T>
+    static void registerWriter();
+
+
+
+
+
+
+
+    template <typename T>
+    static void unregisterWriter();
+
+
+
+
+
+    template <typename T>
+    [[nodiscard]] static bool isWriterRegistered();
+# 112 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileReader> createReaderFromFilename(const std::filesystem::path& filename);
+# 125 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileReader> createReaderFromMemory(const void* data, std::size_t sizeInBytes);
+# 137 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileReader> createReaderFromStream(InputStream& stream);
+# 147 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileWriter> createWriterFromFilename(const std::filesystem::path& filename);
+
+private:
+
+
+
+    template <typename T>
+    using CreateFnPtr = std::unique_ptr<T> (*)();
+
+    using ReaderCheckFnPtr = bool (*)(InputStream&);
+    using WriterCheckFnPtr = bool (*)(const std::filesystem::path&);
+
+    using ReaderFactoryMap = std::unordered_map<CreateFnPtr<SoundFileReader>, ReaderCheckFnPtr>;
+    using WriterFactoryMap = std::unordered_map<CreateFnPtr<SoundFileWriter>, WriterCheckFnPtr>;
+
+
+
+
+    [[nodiscard]] static ReaderFactoryMap& getReaderFactoryMap();
+    [[nodiscard]] static WriterFactoryMap& getWriterFactoryMap();
+};
+
+}
+
+# 1 "C:/SFML/include/SFML/Audio/SoundFileFactory.inl" 1 3 4
+# 32 "C:/SFML/include/SFML/Audio/SoundFileFactory.inl" 3 4
+namespace sf
+{
+namespace priv
+{
+template <typename T>
+std::unique_ptr<SoundFileReader> createReader()
+{
+    return std::make_unique<T>();
+}
+template <typename T>
+std::unique_ptr<SoundFileWriter> createWriter()
+{
+    return std::make_unique<T>();
+}
+}
+
+
+
+template <typename T>
+void SoundFileFactory::registerReader()
+{
+    getReaderFactoryMap()[&priv::createReader<T>] = &T::check;
+}
+
+
+
+template <typename T>
+void SoundFileFactory::unregisterReader()
+{
+    getReaderFactoryMap().erase(&priv::createReader<T>);
+}
+
+
+
+template <typename T>
+bool SoundFileFactory::isReaderRegistered()
+{
+    return getReaderFactoryMap().count(&priv::createReader<T>) == 1;
+}
+
+
+
+template <typename T>
+void SoundFileFactory::registerWriter()
+{
+    getWriterFactoryMap()[&priv::createWriter<T>] = &T::check;
+}
+
+
+
+template <typename T>
+void SoundFileFactory::unregisterWriter()
+{
+    getWriterFactoryMap().erase(&priv::createWriter<T>);
+}
+
+
+
+template <typename T>
+bool SoundFileFactory::isWriterRegistered()
+{
+    return getWriterFactoryMap().count(&priv::createWriter<T>) == 1;
+}
+
+}
+# 172 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 2 3 4
+# 40 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 3 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
 # 1 "C:/mingw64/include/c++/14.2.0/iostream" 1 3
 # 36 "C:/mingw64/include/c++/14.2.0/iostream" 3
        
@@ -107288,8 +111656,6072 @@ namespace std
 # 85 "C:/mingw64/include/c++/14.2.0/iostream" 3
 
 }
-# 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.cpp" 2
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.h" 1
+# 4 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+
+# 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
+# 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
+       
+# 40 "C:/mingw64/include/c++/14.2.0/cmath" 3
+
+
+
+
+
+
+
+# 1 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 1 3
+# 10 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+       
+# 11 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+
+
+
+
+struct _exception;
+
+#pragma pack(push,_CRT_PACKING)
+# 77 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+extern "C++" {
+template <typename type1, typename type2> struct __mingw_types_compatible_p {
+  static const bool result = false;
+};
+
+template <typename type1> struct __mingw_types_compatible_p<type1, type1> {
+ static const bool result = true;
+};
+
+template <typename type1> struct __mingw_types_compatible_p<const type1, type1> {
+  static const bool result = true;
+};
+
+template <typename type1> struct __mingw_types_compatible_p<type1, const type1> {
+  static const bool result = true;
+};
+}
+# 111 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+extern "C" {
+
+
+
+
+
+
+
+  typedef union __mingw_dbl_type_t {
+    double x;
+    unsigned long long val;
+    __extension__ struct {
+      unsigned int low, high;
+    } lh;
+  } __mingw_dbl_type_t;
+
+  typedef union __mingw_flt_type_t {
+    float x;
+    unsigned int val;
+  } __mingw_flt_type_t;
+
+  typedef union __mingw_ldbl_type_t
+  {
+    long double x;
+    __extension__ struct {
+      unsigned int low, high;
+      int sign_exponent : 16;
+      int res1 : 16;
+      int res0 : 32;
+    } lh;
+  } __mingw_ldbl_type_t;
+
+
+
+
+
+  extern double const _HUGE;
+# 163 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  struct _exception {
+    int type;
+    const char *name;
+    double arg1;
+    double arg2;
+    double retval;
+  };
+
+  void __mingw_raise_matherr (int typ, const char *name, double a1, double a2,
+         double rslt);
+  void __mingw_setusermatherr (int (__attribute__((__cdecl__)) *)(struct _exception *));
+  __attribute__ ((__dllimport__)) void __setusermatherr(int (__attribute__((__cdecl__)) *)(struct _exception *));
+
+
+
+  double __attribute__((__cdecl__)) sin(double _X);
+  double __attribute__((__cdecl__)) cos(double _X);
+  double __attribute__((__cdecl__)) tan(double _X);
+  double __attribute__((__cdecl__)) sinh(double _X);
+  double __attribute__((__cdecl__)) cosh(double _X);
+  double __attribute__((__cdecl__)) tanh(double _X);
+  double __attribute__((__cdecl__)) asin(double _X);
+  double __attribute__((__cdecl__)) acos(double _X);
+  double __attribute__((__cdecl__)) atan(double _X);
+  double __attribute__((__cdecl__)) atan2(double _Y,double _X);
+  double __attribute__((__cdecl__)) exp(double _X);
+  double __attribute__((__cdecl__)) log(double _X);
+  double __attribute__((__cdecl__)) log10(double _X);
+  double __attribute__((__cdecl__)) pow(double _X,double _Y);
+  double __attribute__((__cdecl__)) sqrt(double _X);
+  double __attribute__((__cdecl__)) ceil(double _X);
+  double __attribute__((__cdecl__)) floor(double _X);
+
+
+  extern float __attribute__((__cdecl__)) fabsf (float x);
+  extern long double __attribute__((__cdecl__)) fabsl (long double);
+  extern double __attribute__((__cdecl__)) fabs (double _X);
+# 238 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  double __attribute__((__cdecl__)) ldexp(double _X,int _Y);
+  double __attribute__((__cdecl__)) frexp(double _X,int *_Y);
+  double __attribute__((__cdecl__)) modf(double _X,double *_Y);
+  double __attribute__((__cdecl__)) fmod(double _X,double _Y);
+
+  void __attribute__((__cdecl__)) sincos (double __x, double *p_sin, double *p_cos);
+  void __attribute__((__cdecl__)) sincosl (long double __x, long double *p_sin, long double *p_cos);
+  void __attribute__((__cdecl__)) sincosf (float __x, float *p_sin, float *p_cos);
+# 265 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  struct _complex {
+    double x;
+    double y;
+  };
+
+
+  double __attribute__((__cdecl__)) _cabs(struct _complex _ComplexA);
+  double __attribute__((__cdecl__)) _hypot(double _X,double _Y);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _j0(double _X);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _j1(double _X);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _jn(int _X,double _Y);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _y0(double _X);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _y1(double _X);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _yn(int _X,double _Y);
+
+
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _matherr (struct _exception *);
+# 292 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _chgsign (double _X);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _copysign (double _Number,double _Sign);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _logb (double);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _nextafter (double, double);
+  __attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) _scalb (double, long);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _finite (double);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _fpclass (double);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _isnan (double);
+
+
+
+
+
+
+__attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) j0 (double) ;
+__attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) j1 (double) ;
+__attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) jn (int, double) ;
+__attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) y0 (double) ;
+__attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) y1 (double) ;
+__attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) yn (int, double) ;
+
+__attribute__ ((__dllimport__)) double __attribute__((__cdecl__)) chgsign (double);
+# 322 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) finite (double);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) fpclass (double);
+# 367 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+typedef float float_t;
+typedef double double_t;
+# 402 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern int __attribute__((__cdecl__)) __fpclassifyl (long double);
+  extern int __attribute__((__cdecl__)) __fpclassifyf (float);
+  extern int __attribute__((__cdecl__)) __fpclassify (double);
+# 515 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern int __attribute__((__cdecl__)) __isnan (double);
+  extern int __attribute__((__cdecl__)) __isnanf (float);
+  extern int __attribute__((__cdecl__)) __isnanl (long double);
+# 602 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern int __attribute__((__cdecl__)) __signbit (double);
+  extern int __attribute__((__cdecl__)) __signbitf (float);
+  extern int __attribute__((__cdecl__)) __signbitl (long double);
+# 659 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern float __attribute__((__cdecl__)) sinf(float _X);
+  extern long double __attribute__((__cdecl__)) sinl(long double);
+
+  extern float __attribute__((__cdecl__)) cosf(float _X);
+  extern long double __attribute__((__cdecl__)) cosl(long double);
+
+  extern float __attribute__((__cdecl__)) tanf(float _X);
+  extern long double __attribute__((__cdecl__)) tanl(long double);
+  extern float __attribute__((__cdecl__)) asinf(float _X);
+  extern long double __attribute__((__cdecl__)) asinl(long double);
+
+  extern float __attribute__((__cdecl__)) acosf (float);
+  extern long double __attribute__((__cdecl__)) acosl (long double);
+
+  extern float __attribute__((__cdecl__)) atanf (float);
+  extern long double __attribute__((__cdecl__)) atanl (long double);
+
+  extern float __attribute__((__cdecl__)) atan2f (float, float);
+  extern long double __attribute__((__cdecl__)) atan2l (long double, long double);
+
+
+  extern float __attribute__((__cdecl__)) sinhf(float _X);
+
+
+
+  extern long double __attribute__((__cdecl__)) sinhl(long double);
+
+  extern float __attribute__((__cdecl__)) coshf(float _X);
+
+
+
+  extern long double __attribute__((__cdecl__)) coshl(long double);
+
+  extern float __attribute__((__cdecl__)) tanhf(float _X);
+
+
+
+  extern long double __attribute__((__cdecl__)) tanhl(long double);
+
+
+
+  extern double __attribute__((__cdecl__)) acosh (double);
+  extern float __attribute__((__cdecl__)) acoshf (float);
+  extern long double __attribute__((__cdecl__)) acoshl (long double);
+
+
+  extern double __attribute__((__cdecl__)) asinh (double);
+  extern float __attribute__((__cdecl__)) asinhf (float);
+  extern long double __attribute__((__cdecl__)) asinhl (long double);
+
+
+  extern double __attribute__((__cdecl__)) atanh (double);
+  extern float __attribute__((__cdecl__)) atanhf (float);
+  extern long double __attribute__((__cdecl__)) atanhl (long double);
+
+
+
+  extern float __attribute__((__cdecl__)) expf(float _X);
+
+
+
+  extern long double __attribute__((__cdecl__)) expl(long double);
+
+
+  extern double __attribute__((__cdecl__)) exp2(double);
+  extern float __attribute__((__cdecl__)) exp2f(float);
+  extern long double __attribute__((__cdecl__)) exp2l(long double);
+
+
+
+  extern double __attribute__((__cdecl__)) expm1(double);
+  extern float __attribute__((__cdecl__)) expm1f(float);
+  extern long double __attribute__((__cdecl__)) expm1l(long double);
+
+
+  extern float frexpf(float _X,int *_Y);
+
+
+
+  extern long double __attribute__((__cdecl__)) frexpl(long double,int *);
+
+
+
+
+  extern int __attribute__((__cdecl__)) ilogb (double);
+  extern int __attribute__((__cdecl__)) ilogbf (float);
+  extern int __attribute__((__cdecl__)) ilogbl (long double);
+
+
+  extern float __attribute__((__cdecl__)) ldexpf(float _X,int _Y);
+
+
+
+  extern long double __attribute__((__cdecl__)) ldexpl (long double, int);
+
+
+  extern float __attribute__((__cdecl__)) logf (float);
+  extern long double __attribute__((__cdecl__)) logl(long double);
+
+
+  extern float __attribute__((__cdecl__)) log10f (float);
+  extern long double __attribute__((__cdecl__)) log10l(long double);
+
+
+  extern double __attribute__((__cdecl__)) log1p(double);
+  extern float __attribute__((__cdecl__)) log1pf(float);
+  extern long double __attribute__((__cdecl__)) log1pl(long double);
+
+
+  extern double __attribute__((__cdecl__)) log2 (double);
+  extern float __attribute__((__cdecl__)) log2f (float);
+  extern long double __attribute__((__cdecl__)) log2l (long double);
+
+
+  extern double __attribute__((__cdecl__)) logb (double);
+  extern float __attribute__((__cdecl__)) logbf (float);
+  extern long double __attribute__((__cdecl__)) logbl (long double);
+# 862 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern float __attribute__((__cdecl__)) modff (float, float*);
+  extern long double __attribute__((__cdecl__)) modfl (long double, long double*);
+
+
+  extern double __attribute__((__cdecl__)) scalbn (double, int);
+  extern float __attribute__((__cdecl__)) scalbnf (float, int);
+  extern long double __attribute__((__cdecl__)) scalbnl (long double, int);
+
+  extern double __attribute__((__cdecl__)) scalbln (double, long);
+  extern float __attribute__((__cdecl__)) scalblnf (float, long);
+  extern long double __attribute__((__cdecl__)) scalblnl (long double, long);
+
+
+
+  extern double __attribute__((__cdecl__)) cbrt (double);
+  extern float __attribute__((__cdecl__)) cbrtf (float);
+  extern long double __attribute__((__cdecl__)) cbrtl (long double);
+
+
+  extern double __attribute__((__cdecl__)) hypot (double, double) ;
+  extern float __attribute__((__cdecl__)) hypotf (float x, float y);
+
+
+
+  extern long double __attribute__((__cdecl__)) hypotl (long double, long double);
+
+
+  extern float __attribute__((__cdecl__)) powf(float _X,float _Y);
+
+
+
+  extern long double __attribute__((__cdecl__)) powl (long double, long double);
+
+
+  extern float __attribute__((__cdecl__)) sqrtf (float);
+  extern long double sqrtl(long double);
+
+
+  extern double __attribute__((__cdecl__)) erf (double);
+  extern float __attribute__((__cdecl__)) erff (float);
+  extern long double __attribute__((__cdecl__)) erfl (long double);
+
+
+  extern double __attribute__((__cdecl__)) erfc (double);
+  extern float __attribute__((__cdecl__)) erfcf (float);
+  extern long double __attribute__((__cdecl__)) erfcl (long double);
+
+
+  extern double __attribute__((__cdecl__)) lgamma (double);
+  extern float __attribute__((__cdecl__)) lgammaf (float);
+  extern long double __attribute__((__cdecl__)) lgammal (long double);
+
+  extern int signgam;
+
+
+  extern double __attribute__((__cdecl__)) tgamma (double);
+  extern float __attribute__((__cdecl__)) tgammaf (float);
+  extern long double __attribute__((__cdecl__)) tgammal (long double);
+
+
+  extern float __attribute__((__cdecl__)) ceilf (float);
+  extern long double __attribute__((__cdecl__)) ceill (long double);
+
+
+  extern float __attribute__((__cdecl__)) floorf (float);
+  extern long double __attribute__((__cdecl__)) floorl (long double);
+
+
+  extern double __attribute__((__cdecl__)) nearbyint ( double);
+  extern float __attribute__((__cdecl__)) nearbyintf (float);
+  extern long double __attribute__((__cdecl__)) nearbyintl (long double);
+
+
+
+extern double __attribute__((__cdecl__)) rint (double);
+extern float __attribute__((__cdecl__)) rintf (float);
+extern long double __attribute__((__cdecl__)) rintl (long double);
+
+
+extern long __attribute__((__cdecl__)) lrint (double);
+extern long __attribute__((__cdecl__)) lrintf (float);
+extern long __attribute__((__cdecl__)) lrintl (long double);
+
+__extension__ long long __attribute__((__cdecl__)) llrint (double);
+__extension__ long long __attribute__((__cdecl__)) llrintf (float);
+__extension__ long long __attribute__((__cdecl__)) llrintl (long double);
+# 1029 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern double __attribute__((__cdecl__)) round (double);
+  extern float __attribute__((__cdecl__)) roundf (float);
+  extern long double __attribute__((__cdecl__)) roundl (long double);
+
+
+  extern long __attribute__((__cdecl__)) lround (double);
+  extern long __attribute__((__cdecl__)) lroundf (float);
+  extern long __attribute__((__cdecl__)) lroundl (long double);
+  __extension__ long long __attribute__((__cdecl__)) llround (double);
+  __extension__ long long __attribute__((__cdecl__)) llroundf (float);
+  __extension__ long long __attribute__((__cdecl__)) llroundl (long double);
+
+
+
+  extern double __attribute__((__cdecl__)) trunc (double);
+  extern float __attribute__((__cdecl__)) truncf (float);
+  extern long double __attribute__((__cdecl__)) truncl (long double);
+
+
+  extern float __attribute__((__cdecl__)) fmodf (float, float);
+  extern long double __attribute__((__cdecl__)) fmodl (long double, long double);
+
+
+  extern double __attribute__((__cdecl__)) remainder (double, double);
+  extern float __attribute__((__cdecl__)) remainderf (float, float);
+  extern long double __attribute__((__cdecl__)) remainderl (long double, long double);
+
+
+  extern double __attribute__((__cdecl__)) remquo(double, double, int *);
+  extern float __attribute__((__cdecl__)) remquof(float, float, int *);
+  extern long double __attribute__((__cdecl__)) remquol(long double, long double, int *);
+
+
+  extern double __attribute__((__cdecl__)) copysign (double, double);
+  extern float __attribute__((__cdecl__)) copysignf (float, float);
+  extern long double __attribute__((__cdecl__)) copysignl (long double, long double);
+# 1086 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern double __attribute__((__cdecl__)) nan(const char *tagp);
+  extern float __attribute__((__cdecl__)) nanf(const char *tagp);
+  extern long double __attribute__((__cdecl__)) nanl(const char *tagp);
+# 1097 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+  extern double __attribute__((__cdecl__)) nextafter (double, double);
+  extern float __attribute__((__cdecl__)) nextafterf (float, float);
+  extern long double __attribute__((__cdecl__)) nextafterl (long double, long double);
+
+
+  extern double __attribute__((__cdecl__)) nexttoward (double, long double);
+  extern float __attribute__((__cdecl__)) nexttowardf (float, long double);
+  extern long double __attribute__((__cdecl__)) nexttowardl (long double, long double);
+
+
+
+  extern double __attribute__((__cdecl__)) fdim (double x, double y);
+  extern float __attribute__((__cdecl__)) fdimf (float x, float y);
+  extern long double __attribute__((__cdecl__)) fdiml (long double x, long double y);
+
+
+
+
+
+
+
+  extern double __attribute__((__cdecl__)) fmax (double, double);
+  extern float __attribute__((__cdecl__)) fmaxf (float, float);
+  extern long double __attribute__((__cdecl__)) fmaxl (long double, long double);
+
+
+  extern double __attribute__((__cdecl__)) fmin (double, double);
+  extern float __attribute__((__cdecl__)) fminf (float, float);
+  extern long double __attribute__((__cdecl__)) fminl (long double, long double);
+
+
+
+  extern double __attribute__((__cdecl__)) fma (double, double, double);
+  extern float __attribute__((__cdecl__)) fmaf (float, float, float);
+  extern long double __attribute__((__cdecl__)) fmal (long double, long double, long double);
+# 1180 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+   __attribute__ ((__dllimport__)) float __attribute__((__cdecl__)) _copysignf (float _Number,float _Sign);
+   __attribute__ ((__dllimport__)) float __attribute__((__cdecl__)) _chgsignf (float _X);
+   __attribute__ ((__dllimport__)) float __attribute__((__cdecl__)) _logbf(float _X);
+   __attribute__ ((__dllimport__)) float __attribute__((__cdecl__)) _nextafterf(float _X,float _Y);
+   __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _finitef(float _X);
+   __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _isnanf(float _X);
+   __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _fpclassf(float _X);
+
+
+
+   extern long double __attribute__((__cdecl__)) _chgsignl (long double);
+# 1575 "C:/mingw64/x86_64-w64-mingw32/include/math.h" 3
+}
+
+
+
+
+#pragma pack(pop)
+# 48 "C:/mingw64/include/c++/14.2.0/cmath" 2 3
+# 56 "C:/mingw64/include/c++/14.2.0/cmath" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/version.h" 1 3
+# 47 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+       
+# 48 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+# 57 "C:/mingw64/include/c++/14.2.0/cmath" 2 3
+# 83 "C:/mingw64/include/c++/14.2.0/cmath" 3
+extern "C++"
+{
+namespace std
+{
+
+
+  using ::acos;
+
+
+  inline constexpr float
+  acos(float __x)
+  { return __builtin_acosf(__x); }
+
+  inline constexpr long double
+  acos(long double __x)
+  { return __builtin_acosl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    acos(_Tp __x)
+    { return __builtin_acos(__x); }
+
+  using ::asin;
+
+
+  inline constexpr float
+  asin(float __x)
+  { return __builtin_asinf(__x); }
+
+  inline constexpr long double
+  asin(long double __x)
+  { return __builtin_asinl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    asin(_Tp __x)
+    { return __builtin_asin(__x); }
+
+  using ::atan;
+
+
+  inline constexpr float
+  atan(float __x)
+  { return __builtin_atanf(__x); }
+
+  inline constexpr long double
+  atan(long double __x)
+  { return __builtin_atanl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    atan(_Tp __x)
+    { return __builtin_atan(__x); }
+
+  using ::atan2;
+
+
+  inline constexpr float
+  atan2(float __y, float __x)
+  { return __builtin_atan2f(__y, __x); }
+
+  inline constexpr long double
+  atan2(long double __y, long double __x)
+  { return __builtin_atan2l(__y, __x); }
+
+
+  using ::ceil;
+
+
+  inline constexpr float
+  ceil(float __x)
+  { return __builtin_ceilf(__x); }
+
+  inline constexpr long double
+  ceil(long double __x)
+  { return __builtin_ceill(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    ceil(_Tp __x)
+    { return __builtin_ceil(__x); }
+
+  using ::cos;
+
+
+  inline constexpr float
+  cos(float __x)
+  { return __builtin_cosf(__x); }
+
+  inline constexpr long double
+  cos(long double __x)
+  { return __builtin_cosl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    cos(_Tp __x)
+    { return __builtin_cos(__x); }
+
+  using ::cosh;
+
+
+  inline constexpr float
+  cosh(float __x)
+  { return __builtin_coshf(__x); }
+
+  inline constexpr long double
+  cosh(long double __x)
+  { return __builtin_coshl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    cosh(_Tp __x)
+    { return __builtin_cosh(__x); }
+
+  using ::exp;
+
+
+  inline constexpr float
+  exp(float __x)
+  { return __builtin_expf(__x); }
+
+  inline constexpr long double
+  exp(long double __x)
+  { return __builtin_expl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    exp(_Tp __x)
+    { return __builtin_exp(__x); }
+
+  using ::fabs;
+
+
+  inline constexpr float
+  fabs(float __x)
+  { return __builtin_fabsf(__x); }
+
+  inline constexpr long double
+  fabs(long double __x)
+  { return __builtin_fabsl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    fabs(_Tp __x)
+    { return __builtin_fabs(__x); }
+
+  using ::floor;
+
+
+  inline constexpr float
+  floor(float __x)
+  { return __builtin_floorf(__x); }
+
+  inline constexpr long double
+  floor(long double __x)
+  { return __builtin_floorl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    floor(_Tp __x)
+    { return __builtin_floor(__x); }
+
+  using ::fmod;
+
+
+  inline constexpr float
+  fmod(float __x, float __y)
+  { return __builtin_fmodf(__x, __y); }
+
+  inline constexpr long double
+  fmod(long double __x, long double __y)
+  { return __builtin_fmodl(__x, __y); }
+
+
+  using ::frexp;
+
+
+  inline float
+  frexp(float __x, int* __exp)
+  { return __builtin_frexpf(__x, __exp); }
+
+  inline long double
+  frexp(long double __x, int* __exp)
+  { return __builtin_frexpl(__x, __exp); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    frexp(_Tp __x, int* __exp)
+    { return __builtin_frexp(__x, __exp); }
+
+  using ::ldexp;
+
+
+  inline constexpr float
+  ldexp(float __x, int __exp)
+  { return __builtin_ldexpf(__x, __exp); }
+
+  inline constexpr long double
+  ldexp(long double __x, int __exp)
+  { return __builtin_ldexpl(__x, __exp); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    ldexp(_Tp __x, int __exp)
+    { return __builtin_ldexp(__x, __exp); }
+
+  using ::log;
+
+
+  inline constexpr float
+  log(float __x)
+  { return __builtin_logf(__x); }
+
+  inline constexpr long double
+  log(long double __x)
+  { return __builtin_logl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    log(_Tp __x)
+    { return __builtin_log(__x); }
+
+  using ::log10;
+
+
+  inline constexpr float
+  log10(float __x)
+  { return __builtin_log10f(__x); }
+
+  inline constexpr long double
+  log10(long double __x)
+  { return __builtin_log10l(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    log10(_Tp __x)
+    { return __builtin_log10(__x); }
+
+  using ::modf;
+
+
+  inline float
+  modf(float __x, float* __iptr)
+  { return __builtin_modff(__x, __iptr); }
+
+  inline long double
+  modf(long double __x, long double* __iptr)
+  { return __builtin_modfl(__x, __iptr); }
+
+
+  using ::pow;
+
+
+  inline constexpr float
+  pow(float __x, float __y)
+  { return __builtin_powf(__x, __y); }
+
+  inline constexpr long double
+  pow(long double __x, long double __y)
+  { return __builtin_powl(__x, __y); }
+# 400 "C:/mingw64/include/c++/14.2.0/cmath" 3
+  using ::sin;
+
+
+  inline constexpr float
+  sin(float __x)
+  { return __builtin_sinf(__x); }
+
+  inline constexpr long double
+  sin(long double __x)
+  { return __builtin_sinl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    sin(_Tp __x)
+    { return __builtin_sin(__x); }
+
+  using ::sinh;
+
+
+  inline constexpr float
+  sinh(float __x)
+  { return __builtin_sinhf(__x); }
+
+  inline constexpr long double
+  sinh(long double __x)
+  { return __builtin_sinhl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    sinh(_Tp __x)
+    { return __builtin_sinh(__x); }
+
+  using ::sqrt;
+
+
+  inline constexpr float
+  sqrt(float __x)
+  { return __builtin_sqrtf(__x); }
+
+  inline constexpr long double
+  sqrt(long double __x)
+  { return __builtin_sqrtl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    sqrt(_Tp __x)
+    { return __builtin_sqrt(__x); }
+
+  using ::tan;
+
+
+  inline constexpr float
+  tan(float __x)
+  { return __builtin_tanf(__x); }
+
+  inline constexpr long double
+  tan(long double __x)
+  { return __builtin_tanl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    tan(_Tp __x)
+    { return __builtin_tan(__x); }
+
+  using ::tanh;
+
+
+  inline constexpr float
+  tanh(float __x)
+  { return __builtin_tanhf(__x); }
+
+  inline constexpr long double
+  tanh(long double __x)
+  { return __builtin_tanhl(__x); }
+
+
+  template<typename _Tp>
+    inline constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    double>::__type
+    tanh(_Tp __x)
+    { return __builtin_tanh(__x); }
+# 1053 "C:/mingw64/include/c++/14.2.0/cmath" 3
+  template<typename _Tp, typename _Up>
+    inline constexpr
+    typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    atan2(_Tp __y, _Up __x)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return atan2(__type(__y), __type(__x));
+    }
+
+  template<typename _Tp, typename _Up>
+    inline constexpr
+    typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    fmod(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return fmod(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    inline constexpr
+    typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    pow(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return pow(__type(__x), __type(__y));
+    }
+# 1100 "C:/mingw64/include/c++/14.2.0/cmath" 3
+  constexpr int
+  fpclassify(float __x)
+  { return __builtin_fpclassify(0x0100, (0x0100 | 0x0400), 0x0400,
+    (0x0400 | 0x4000), 0x4000, __x); }
+
+  constexpr int
+  fpclassify(double __x)
+  { return __builtin_fpclassify(0x0100, (0x0100 | 0x0400), 0x0400,
+    (0x0400 | 0x4000), 0x4000, __x); }
+
+  constexpr int
+  fpclassify(long double __x)
+  { return __builtin_fpclassify(0x0100, (0x0100 | 0x0400), 0x0400,
+    (0x0400 | 0x4000), 0x4000, __x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              int>::__type
+    fpclassify(_Tp __x)
+    { return __x != 0 ? 0x0400 : 0x4000; }
+
+
+
+  constexpr bool
+  isfinite(float __x)
+  { return __builtin_isfinite(__x); }
+
+  constexpr bool
+  isfinite(double __x)
+  { return __builtin_isfinite(__x); }
+
+  constexpr bool
+  isfinite(long double __x)
+  { return __builtin_isfinite(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              bool>::__type
+    isfinite(_Tp)
+    { return true; }
+
+
+
+  constexpr bool
+  isinf(float __x)
+  { return __builtin_isinf(__x); }
+
+
+
+
+
+  constexpr bool
+  isinf(double __x)
+  { return __builtin_isinf(__x); }
+
+
+  constexpr bool
+  isinf(long double __x)
+  { return __builtin_isinf(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              bool>::__type
+    isinf(_Tp)
+    { return false; }
+
+
+
+  constexpr bool
+  isnan(float __x)
+  { return __builtin_isnan(__x); }
+
+
+
+
+
+  constexpr bool
+  isnan(double __x)
+  { return __builtin_isnan(__x); }
+
+
+  constexpr bool
+  isnan(long double __x)
+  { return __builtin_isnan(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              bool>::__type
+    isnan(_Tp)
+    { return false; }
+
+
+
+  constexpr bool
+  isnormal(float __x)
+  { return __builtin_isnormal(__x); }
+
+  constexpr bool
+  isnormal(double __x)
+  { return __builtin_isnormal(__x); }
+
+  constexpr bool
+  isnormal(long double __x)
+  { return __builtin_isnormal(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              bool>::__type
+    isnormal(_Tp __x)
+    { return __x != 0 ? true : false; }
+
+
+
+
+  constexpr bool
+  signbit(float __x)
+  { return __builtin_signbit(__x); }
+
+  constexpr bool
+  signbit(double __x)
+  { return __builtin_signbit(__x); }
+
+  constexpr bool
+  signbit(long double __x)
+  { return __builtin_signbit(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              bool>::__type
+    signbit(_Tp __x)
+    { return __x < 0 ? true : false; }
+
+
+
+  constexpr bool
+  isgreater(float __x, float __y)
+  { return __builtin_isgreater(__x, __y); }
+
+  constexpr bool
+  isgreater(double __x, double __y)
+  { return __builtin_isgreater(__x, __y); }
+
+  constexpr bool
+  isgreater(long double __x, long double __y)
+  { return __builtin_isgreater(__x, __y); }
+
+
+
+  template<typename _Tp, typename _Up>
+    constexpr typename
+    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+       && __is_arithmetic<_Up>::__value), bool>::__type
+    isgreater(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return __builtin_isgreater(__type(__x), __type(__y));
+    }
+
+
+
+  constexpr bool
+  isgreaterequal(float __x, float __y)
+  { return __builtin_isgreaterequal(__x, __y); }
+
+  constexpr bool
+  isgreaterequal(double __x, double __y)
+  { return __builtin_isgreaterequal(__x, __y); }
+
+  constexpr bool
+  isgreaterequal(long double __x, long double __y)
+  { return __builtin_isgreaterequal(__x, __y); }
+
+
+
+  template<typename _Tp, typename _Up>
+    constexpr typename
+    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+       && __is_arithmetic<_Up>::__value), bool>::__type
+    isgreaterequal(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return __builtin_isgreaterequal(__type(__x), __type(__y));
+    }
+
+
+
+  constexpr bool
+  isless(float __x, float __y)
+  { return __builtin_isless(__x, __y); }
+
+  constexpr bool
+  isless(double __x, double __y)
+  { return __builtin_isless(__x, __y); }
+
+  constexpr bool
+  isless(long double __x, long double __y)
+  { return __builtin_isless(__x, __y); }
+
+
+
+  template<typename _Tp, typename _Up>
+    constexpr typename
+    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+       && __is_arithmetic<_Up>::__value), bool>::__type
+    isless(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return __builtin_isless(__type(__x), __type(__y));
+    }
+
+
+
+  constexpr bool
+  islessequal(float __x, float __y)
+  { return __builtin_islessequal(__x, __y); }
+
+  constexpr bool
+  islessequal(double __x, double __y)
+  { return __builtin_islessequal(__x, __y); }
+
+  constexpr bool
+  islessequal(long double __x, long double __y)
+  { return __builtin_islessequal(__x, __y); }
+
+
+
+  template<typename _Tp, typename _Up>
+    constexpr typename
+    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+       && __is_arithmetic<_Up>::__value), bool>::__type
+    islessequal(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return __builtin_islessequal(__type(__x), __type(__y));
+    }
+
+
+
+  constexpr bool
+  islessgreater(float __x, float __y)
+  { return __builtin_islessgreater(__x, __y); }
+
+  constexpr bool
+  islessgreater(double __x, double __y)
+  { return __builtin_islessgreater(__x, __y); }
+
+  constexpr bool
+  islessgreater(long double __x, long double __y)
+  { return __builtin_islessgreater(__x, __y); }
+
+
+
+  template<typename _Tp, typename _Up>
+    constexpr typename
+    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+       && __is_arithmetic<_Up>::__value), bool>::__type
+    islessgreater(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return __builtin_islessgreater(__type(__x), __type(__y));
+    }
+
+
+
+  constexpr bool
+  isunordered(float __x, float __y)
+  { return __builtin_isunordered(__x, __y); }
+
+  constexpr bool
+  isunordered(double __x, double __y)
+  { return __builtin_isunordered(__x, __y); }
+
+  constexpr bool
+  isunordered(long double __x, long double __y)
+  { return __builtin_isunordered(__x, __y); }
+
+
+
+  template<typename _Tp, typename _Up>
+    constexpr typename
+    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+       && __is_arithmetic<_Up>::__value), bool>::__type
+    isunordered(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return __builtin_isunordered(__type(__x), __type(__y));
+    }
+# 1820 "C:/mingw64/include/c++/14.2.0/cmath" 3
+  using ::acosf;
+
+
+  using ::acosl;
+
+
+
+  using ::asinf;
+
+
+  using ::asinl;
+
+
+
+  using ::atanf;
+
+
+  using ::atanl;
+
+
+
+  using ::atan2f;
+
+
+  using ::atan2l;
+
+
+
+  using ::ceilf;
+
+
+  using ::ceill;
+
+
+
+  using ::cosf;
+
+
+  using ::cosl;
+
+
+
+  using ::coshf;
+
+
+  using ::coshl;
+
+
+
+  using ::expf;
+
+
+  using ::expl;
+
+
+
+  using ::fabsf;
+
+
+  using ::fabsl;
+
+
+
+  using ::floorf;
+
+
+  using ::floorl;
+
+
+
+  using ::fmodf;
+
+
+  using ::fmodl;
+
+
+
+  using ::frexpf;
+
+
+  using ::frexpl;
+
+
+
+  using ::ldexpf;
+
+
+  using ::ldexpl;
+
+
+
+  using ::logf;
+
+
+  using ::logl;
+
+
+
+  using ::log10f;
+
+
+  using ::log10l;
+
+
+
+  using ::modff;
+
+
+  using ::modfl;
+
+
+
+  using ::powf;
+
+
+  using ::powl;
+
+
+
+  using ::sinf;
+
+
+  using ::sinl;
+
+
+
+  using ::sinhf;
+
+
+  using ::sinhl;
+
+
+
+  using ::sqrtf;
+
+
+  using ::sqrtl;
+
+
+
+  using ::tanf;
+
+
+  using ::tanl;
+
+
+
+  using ::tanhf;
+
+
+  using ::tanhl;
+# 2085 "C:/mingw64/include/c++/14.2.0/cmath" 3
+  using ::double_t;
+  using ::float_t;
+
+
+
+  using ::acosh;
+  using ::acoshf;
+  using ::acoshl;
+
+  using ::asinh;
+  using ::asinhf;
+  using ::asinhl;
+
+  using ::atanh;
+  using ::atanhf;
+  using ::atanhl;
+
+  using ::cbrt;
+  using ::cbrtf;
+  using ::cbrtl;
+
+  using ::copysign;
+  using ::copysignf;
+  using ::copysignl;
+
+  using ::erf;
+  using ::erff;
+  using ::erfl;
+
+  using ::erfc;
+  using ::erfcf;
+  using ::erfcl;
+
+  using ::exp2;
+  using ::exp2f;
+  using ::exp2l;
+
+  using ::expm1;
+  using ::expm1f;
+  using ::expm1l;
+
+  using ::fdim;
+  using ::fdimf;
+  using ::fdiml;
+
+  using ::fma;
+  using ::fmaf;
+  using ::fmal;
+
+  using ::fmax;
+  using ::fmaxf;
+  using ::fmaxl;
+
+  using ::fmin;
+  using ::fminf;
+  using ::fminl;
+
+  using ::hypot;
+  using ::hypotf;
+  using ::hypotl;
+
+  using ::ilogb;
+  using ::ilogbf;
+  using ::ilogbl;
+
+  using ::lgamma;
+  using ::lgammaf;
+  using ::lgammal;
+
+
+  using ::llrint;
+  using ::llrintf;
+  using ::llrintl;
+
+  using ::llround;
+  using ::llroundf;
+  using ::llroundl;
+
+
+  using ::log1p;
+  using ::log1pf;
+  using ::log1pl;
+
+  using ::log2;
+  using ::log2f;
+  using ::log2l;
+
+  using ::logb;
+  using ::logbf;
+  using ::logbl;
+
+  using ::lrint;
+  using ::lrintf;
+  using ::lrintl;
+
+  using ::lround;
+  using ::lroundf;
+  using ::lroundl;
+
+  using ::nan;
+  using ::nanf;
+  using ::nanl;
+
+  using ::nearbyint;
+  using ::nearbyintf;
+  using ::nearbyintl;
+
+  using ::nextafter;
+  using ::nextafterf;
+  using ::nextafterl;
+
+  using ::nexttoward;
+  using ::nexttowardf;
+  using ::nexttowardl;
+
+  using ::remainder;
+  using ::remainderf;
+  using ::remainderl;
+
+  using ::remquo;
+  using ::remquof;
+  using ::remquol;
+
+  using ::rint;
+  using ::rintf;
+  using ::rintl;
+
+  using ::round;
+  using ::roundf;
+  using ::roundl;
+
+  using ::scalbln;
+  using ::scalblnf;
+  using ::scalblnl;
+
+  using ::scalbn;
+  using ::scalbnf;
+  using ::scalbnl;
+
+  using ::tgamma;
+  using ::tgammaf;
+  using ::tgammal;
+
+  using ::trunc;
+  using ::truncf;
+  using ::truncl;
+
+
+
+  constexpr float
+  acosh(float __x)
+  { return __builtin_acoshf(__x); }
+
+  constexpr long double
+  acosh(long double __x)
+  { return __builtin_acoshl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    acosh(_Tp __x)
+    { return __builtin_acosh(__x); }
+
+
+
+  constexpr float
+  asinh(float __x)
+  { return __builtin_asinhf(__x); }
+
+  constexpr long double
+  asinh(long double __x)
+  { return __builtin_asinhl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    asinh(_Tp __x)
+    { return __builtin_asinh(__x); }
+
+
+
+  constexpr float
+  atanh(float __x)
+  { return __builtin_atanhf(__x); }
+
+  constexpr long double
+  atanh(long double __x)
+  { return __builtin_atanhl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    atanh(_Tp __x)
+    { return __builtin_atanh(__x); }
+
+
+
+  constexpr float
+  cbrt(float __x)
+  { return __builtin_cbrtf(__x); }
+
+  constexpr long double
+  cbrt(long double __x)
+  { return __builtin_cbrtl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    cbrt(_Tp __x)
+    { return __builtin_cbrt(__x); }
+
+
+
+  constexpr float
+  copysign(float __x, float __y)
+  { return __builtin_copysignf(__x, __y); }
+
+  constexpr long double
+  copysign(long double __x, long double __y)
+  { return __builtin_copysignl(__x, __y); }
+
+
+
+  constexpr float
+  erf(float __x)
+  { return __builtin_erff(__x); }
+
+  constexpr long double
+  erf(long double __x)
+  { return __builtin_erfl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    erf(_Tp __x)
+    { return __builtin_erf(__x); }
+
+
+
+  constexpr float
+  erfc(float __x)
+  { return __builtin_erfcf(__x); }
+
+  constexpr long double
+  erfc(long double __x)
+  { return __builtin_erfcl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    erfc(_Tp __x)
+    { return __builtin_erfc(__x); }
+
+
+
+  constexpr float
+  exp2(float __x)
+  { return __builtin_exp2f(__x); }
+
+  constexpr long double
+  exp2(long double __x)
+  { return __builtin_exp2l(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    exp2(_Tp __x)
+    { return __builtin_exp2(__x); }
+
+
+
+  constexpr float
+  expm1(float __x)
+  { return __builtin_expm1f(__x); }
+
+  constexpr long double
+  expm1(long double __x)
+  { return __builtin_expm1l(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    expm1(_Tp __x)
+    { return __builtin_expm1(__x); }
+
+
+
+  constexpr float
+  fdim(float __x, float __y)
+  { return __builtin_fdimf(__x, __y); }
+
+  constexpr long double
+  fdim(long double __x, long double __y)
+  { return __builtin_fdiml(__x, __y); }
+
+
+
+  constexpr float
+  fma(float __x, float __y, float __z)
+  { return __builtin_fmaf(__x, __y, __z); }
+
+  constexpr long double
+  fma(long double __x, long double __y, long double __z)
+  { return __builtin_fmal(__x, __y, __z); }
+
+
+
+  constexpr float
+  fmax(float __x, float __y)
+  { return __builtin_fmaxf(__x, __y); }
+
+  constexpr long double
+  fmax(long double __x, long double __y)
+  { return __builtin_fmaxl(__x, __y); }
+
+
+
+  constexpr float
+  fmin(float __x, float __y)
+  { return __builtin_fminf(__x, __y); }
+
+  constexpr long double
+  fmin(long double __x, long double __y)
+  { return __builtin_fminl(__x, __y); }
+
+
+
+  constexpr float
+  hypot(float __x, float __y)
+  { return __builtin_hypotf(__x, __y); }
+
+  constexpr long double
+  hypot(long double __x, long double __y)
+  { return __builtin_hypotl(__x, __y); }
+
+
+
+  constexpr int
+  ilogb(float __x)
+  { return __builtin_ilogbf(__x); }
+
+  constexpr int
+  ilogb(long double __x)
+  { return __builtin_ilogbl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr
+    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                    int>::__type
+    ilogb(_Tp __x)
+    { return __builtin_ilogb(__x); }
+
+
+
+  constexpr float
+  lgamma(float __x)
+  { return __builtin_lgammaf(__x); }
+
+  constexpr long double
+  lgamma(long double __x)
+  { return __builtin_lgammal(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    lgamma(_Tp __x)
+    { return __builtin_lgamma(__x); }
+
+
+
+  constexpr long long
+  llrint(float __x)
+  { return __builtin_llrintf(__x); }
+
+  constexpr long long
+  llrint(long double __x)
+  { return __builtin_llrintl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              long long>::__type
+    llrint(_Tp __x)
+    { return __builtin_llrint(__x); }
+
+
+
+  constexpr long long
+  llround(float __x)
+  { return __builtin_llroundf(__x); }
+
+  constexpr long long
+  llround(long double __x)
+  { return __builtin_llroundl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              long long>::__type
+    llround(_Tp __x)
+    { return __builtin_llround(__x); }
+
+
+
+  constexpr float
+  log1p(float __x)
+  { return __builtin_log1pf(__x); }
+
+  constexpr long double
+  log1p(long double __x)
+  { return __builtin_log1pl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    log1p(_Tp __x)
+    { return __builtin_log1p(__x); }
+
+
+
+
+  constexpr float
+  log2(float __x)
+  { return __builtin_log2f(__x); }
+
+  constexpr long double
+  log2(long double __x)
+  { return __builtin_log2l(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    log2(_Tp __x)
+    { return __builtin_log2(__x); }
+
+
+
+  constexpr float
+  logb(float __x)
+  { return __builtin_logbf(__x); }
+
+  constexpr long double
+  logb(long double __x)
+  { return __builtin_logbl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    logb(_Tp __x)
+    { return __builtin_logb(__x); }
+
+
+
+  constexpr long
+  lrint(float __x)
+  { return __builtin_lrintf(__x); }
+
+  constexpr long
+  lrint(long double __x)
+  { return __builtin_lrintl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              long>::__type
+    lrint(_Tp __x)
+    { return __builtin_lrint(__x); }
+
+
+
+  constexpr long
+  lround(float __x)
+  { return __builtin_lroundf(__x); }
+
+  constexpr long
+  lround(long double __x)
+  { return __builtin_lroundl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              long>::__type
+    lround(_Tp __x)
+    { return __builtin_lround(__x); }
+
+
+
+  constexpr float
+  nearbyint(float __x)
+  { return __builtin_nearbyintf(__x); }
+
+  constexpr long double
+  nearbyint(long double __x)
+  { return __builtin_nearbyintl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    nearbyint(_Tp __x)
+    { return __builtin_nearbyint(__x); }
+
+
+
+  constexpr float
+  nextafter(float __x, float __y)
+  { return __builtin_nextafterf(__x, __y); }
+
+  constexpr long double
+  nextafter(long double __x, long double __y)
+  { return __builtin_nextafterl(__x, __y); }
+
+
+
+  constexpr float
+  nexttoward(float __x, long double __y)
+  { return __builtin_nexttowardf(__x, __y); }
+
+  constexpr long double
+  nexttoward(long double __x, long double __y)
+  { return __builtin_nexttowardl(__x, __y); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    nexttoward(_Tp __x, long double __y)
+    { return __builtin_nexttoward(__x, __y); }
+
+
+
+  constexpr float
+  remainder(float __x, float __y)
+  { return __builtin_remainderf(__x, __y); }
+
+  constexpr long double
+  remainder(long double __x, long double __y)
+  { return __builtin_remainderl(__x, __y); }
+
+
+
+  inline float
+  remquo(float __x, float __y, int* __pquo)
+  { return __builtin_remquof(__x, __y, __pquo); }
+
+  inline long double
+  remquo(long double __x, long double __y, int* __pquo)
+  { return __builtin_remquol(__x, __y, __pquo); }
+
+
+
+  constexpr float
+  rint(float __x)
+  { return __builtin_rintf(__x); }
+
+  constexpr long double
+  rint(long double __x)
+  { return __builtin_rintl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    rint(_Tp __x)
+    { return __builtin_rint(__x); }
+
+
+
+  constexpr float
+  round(float __x)
+  { return __builtin_roundf(__x); }
+
+  constexpr long double
+  round(long double __x)
+  { return __builtin_roundl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    round(_Tp __x)
+    { return __builtin_round(__x); }
+
+
+
+  constexpr float
+  scalbln(float __x, long __ex)
+  { return __builtin_scalblnf(__x, __ex); }
+
+  constexpr long double
+  scalbln(long double __x, long __ex)
+  { return __builtin_scalblnl(__x, __ex); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    scalbln(_Tp __x, long __ex)
+    { return __builtin_scalbln(__x, __ex); }
+
+
+
+  constexpr float
+  scalbn(float __x, int __ex)
+  { return __builtin_scalbnf(__x, __ex); }
+
+  constexpr long double
+  scalbn(long double __x, int __ex)
+  { return __builtin_scalbnl(__x, __ex); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    scalbn(_Tp __x, int __ex)
+    { return __builtin_scalbn(__x, __ex); }
+
+
+
+  constexpr float
+  tgamma(float __x)
+  { return __builtin_tgammaf(__x); }
+
+  constexpr long double
+  tgamma(long double __x)
+  { return __builtin_tgammal(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    tgamma(_Tp __x)
+    { return __builtin_tgamma(__x); }
+
+
+
+  constexpr float
+  trunc(float __x)
+  { return __builtin_truncf(__x); }
+
+  constexpr long double
+  trunc(long double __x)
+  { return __builtin_truncl(__x); }
+
+
+
+  template<typename _Tp>
+    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+                                              double>::__type
+    trunc(_Tp __x)
+    { return __builtin_trunc(__x); }
+# 3674 "C:/mingw64/include/c++/14.2.0/cmath" 3
+  template<typename _Tp, typename _Up>
+    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    copysign(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return copysign(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    fdim(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return fdim(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    fmax(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return fmax(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    fmin(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return fmin(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    hypot(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return hypot(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    nextafter(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return nextafter(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    remainder(_Tp __x, _Up __y)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return remainder(__type(__x), __type(__y));
+    }
+
+  template<typename _Tp, typename _Up>
+    inline typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+    remquo(_Tp __x, _Up __y, int* __pquo)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+      return remquo(__type(__x), __type(__y), __pquo);
+    }
+
+  template<typename _Tp, typename _Up, typename _Vp>
+    constexpr typename __gnu_cxx::__promote_3<_Tp, _Up, _Vp>::__type
+    fma(_Tp __x, _Up __y, _Vp __z)
+    {
+      typedef typename __gnu_cxx::__promote_3<_Tp, _Up, _Vp>::__type __type;
+      return fma(__type(__x), __type(__y), __type(__z));
+    }
+
+
+
+
+
+
+
+  template<typename _Tp>
+    inline _Tp
+    __hypot3(_Tp __x, _Tp __y, _Tp __z)
+    {
+      __x = std::abs(__x);
+      __y = std::abs(__y);
+      __z = std::abs(__z);
+      if (_Tp __a = __x < __y ? __y < __z ? __z : __y : __x < __z ? __z : __x)
+ return __a * std::sqrt((__x / __a) * (__x / __a)
+          + (__y / __a) * (__y / __a)
+          + (__z / __a) * (__z / __a));
+      else
+ return {};
+    }
+
+  inline float
+  hypot(float __x, float __y, float __z)
+  { return std::__hypot3<float>(__x, __y, __z); }
+
+  inline double
+  hypot(double __x, double __y, double __z)
+  { return std::__hypot3<double>(__x, __y, __z); }
+
+  inline long double
+  hypot(long double __x, long double __y, long double __z)
+  { return std::__hypot3<long double>(__x, __y, __z); }
+
+  template<typename _Tp, typename _Up, typename _Vp>
+    __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>
+    hypot(_Tp __x, _Up __y, _Vp __z)
+    {
+      using __type = __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>;
+      return std::__hypot3<__type>(__x, __y, __z);
+    }
+# 3823 "C:/mingw64/include/c++/14.2.0/cmath" 3
+  template<typename _Fp>
+    constexpr _Fp
+    __lerp(_Fp __a, _Fp __b, _Fp __t) noexcept
+    {
+      if ((__a <= 0 && __b >= 0) || (__a >= 0 && __b <= 0))
+ return __t * __b + (1 - __t) * __a;
+
+      if (__t == 1)
+ return __b;
+
+
+
+      const _Fp __x = __a + __t * (__b - __a);
+      return (__t > 1) == (__b > __a)
+ ? (__b < __x ? __x : __b)
+ : (__b > __x ? __x : __b);
+    }
+
+  constexpr float
+  lerp(float __a, float __b, float __t) noexcept
+  { return std::__lerp(__a, __b, __t); }
+
+  constexpr double
+  lerp(double __a, double __b, double __t) noexcept
+  { return std::__lerp(__a, __b, __t); }
+
+  constexpr long double
+  lerp(long double __a, long double __b, long double __t) noexcept
+  { return std::__lerp(__a, __b, __t); }
+
+  template<typename _Tp, typename _Up, typename _Vp>
+    constexpr __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>
+    lerp(_Tp __x, _Up __y, _Vp __z) noexcept
+    {
+      using __type = __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>;
+      return std::__lerp<__type>(__x, __y, __z);
+    }
+# 3894 "C:/mingw64/include/c++/14.2.0/cmath" 3
+
+}
+
+
+# 1 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 1 3
+# 37 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/version.h" 1 3
+# 47 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+       
+# 48 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+# 38 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 47 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 1 3
+# 49 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/special_function_util.h" 1 3
+# 39 "C:/mingw64/include/c++/14.2.0/tr1/special_function_util.h" 3
+namespace std
+{
+
+# 50 "C:/mingw64/include/c++/14.2.0/tr1/special_function_util.h" 3
+  namespace __detail
+  {
+
+
+
+    template<typename _Tp>
+    struct __floating_point_constant
+    {
+      static const _Tp __value;
+    };
+
+
+
+    template<typename _Tp>
+      struct __numeric_constants
+      {
+
+        static _Tp __pi() throw()
+        { return static_cast<_Tp>(3.1415926535897932384626433832795029L); }
+
+        static _Tp __pi_2() throw()
+        { return static_cast<_Tp>(1.5707963267948966192313216916397514L); }
+
+        static _Tp __pi_3() throw()
+        { return static_cast<_Tp>(1.0471975511965977461542144610931676L); }
+
+        static _Tp __pi_4() throw()
+        { return static_cast<_Tp>(0.7853981633974483096156608458198757L); }
+
+        static _Tp __1_pi() throw()
+        { return static_cast<_Tp>(0.3183098861837906715377675267450287L); }
+
+        static _Tp __2_sqrtpi() throw()
+        { return static_cast<_Tp>(1.1283791670955125738961589031215452L); }
+
+        static _Tp __sqrt2() throw()
+        { return static_cast<_Tp>(1.4142135623730950488016887242096981L); }
+
+        static _Tp __sqrt3() throw()
+        { return static_cast<_Tp>(1.7320508075688772935274463415058723L); }
+
+        static _Tp __sqrtpio2() throw()
+        { return static_cast<_Tp>(1.2533141373155002512078826424055226L); }
+
+        static _Tp __sqrt1_2() throw()
+        { return static_cast<_Tp>(0.7071067811865475244008443621048490L); }
+
+        static _Tp __lnpi() throw()
+        { return static_cast<_Tp>(1.1447298858494001741434273513530587L); }
+
+        static _Tp __gamma_e() throw()
+        { return static_cast<_Tp>(0.5772156649015328606065120900824024L); }
+
+        static _Tp __euler() throw()
+        { return static_cast<_Tp>(2.7182818284590452353602874713526625L); }
+      };
+# 114 "C:/mingw64/include/c++/14.2.0/tr1/special_function_util.h" 3
+    template<typename _Tp>
+    inline bool __isnan(_Tp __x)
+    { return std::isnan(__x); }
+# 133 "C:/mingw64/include/c++/14.2.0/tr1/special_function_util.h" 3
+  }
+
+
+
+
+
+}
+# 50 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 2 3
+
+namespace std
+{
+
+# 65 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+  namespace __detail
+  {
+# 76 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template <typename _Tp>
+    _Tp
+    __bernoulli_series(unsigned int __n)
+    {
+
+      static const _Tp __num[28] = {
+        _Tp(1UL), -_Tp(1UL) / _Tp(2UL),
+        _Tp(1UL) / _Tp(6UL), _Tp(0UL),
+        -_Tp(1UL) / _Tp(30UL), _Tp(0UL),
+        _Tp(1UL) / _Tp(42UL), _Tp(0UL),
+        -_Tp(1UL) / _Tp(30UL), _Tp(0UL),
+        _Tp(5UL) / _Tp(66UL), _Tp(0UL),
+        -_Tp(691UL) / _Tp(2730UL), _Tp(0UL),
+        _Tp(7UL) / _Tp(6UL), _Tp(0UL),
+        -_Tp(3617UL) / _Tp(510UL), _Tp(0UL),
+        _Tp(43867UL) / _Tp(798UL), _Tp(0UL),
+        -_Tp(174611) / _Tp(330UL), _Tp(0UL),
+        _Tp(854513UL) / _Tp(138UL), _Tp(0UL),
+        -_Tp(236364091UL) / _Tp(2730UL), _Tp(0UL),
+        _Tp(8553103UL) / _Tp(6UL), _Tp(0UL)
+      };
+
+      if (__n == 0)
+        return _Tp(1);
+
+      if (__n == 1)
+        return -_Tp(1) / _Tp(2);
+
+
+      if (__n % 2 == 1)
+        return _Tp(0);
+
+
+      if (__n < 28)
+        return __num[__n];
+
+
+      _Tp __fact = _Tp(1);
+      if ((__n / 2) % 2 == 0)
+        __fact *= _Tp(-1);
+      for (unsigned int __k = 1; __k <= __n; ++__k)
+        __fact *= __k / (_Tp(2) * __numeric_constants<_Tp>::__pi());
+      __fact *= _Tp(2);
+
+      _Tp __sum = _Tp(0);
+      for (unsigned int __i = 1; __i < 1000; ++__i)
+        {
+          _Tp __term = std::pow(_Tp(__i), -_Tp(__n));
+          if (__term < std::numeric_limits<_Tp>::epsilon())
+            break;
+          __sum += __term;
+        }
+
+      return __fact * __sum;
+    }
+# 139 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __bernoulli(int __n)
+    { return __bernoulli_series<_Tp>(__n); }
+# 153 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __log_gamma_bernoulli(_Tp __x)
+    {
+      _Tp __lg = (__x - _Tp(0.5L)) * std::log(__x) - __x
+               + _Tp(0.5L) * std::log(_Tp(2)
+               * __numeric_constants<_Tp>::__pi());
+
+      const _Tp __xx = __x * __x;
+      _Tp __help = _Tp(1) / __x;
+      for ( unsigned int __i = 1; __i < 20; ++__i )
+        {
+          const _Tp __2i = _Tp(2 * __i);
+          __help /= __2i * (__2i - _Tp(1)) * __xx;
+          __lg += __bernoulli<_Tp>(2 * __i) * __help;
+        }
+
+      return __lg;
+    }
+# 181 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __log_gamma_lanczos(_Tp __x)
+    {
+      const _Tp __xm1 = __x - _Tp(1);
+
+      static const _Tp __lanczos_cheb_7[9] = {
+       _Tp( 0.99999999999980993227684700473478L),
+       _Tp( 676.520368121885098567009190444019L),
+       _Tp(-1259.13921672240287047156078755283L),
+       _Tp( 771.3234287776530788486528258894L),
+       _Tp(-176.61502916214059906584551354L),
+       _Tp( 12.507343278686904814458936853L),
+       _Tp(-0.13857109526572011689554707L),
+       _Tp( 9.984369578019570859563e-6L),
+       _Tp( 1.50563273514931155834e-7L)
+      };
+
+      static const _Tp __LOGROOT2PI
+          = _Tp(0.9189385332046727417803297364056176L);
+
+      _Tp __sum = __lanczos_cheb_7[0];
+      for(unsigned int __k = 1; __k < 9; ++__k)
+        __sum += __lanczos_cheb_7[__k] / (__xm1 + __k);
+
+      const _Tp __term1 = (__xm1 + _Tp(0.5L))
+                        * std::log((__xm1 + _Tp(7.5L))
+                       / __numeric_constants<_Tp>::__euler());
+      const _Tp __term2 = __LOGROOT2PI + std::log(__sum);
+      const _Tp __result = __term1 + (__term2 - _Tp(7));
+
+      return __result;
+    }
+# 225 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __log_gamma(_Tp __x)
+    {
+      if (__x > _Tp(0.5L))
+        return __log_gamma_lanczos(__x);
+      else
+        {
+          const _Tp __sin_fact
+                 = std::abs(std::sin(__numeric_constants<_Tp>::__pi() * __x));
+          if (__sin_fact == _Tp(0))
+            std::__throw_domain_error(("Argument is nonpositive integer " "in __log_gamma")
+                                                           );
+          return __numeric_constants<_Tp>::__lnpi()
+                     - std::log(__sin_fact)
+                     - __log_gamma_lanczos(_Tp(1) - __x);
+        }
+    }
+# 252 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __log_gamma_sign(_Tp __x)
+    {
+      if (__x > _Tp(0))
+        return _Tp(1);
+      else
+        {
+          const _Tp __sin_fact
+                  = std::sin(__numeric_constants<_Tp>::__pi() * __x);
+          if (__sin_fact > _Tp(0))
+            return (1);
+          else if (__sin_fact < _Tp(0))
+            return -_Tp(1);
+          else
+            return _Tp(0);
+        }
+    }
+# 283 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __log_bincoef(unsigned int __n, unsigned int __k)
+    {
+
+      static const _Tp __max_bincoeff
+                      = std::numeric_limits<_Tp>::max_exponent10
+                      * std::log(_Tp(10)) - _Tp(1);
+
+      _Tp __coeff = ::std::lgamma(_Tp(1 + __n))
+                  - ::std::lgamma(_Tp(1 + __k))
+                  - ::std::lgamma(_Tp(1 + __n - __k));
+
+
+
+
+
+    }
+# 314 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __bincoef(unsigned int __n, unsigned int __k)
+    {
+
+      static const _Tp __max_bincoeff
+                      = std::numeric_limits<_Tp>::max_exponent10
+                      * std::log(_Tp(10)) - _Tp(1);
+
+      const _Tp __log_coeff = __log_bincoef<_Tp>(__n, __k);
+      if (__log_coeff > __max_bincoeff)
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else
+        return std::exp(__log_coeff);
+    }
+# 337 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __gamma(_Tp __x)
+    { return std::exp(__log_gamma(__x)); }
+# 356 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __psi_series(_Tp __x)
+    {
+      _Tp __sum = -__numeric_constants<_Tp>::__gamma_e() - _Tp(1) / __x;
+      const unsigned int __max_iter = 100000;
+      for (unsigned int __k = 1; __k < __max_iter; ++__k)
+        {
+          const _Tp __term = __x / (__k * (__k + __x));
+          __sum += __term;
+          if (std::abs(__term / __sum) < std::numeric_limits<_Tp>::epsilon())
+            break;
+        }
+      return __sum;
+    }
+# 386 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __psi_asymp(_Tp __x)
+    {
+      _Tp __sum = std::log(__x) - _Tp(0.5L) / __x;
+      const _Tp __xx = __x * __x;
+      _Tp __xp = __xx;
+      const unsigned int __max_iter = 100;
+      for (unsigned int __k = 1; __k < __max_iter; ++__k)
+        {
+          const _Tp __term = __bernoulli<_Tp>(2 * __k) / (2 * __k * __xp);
+          __sum -= __term;
+          if (std::abs(__term / __sum) < std::numeric_limits<_Tp>::epsilon())
+            break;
+          __xp *= __xx;
+        }
+      return __sum;
+    }
+# 417 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __psi(_Tp __x)
+    {
+      const int __n = static_cast<int>(__x + 0.5L);
+      const _Tp __eps = _Tp(4) * std::numeric_limits<_Tp>::epsilon();
+      if (__n <= 0 && std::abs(__x - _Tp(__n)) < __eps)
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__x < _Tp(0))
+        {
+          const _Tp __pi = __numeric_constants<_Tp>::__pi();
+          return __psi(_Tp(1) - __x)
+               - __pi * std::cos(__pi * __x) / std::sin(__pi * __x);
+        }
+      else if (__x > _Tp(100))
+        return __psi_asymp(__x);
+      else
+        return __psi_series(__x);
+    }
+# 446 "C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __psi(unsigned int __n, _Tp __x)
+    {
+      if (__x <= _Tp(0))
+        std::__throw_domain_error(("Argument out of range " "in __psi")
+                                                 );
+      else if (__n == 0)
+        return __psi(__x);
+      else
+        {
+          const _Tp __hzeta = __hurwitz_zeta(_Tp(__n + 1), __x);
+
+          const _Tp __ln_nfact = ::std::lgamma(_Tp(__n + 1));
+
+
+
+          _Tp __result = std::exp(__ln_nfact) * __hzeta;
+          if (__n % 2 == 1)
+            __result = -__result;
+          return __result;
+        }
+    }
+  }
+
+
+
+
+
+
+}
+# 48 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 1 3
+# 55 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+namespace std
+{
+
+# 71 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+  namespace __detail
+  {
+# 98 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template <typename _Tp>
+    void
+    __gamma_temme(_Tp __mu,
+                  _Tp & __gam1, _Tp & __gam2, _Tp & __gampl, _Tp & __gammi)
+    {
+
+      __gampl = _Tp(1) / ::std::tgamma(_Tp(1) + __mu);
+      __gammi = _Tp(1) / ::std::tgamma(_Tp(1) - __mu);
+
+
+
+
+
+      if (std::abs(__mu) < std::numeric_limits<_Tp>::epsilon())
+        __gam1 = -_Tp(__numeric_constants<_Tp>::__gamma_e());
+      else
+        __gam1 = (__gammi - __gampl) / (_Tp(2) * __mu);
+
+      __gam2 = (__gammi + __gampl) / (_Tp(2));
+
+      return;
+    }
+# 136 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template <typename _Tp>
+    void
+    __bessel_jn(_Tp __nu, _Tp __x,
+                _Tp & __Jnu, _Tp & __Nnu, _Tp & __Jpnu, _Tp & __Npnu)
+    {
+      if (__x == _Tp(0))
+        {
+          if (__nu == _Tp(0))
+            {
+              __Jnu = _Tp(1);
+              __Jpnu = _Tp(0);
+            }
+          else if (__nu == _Tp(1))
+            {
+              __Jnu = _Tp(0);
+              __Jpnu = _Tp(0.5L);
+            }
+          else
+            {
+              __Jnu = _Tp(0);
+              __Jpnu = _Tp(0);
+            }
+          __Nnu = -std::numeric_limits<_Tp>::infinity();
+          __Npnu = std::numeric_limits<_Tp>::infinity();
+          return;
+        }
+
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+
+
+
+
+      const _Tp __fp_min = std::sqrt(std::numeric_limits<_Tp>::min());
+      const int __max_iter = 15000;
+      const _Tp __x_min = _Tp(2);
+
+      const int __nl = (__x < __x_min
+                    ? static_cast<int>(__nu + _Tp(0.5L))
+                    : std::max(0, static_cast<int>(__nu - __x + _Tp(1.5L))));
+
+      const _Tp __mu = __nu - __nl;
+      const _Tp __mu2 = __mu * __mu;
+      const _Tp __xi = _Tp(1) / __x;
+      const _Tp __xi2 = _Tp(2) * __xi;
+      _Tp __w = __xi2 / __numeric_constants<_Tp>::__pi();
+      int __isign = 1;
+      _Tp __h = __nu * __xi;
+      if (__h < __fp_min)
+        __h = __fp_min;
+      _Tp __b = __xi2 * __nu;
+      _Tp __d = _Tp(0);
+      _Tp __c = __h;
+      int __i;
+      for (__i = 1; __i <= __max_iter; ++__i)
+        {
+          __b += __xi2;
+          __d = __b - __d;
+          if (std::abs(__d) < __fp_min)
+            __d = __fp_min;
+          __c = __b - _Tp(1) / __c;
+          if (std::abs(__c) < __fp_min)
+            __c = __fp_min;
+          __d = _Tp(1) / __d;
+          const _Tp __del = __c * __d;
+          __h *= __del;
+          if (__d < _Tp(0))
+            __isign = -__isign;
+          if (std::abs(__del - _Tp(1)) < __eps)
+            break;
+        }
+      if (__i > __max_iter)
+        std::__throw_runtime_error(("Argument x too large in __bessel_jn; " "try asymptotic expansion.")
+                                                                   );
+      _Tp __Jnul = __isign * __fp_min;
+      _Tp __Jpnul = __h * __Jnul;
+      _Tp __Jnul1 = __Jnul;
+      _Tp __Jpnu1 = __Jpnul;
+      _Tp __fact = __nu * __xi;
+      for ( int __l = __nl; __l >= 1; --__l )
+        {
+          const _Tp __Jnutemp = __fact * __Jnul + __Jpnul;
+          __fact -= __xi;
+          __Jpnul = __fact * __Jnutemp - __Jnul;
+          __Jnul = __Jnutemp;
+        }
+      if (__Jnul == _Tp(0))
+        __Jnul = __eps;
+      _Tp __f= __Jpnul / __Jnul;
+      _Tp __Nmu, __Nnu1, __Npmu, __Jmu;
+      if (__x < __x_min)
+        {
+          const _Tp __x2 = __x / _Tp(2);
+          const _Tp __pimu = __numeric_constants<_Tp>::__pi() * __mu;
+          _Tp __fact = (std::abs(__pimu) < __eps
+                      ? _Tp(1) : __pimu / std::sin(__pimu));
+          _Tp __d = -std::log(__x2);
+          _Tp __e = __mu * __d;
+          _Tp __fact2 = (std::abs(__e) < __eps
+                       ? _Tp(1) : std::sinh(__e) / __e);
+          _Tp __gam1, __gam2, __gampl, __gammi;
+          __gamma_temme(__mu, __gam1, __gam2, __gampl, __gammi);
+          _Tp __ff = (_Tp(2) / __numeric_constants<_Tp>::__pi())
+                   * __fact * (__gam1 * std::cosh(__e) + __gam2 * __fact2 * __d);
+          __e = std::exp(__e);
+          _Tp __p = __e / (__numeric_constants<_Tp>::__pi() * __gampl);
+          _Tp __q = _Tp(1) / (__e * __numeric_constants<_Tp>::__pi() * __gammi);
+          const _Tp __pimu2 = __pimu / _Tp(2);
+          _Tp __fact3 = (std::abs(__pimu2) < __eps
+                       ? _Tp(1) : std::sin(__pimu2) / __pimu2 );
+          _Tp __r = __numeric_constants<_Tp>::__pi() * __pimu2 * __fact3 * __fact3;
+          _Tp __c = _Tp(1);
+          __d = -__x2 * __x2;
+          _Tp __sum = __ff + __r * __q;
+          _Tp __sum1 = __p;
+          for (__i = 1; __i <= __max_iter; ++__i)
+            {
+              __ff = (__i * __ff + __p + __q) / (__i * __i - __mu2);
+              __c *= __d / _Tp(__i);
+              __p /= _Tp(__i) - __mu;
+              __q /= _Tp(__i) + __mu;
+              const _Tp __del = __c * (__ff + __r * __q);
+              __sum += __del;
+              const _Tp __del1 = __c * __p - __i * __del;
+              __sum1 += __del1;
+              if ( std::abs(__del) < __eps * (_Tp(1) + std::abs(__sum)) )
+                break;
+            }
+          if ( __i > __max_iter )
+            std::__throw_runtime_error(("Bessel y series failed to converge " "in __bessel_jn.")
+                                                             );
+          __Nmu = -__sum;
+          __Nnu1 = -__sum1 * __xi2;
+          __Npmu = __mu * __xi * __Nmu - __Nnu1;
+          __Jmu = __w / (__Npmu - __f * __Nmu);
+        }
+      else
+        {
+          _Tp __a = _Tp(0.25L) - __mu2;
+          _Tp __q = _Tp(1);
+          _Tp __p = -__xi / _Tp(2);
+          _Tp __br = _Tp(2) * __x;
+          _Tp __bi = _Tp(2);
+          _Tp __fact = __a * __xi / (__p * __p + __q * __q);
+          _Tp __cr = __br + __q * __fact;
+          _Tp __ci = __bi + __p * __fact;
+          _Tp __den = __br * __br + __bi * __bi;
+          _Tp __dr = __br / __den;
+          _Tp __di = -__bi / __den;
+          _Tp __dlr = __cr * __dr - __ci * __di;
+          _Tp __dli = __cr * __di + __ci * __dr;
+          _Tp __temp = __p * __dlr - __q * __dli;
+          __q = __p * __dli + __q * __dlr;
+          __p = __temp;
+          int __i;
+          for (__i = 2; __i <= __max_iter; ++__i)
+            {
+              __a += _Tp(2 * (__i - 1));
+              __bi += _Tp(2);
+              __dr = __a * __dr + __br;
+              __di = __a * __di + __bi;
+              if (std::abs(__dr) + std::abs(__di) < __fp_min)
+                __dr = __fp_min;
+              __fact = __a / (__cr * __cr + __ci * __ci);
+              __cr = __br + __cr * __fact;
+              __ci = __bi - __ci * __fact;
+              if (std::abs(__cr) + std::abs(__ci) < __fp_min)
+                __cr = __fp_min;
+              __den = __dr * __dr + __di * __di;
+              __dr /= __den;
+              __di /= -__den;
+              __dlr = __cr * __dr - __ci * __di;
+              __dli = __cr * __di + __ci * __dr;
+              __temp = __p * __dlr - __q * __dli;
+              __q = __p * __dli + __q * __dlr;
+              __p = __temp;
+              if (std::abs(__dlr - _Tp(1)) + std::abs(__dli) < __eps)
+                break;
+          }
+          if (__i > __max_iter)
+            std::__throw_runtime_error(("Lentz's method failed " "in __bessel_jn.")
+                                                             );
+          const _Tp __gam = (__p - __f) / __q;
+          __Jmu = std::sqrt(__w / ((__p - __f) * __gam + __q));
+
+          __Jmu = ::std::copysign(__Jmu, __Jnul);
+
+
+
+
+          __Nmu = __gam * __Jmu;
+          __Npmu = (__p + __q / __gam) * __Nmu;
+          __Nnu1 = __mu * __xi * __Nmu - __Npmu;
+      }
+      __fact = __Jmu / __Jnul;
+      __Jnu = __fact * __Jnul1;
+      __Jpnu = __fact * __Jpnu1;
+      for (__i = 1; __i <= __nl; ++__i)
+        {
+          const _Tp __Nnutemp = (__mu + __i) * __xi2 * __Nnu1 - __Nmu;
+          __Nmu = __Nnu1;
+          __Nnu1 = __Nnutemp;
+        }
+      __Nnu = __Nmu;
+      __Npnu = __nu * __xi * __Nmu - __Nnu1;
+
+      return;
+    }
+# 361 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template <typename _Tp>
+    void
+    __cyl_bessel_jn_asymp(_Tp __nu, _Tp __x, _Tp & __Jnu, _Tp & __Nnu)
+    {
+      const _Tp __mu = _Tp(4) * __nu * __nu;
+      const _Tp __8x = _Tp(8) * __x;
+
+      _Tp __P = _Tp(0);
+      _Tp __Q = _Tp(0);
+
+      _Tp __k = _Tp(0);
+      _Tp __term = _Tp(1);
+
+      int __epsP = 0;
+      int __epsQ = 0;
+
+      _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+
+      do
+        {
+          __term *= (__k == 0
+                     ? _Tp(1)
+                     : -(__mu - (2 * __k - 1) * (2 * __k - 1)) / (__k * __8x));
+
+          __epsP = std::abs(__term) < __eps * std::abs(__P);
+          __P += __term;
+
+          __k++;
+
+          __term *= (__mu - (2 * __k - 1) * (2 * __k - 1)) / (__k * __8x);
+          __epsQ = std::abs(__term) < __eps * std::abs(__Q);
+          __Q += __term;
+
+          if (__epsP && __epsQ && __k > (__nu / 2.))
+            break;
+
+          __k++;
+        }
+      while (__k < 1000);
+
+      const _Tp __chi = __x - (__nu + _Tp(0.5L))
+                             * __numeric_constants<_Tp>::__pi_2();
+
+      const _Tp __c = std::cos(__chi);
+      const _Tp __s = std::sin(__chi);
+
+      const _Tp __coef = std::sqrt(_Tp(2)
+                             / (__numeric_constants<_Tp>::__pi() * __x));
+
+      __Jnu = __coef * (__c * __P - __s * __Q);
+      __Nnu = __coef * (__s * __P + __c * __Q);
+
+      return;
+    }
+# 444 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template <typename _Tp>
+    _Tp
+    __cyl_bessel_ij_series(_Tp __nu, _Tp __x, _Tp __sgn,
+                           unsigned int __max_iter)
+    {
+      if (__x == _Tp(0))
+ return __nu == _Tp(0) ? _Tp(1) : _Tp(0);
+
+      const _Tp __x2 = __x / _Tp(2);
+      _Tp __fact = __nu * std::log(__x2);
+
+      __fact -= ::std::lgamma(__nu + _Tp(1));
+
+
+
+      __fact = std::exp(__fact);
+      const _Tp __xx4 = __sgn * __x2 * __x2;
+      _Tp __Jn = _Tp(1);
+      _Tp __term = _Tp(1);
+
+      for (unsigned int __i = 1; __i < __max_iter; ++__i)
+        {
+          __term *= __xx4 / (_Tp(__i) * (__nu + _Tp(__i)));
+          __Jn += __term;
+          if (std::abs(__term / __Jn) < std::numeric_limits<_Tp>::epsilon())
+            break;
+        }
+
+      return __fact * __Jn;
+    }
+# 490 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __cyl_bessel_j(_Tp __nu, _Tp __x)
+    {
+      if (__nu < _Tp(0) || __x < _Tp(0))
+        std::__throw_domain_error(("Bad argument " "in __cyl_bessel_j.")
+                                                           );
+      else if (__isnan(__nu) || __isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__x * __x < _Tp(10) * (__nu + _Tp(1)))
+        return __cyl_bessel_ij_series(__nu, __x, -_Tp(1), 200);
+      else if (__x > _Tp(1000))
+        {
+          _Tp __J_nu, __N_nu;
+          __cyl_bessel_jn_asymp(__nu, __x, __J_nu, __N_nu);
+          return __J_nu;
+        }
+      else
+        {
+          _Tp __J_nu, __N_nu, __Jp_nu, __Np_nu;
+          __bessel_jn(__nu, __x, __J_nu, __N_nu, __Jp_nu, __Np_nu);
+          return __J_nu;
+        }
+    }
+# 532 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __cyl_neumann_n(_Tp __nu, _Tp __x)
+    {
+      if (__nu < _Tp(0) || __x < _Tp(0))
+        std::__throw_domain_error(("Bad argument " "in __cyl_neumann_n.")
+                                                            );
+      else if (__isnan(__nu) || __isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__x > _Tp(1000))
+        {
+          _Tp __J_nu, __N_nu;
+          __cyl_bessel_jn_asymp(__nu, __x, __J_nu, __N_nu);
+          return __N_nu;
+        }
+      else
+        {
+          _Tp __J_nu, __N_nu, __Jp_nu, __Np_nu;
+          __bessel_jn(__nu, __x, __J_nu, __N_nu, __Jp_nu, __Np_nu);
+          return __N_nu;
+        }
+    }
+# 569 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template <typename _Tp>
+    void
+    __sph_bessel_jn(unsigned int __n, _Tp __x,
+                    _Tp & __j_n, _Tp & __n_n, _Tp & __jp_n, _Tp & __np_n)
+    {
+      const _Tp __nu = _Tp(__n) + _Tp(0.5L);
+
+      _Tp __J_nu, __N_nu, __Jp_nu, __Np_nu;
+      __bessel_jn(__nu, __x, __J_nu, __N_nu, __Jp_nu, __Np_nu);
+
+      const _Tp __factor = __numeric_constants<_Tp>::__sqrtpio2()
+                         / std::sqrt(__x);
+
+      __j_n = __factor * __J_nu;
+      __n_n = __factor * __N_nu;
+      __jp_n = __factor * __Jp_nu - __j_n / (_Tp(2) * __x);
+      __np_n = __factor * __Np_nu - __n_n / (_Tp(2) * __x);
+
+      return;
+    }
+# 604 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template <typename _Tp>
+    _Tp
+    __sph_bessel(unsigned int __n, _Tp __x)
+    {
+      if (__x < _Tp(0))
+        std::__throw_domain_error(("Bad argument " "in __sph_bessel.")
+                                                         );
+      else if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__x == _Tp(0))
+        {
+          if (__n == 0)
+            return _Tp(1);
+          else
+            return _Tp(0);
+        }
+      else
+        {
+          _Tp __j_n, __n_n, __jp_n, __np_n;
+          __sph_bessel_jn(__n, __x, __j_n, __n_n, __jp_n, __np_n);
+          return __j_n;
+        }
+    }
+# 642 "C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc" 3
+    template <typename _Tp>
+    _Tp
+    __sph_neumann(unsigned int __n, _Tp __x)
+    {
+      if (__x < _Tp(0))
+        std::__throw_domain_error(("Bad argument " "in __sph_neumann.")
+                                                          );
+      else if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__x == _Tp(0))
+        return -std::numeric_limits<_Tp>::infinity();
+      else
+        {
+          _Tp __j_n, __n_n, __jp_n, __np_n;
+          __sph_bessel_jn(__n, __x, __j_n, __n_n, __jp_n, __np_n);
+          return __n_n;
+        }
+    }
+  }
+
+
+
+
+
+
+}
+# 49 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 1 3
+# 49 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 3
+namespace std
+{
+
+# 65 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 3
+  namespace __detail
+  {
+# 79 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __beta_gamma(_Tp __x, _Tp __y)
+    {
+
+      _Tp __bet;
+
+      if (__x > __y)
+        {
+          __bet = ::std::tgamma(__x)
+                / ::std::tgamma(__x + __y);
+          __bet *= ::std::tgamma(__y);
+        }
+      else
+        {
+          __bet = ::std::tgamma(__y)
+                / ::std::tgamma(__x + __y);
+          __bet *= ::std::tgamma(__x);
+        }
+# 111 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 3
+      return __bet;
+    }
+# 127 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __beta_lgamma(_Tp __x, _Tp __y)
+    {
+
+      _Tp __bet = ::std::lgamma(__x)
+                + ::std::lgamma(__y)
+                - ::std::lgamma(__x + __y);
+
+
+
+
+
+      __bet = std::exp(__bet);
+      return __bet;
+    }
+# 158 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __beta_product(_Tp __x, _Tp __y)
+    {
+
+      _Tp __bet = (__x + __y) / (__x * __y);
+
+      unsigned int __max_iter = 1000000;
+      for (unsigned int __k = 1; __k < __max_iter; ++__k)
+        {
+          _Tp __term = (_Tp(1) + (__x + __y) / __k)
+                     / ((_Tp(1) + __x / __k) * (_Tp(1) + __y / __k));
+          __bet *= __term;
+        }
+
+      return __bet;
+    }
+# 189 "C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __beta(_Tp __x, _Tp __y)
+    {
+      if (__isnan(__x) || __isnan(__y))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else
+        return __beta_lgamma(__x, __y);
+    }
+  }
+
+
+
+
+
+
+}
+# 50 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 1 3
+# 45 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+namespace std
+{
+
+# 59 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+  namespace __detail
+  {
+# 76 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __ellint_rf(_Tp __x, _Tp __y, _Tp __z)
+    {
+      const _Tp __min = std::numeric_limits<_Tp>::min();
+      const _Tp __lolim = _Tp(5) * __min;
+
+      if (__x < _Tp(0) || __y < _Tp(0) || __z < _Tp(0))
+        std::__throw_domain_error(("Argument less than zero " "in __ellint_rf.")
+                                                        );
+      else if (__x + __y < __lolim || __x + __z < __lolim
+            || __y + __z < __lolim)
+        std::__throw_domain_error(("Argument too small in __ellint_rf"));
+      else
+        {
+          const _Tp __c0 = _Tp(1) / _Tp(4);
+          const _Tp __c1 = _Tp(1) / _Tp(24);
+          const _Tp __c2 = _Tp(1) / _Tp(10);
+          const _Tp __c3 = _Tp(3) / _Tp(44);
+          const _Tp __c4 = _Tp(1) / _Tp(14);
+
+          _Tp __xn = __x;
+          _Tp __yn = __y;
+          _Tp __zn = __z;
+
+          const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+          const _Tp __errtol = std::pow(__eps, _Tp(1) / _Tp(6));
+          _Tp __mu;
+          _Tp __xndev, __yndev, __zndev;
+
+          const unsigned int __max_iter = 100;
+          for (unsigned int __iter = 0; __iter < __max_iter; ++__iter)
+            {
+              __mu = (__xn + __yn + __zn) / _Tp(3);
+              __xndev = 2 - (__mu + __xn) / __mu;
+              __yndev = 2 - (__mu + __yn) / __mu;
+              __zndev = 2 - (__mu + __zn) / __mu;
+              _Tp __epsilon = std::max(std::abs(__xndev), std::abs(__yndev));
+              __epsilon = std::max(__epsilon, std::abs(__zndev));
+              if (__epsilon < __errtol)
+                break;
+              const _Tp __xnroot = std::sqrt(__xn);
+              const _Tp __ynroot = std::sqrt(__yn);
+              const _Tp __znroot = std::sqrt(__zn);
+              const _Tp __lambda = __xnroot * (__ynroot + __znroot)
+                                 + __ynroot * __znroot;
+              __xn = __c0 * (__xn + __lambda);
+              __yn = __c0 * (__yn + __lambda);
+              __zn = __c0 * (__zn + __lambda);
+            }
+
+          const _Tp __e2 = __xndev * __yndev - __zndev * __zndev;
+          const _Tp __e3 = __xndev * __yndev * __zndev;
+          const _Tp __s = _Tp(1) + (__c1 * __e2 - __c2 - __c3 * __e3) * __e2
+                   + __c4 * __e3;
+
+          return __s / std::sqrt(__mu);
+        }
+    }
+# 153 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __comp_ellint_1_series(_Tp __k)
+    {
+
+      const _Tp __kk = __k * __k;
+
+      _Tp __term = __kk / _Tp(4);
+      _Tp __sum = _Tp(1) + __term;
+
+      const unsigned int __max_iter = 1000;
+      for (unsigned int __i = 2; __i < __max_iter; ++__i)
+        {
+          __term *= (2 * __i - 1) * __kk / (2 * __i);
+          if (__term < std::numeric_limits<_Tp>::epsilon())
+            break;
+          __sum += __term;
+        }
+
+      return __numeric_constants<_Tp>::__pi_2() * __sum;
+    }
+# 191 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __comp_ellint_1(_Tp __k)
+    {
+
+      if (__isnan(__k))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (std::abs(__k) >= _Tp(1))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else
+        return __ellint_rf(_Tp(0), _Tp(1) - __k * __k, _Tp(1));
+    }
+# 219 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __ellint_1(_Tp __k, _Tp __phi)
+    {
+
+      if (__isnan(__k) || __isnan(__phi))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (std::abs(__k) > _Tp(1))
+        std::__throw_domain_error(("Bad argument in __ellint_1."));
+      else
+        {
+
+          const int __n = std::floor(__phi / __numeric_constants<_Tp>::__pi()
+                                   + _Tp(0.5L));
+          const _Tp __phi_red = __phi
+                              - __n * __numeric_constants<_Tp>::__pi();
+
+          const _Tp __s = std::sin(__phi_red);
+          const _Tp __c = std::cos(__phi_red);
+
+          const _Tp __F = __s
+                        * __ellint_rf(__c * __c,
+                                _Tp(1) - __k * __k * __s * __s, _Tp(1));
+
+          if (__n == 0)
+            return __F;
+          else
+            return __F + _Tp(2) * __n * __comp_ellint_1(__k);
+        }
+    }
+# 266 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __comp_ellint_2_series(_Tp __k)
+    {
+
+      const _Tp __kk = __k * __k;
+
+      _Tp __term = __kk;
+      _Tp __sum = __term;
+
+      const unsigned int __max_iter = 1000;
+      for (unsigned int __i = 2; __i < __max_iter; ++__i)
+        {
+          const _Tp __i2m = 2 * __i - 1;
+          const _Tp __i2 = 2 * __i;
+          __term *= __i2m * __i2m * __kk / (__i2 * __i2);
+          if (__term < std::numeric_limits<_Tp>::epsilon())
+            break;
+          __sum += __term / __i2m;
+        }
+
+      return __numeric_constants<_Tp>::__pi_2() * (_Tp(1) - __sum);
+    }
+# 314 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __ellint_rd(_Tp __x, _Tp __y, _Tp __z)
+    {
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      const _Tp __errtol = std::pow(__eps / _Tp(8), _Tp(1) / _Tp(6));
+      const _Tp __max = std::numeric_limits<_Tp>::max();
+      const _Tp __lolim = _Tp(2) / std::pow(__max, _Tp(2) / _Tp(3));
+
+      if (__x < _Tp(0) || __y < _Tp(0))
+        std::__throw_domain_error(("Argument less than zero " "in __ellint_rd.")
+                                                        );
+      else if (__x + __y < __lolim || __z < __lolim)
+        std::__throw_domain_error(("Argument too small " "in __ellint_rd.")
+                                                        );
+      else
+        {
+          const _Tp __c0 = _Tp(1) / _Tp(4);
+          const _Tp __c1 = _Tp(3) / _Tp(14);
+          const _Tp __c2 = _Tp(1) / _Tp(6);
+          const _Tp __c3 = _Tp(9) / _Tp(22);
+          const _Tp __c4 = _Tp(3) / _Tp(26);
+
+          _Tp __xn = __x;
+          _Tp __yn = __y;
+          _Tp __zn = __z;
+          _Tp __sigma = _Tp(0);
+          _Tp __power4 = _Tp(1);
+
+          _Tp __mu;
+          _Tp __xndev, __yndev, __zndev;
+
+          const unsigned int __max_iter = 100;
+          for (unsigned int __iter = 0; __iter < __max_iter; ++__iter)
+            {
+              __mu = (__xn + __yn + _Tp(3) * __zn) / _Tp(5);
+              __xndev = (__mu - __xn) / __mu;
+              __yndev = (__mu - __yn) / __mu;
+              __zndev = (__mu - __zn) / __mu;
+              _Tp __epsilon = std::max(std::abs(__xndev), std::abs(__yndev));
+              __epsilon = std::max(__epsilon, std::abs(__zndev));
+              if (__epsilon < __errtol)
+                break;
+              _Tp __xnroot = std::sqrt(__xn);
+              _Tp __ynroot = std::sqrt(__yn);
+              _Tp __znroot = std::sqrt(__zn);
+              _Tp __lambda = __xnroot * (__ynroot + __znroot)
+                           + __ynroot * __znroot;
+              __sigma += __power4 / (__znroot * (__zn + __lambda));
+              __power4 *= __c0;
+              __xn = __c0 * (__xn + __lambda);
+              __yn = __c0 * (__yn + __lambda);
+              __zn = __c0 * (__zn + __lambda);
+            }
+
+          _Tp __ea = __xndev * __yndev;
+          _Tp __eb = __zndev * __zndev;
+          _Tp __ec = __ea - __eb;
+          _Tp __ed = __ea - _Tp(6) * __eb;
+          _Tp __ef = __ed + __ec + __ec;
+          _Tp __s1 = __ed * (-__c1 + __c3 * __ed
+                                   / _Tp(3) - _Tp(3) * __c4 * __zndev * __ef
+                                   / _Tp(2));
+          _Tp __s2 = __zndev
+                   * (__c2 * __ef
+                    + __zndev * (-__c3 * __ec - __zndev * __c4 - __ea));
+
+          return _Tp(3) * __sigma + __power4 * (_Tp(1) + __s1 + __s2)
+                                        / (__mu * std::sqrt(__mu));
+        }
+    }
+# 399 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __comp_ellint_2(_Tp __k)
+    {
+
+      if (__isnan(__k))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (std::abs(__k) == 1)
+        return _Tp(1);
+      else if (std::abs(__k) > _Tp(1))
+        std::__throw_domain_error(("Bad argument in __comp_ellint_2."));
+      else
+        {
+          const _Tp __kk = __k * __k;
+
+          return __ellint_rf(_Tp(0), _Tp(1) - __kk, _Tp(1))
+               - __kk * __ellint_rd(_Tp(0), _Tp(1) - __kk, _Tp(1)) / _Tp(3);
+        }
+    }
+# 433 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __ellint_2(_Tp __k, _Tp __phi)
+    {
+
+      if (__isnan(__k) || __isnan(__phi))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (std::abs(__k) > _Tp(1))
+        std::__throw_domain_error(("Bad argument in __ellint_2."));
+      else
+        {
+
+          const int __n = std::floor(__phi / __numeric_constants<_Tp>::__pi()
+                                   + _Tp(0.5L));
+          const _Tp __phi_red = __phi
+                              - __n * __numeric_constants<_Tp>::__pi();
+
+          const _Tp __kk = __k * __k;
+          const _Tp __s = std::sin(__phi_red);
+          const _Tp __ss = __s * __s;
+          const _Tp __sss = __ss * __s;
+          const _Tp __c = std::cos(__phi_red);
+          const _Tp __cc = __c * __c;
+
+          const _Tp __E = __s
+                        * __ellint_rf(__cc, _Tp(1) - __kk * __ss, _Tp(1))
+                        - __kk * __sss
+                        * __ellint_rd(__cc, _Tp(1) - __kk * __ss, _Tp(1))
+                        / _Tp(3);
+
+          if (__n == 0)
+            return __E;
+          else
+            return __E + _Tp(2) * __n * __comp_ellint_2(__k);
+        }
+    }
+# 492 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __ellint_rc(_Tp __x, _Tp __y)
+    {
+      const _Tp __min = std::numeric_limits<_Tp>::min();
+      const _Tp __lolim = _Tp(5) * __min;
+
+      if (__x < _Tp(0) || __y < _Tp(0) || __x + __y < __lolim)
+        std::__throw_domain_error(("Argument less than zero " "in __ellint_rc.")
+                                                        );
+      else
+        {
+          const _Tp __c0 = _Tp(1) / _Tp(4);
+          const _Tp __c1 = _Tp(1) / _Tp(7);
+          const _Tp __c2 = _Tp(9) / _Tp(22);
+          const _Tp __c3 = _Tp(3) / _Tp(10);
+          const _Tp __c4 = _Tp(3) / _Tp(8);
+
+          _Tp __xn = __x;
+          _Tp __yn = __y;
+
+          const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+          const _Tp __errtol = std::pow(__eps / _Tp(30), _Tp(1) / _Tp(6));
+          _Tp __mu;
+          _Tp __sn;
+
+          const unsigned int __max_iter = 100;
+          for (unsigned int __iter = 0; __iter < __max_iter; ++__iter)
+            {
+              __mu = (__xn + _Tp(2) * __yn) / _Tp(3);
+              __sn = (__yn + __mu) / __mu - _Tp(2);
+              if (std::abs(__sn) < __errtol)
+                break;
+              const _Tp __lambda = _Tp(2) * std::sqrt(__xn) * std::sqrt(__yn)
+                             + __yn;
+              __xn = __c0 * (__xn + __lambda);
+              __yn = __c0 * (__yn + __lambda);
+            }
+
+          _Tp __s = __sn * __sn
+                  * (__c3 + __sn*(__c1 + __sn * (__c4 + __sn * __c2)));
+
+          return (_Tp(1) + __s) / std::sqrt(__mu);
+        }
+    }
+# 561 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __ellint_rj(_Tp __x, _Tp __y, _Tp __z, _Tp __p)
+    {
+      const _Tp __min = std::numeric_limits<_Tp>::min();
+      const _Tp __lolim = std::pow(_Tp(5) * __min, _Tp(1)/_Tp(3));
+
+      if (__x < _Tp(0) || __y < _Tp(0) || __z < _Tp(0))
+        std::__throw_domain_error(("Argument less than zero " "in __ellint_rj.")
+                                                        );
+      else if (__x + __y < __lolim || __x + __z < __lolim
+            || __y + __z < __lolim || __p < __lolim)
+        std::__throw_domain_error(("Argument too small " "in __ellint_rj")
+                                                       );
+      else
+        {
+          const _Tp __c0 = _Tp(1) / _Tp(4);
+          const _Tp __c1 = _Tp(3) / _Tp(14);
+          const _Tp __c2 = _Tp(1) / _Tp(3);
+          const _Tp __c3 = _Tp(3) / _Tp(22);
+          const _Tp __c4 = _Tp(3) / _Tp(26);
+
+          _Tp __xn = __x;
+          _Tp __yn = __y;
+          _Tp __zn = __z;
+          _Tp __pn = __p;
+          _Tp __sigma = _Tp(0);
+          _Tp __power4 = _Tp(1);
+
+          const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+          const _Tp __errtol = std::pow(__eps / _Tp(8), _Tp(1) / _Tp(6));
+
+          _Tp __mu;
+          _Tp __xndev, __yndev, __zndev, __pndev;
+
+          const unsigned int __max_iter = 100;
+          for (unsigned int __iter = 0; __iter < __max_iter; ++__iter)
+            {
+              __mu = (__xn + __yn + __zn + _Tp(2) * __pn) / _Tp(5);
+              __xndev = (__mu - __xn) / __mu;
+              __yndev = (__mu - __yn) / __mu;
+              __zndev = (__mu - __zn) / __mu;
+              __pndev = (__mu - __pn) / __mu;
+              _Tp __epsilon = std::max(std::abs(__xndev), std::abs(__yndev));
+              __epsilon = std::max(__epsilon, std::abs(__zndev));
+              __epsilon = std::max(__epsilon, std::abs(__pndev));
+              if (__epsilon < __errtol)
+                break;
+              const _Tp __xnroot = std::sqrt(__xn);
+              const _Tp __ynroot = std::sqrt(__yn);
+              const _Tp __znroot = std::sqrt(__zn);
+              const _Tp __lambda = __xnroot * (__ynroot + __znroot)
+                                 + __ynroot * __znroot;
+              const _Tp __alpha1 = __pn * (__xnroot + __ynroot + __znroot)
+                                + __xnroot * __ynroot * __znroot;
+              const _Tp __alpha2 = __alpha1 * __alpha1;
+              const _Tp __beta = __pn * (__pn + __lambda)
+                                      * (__pn + __lambda);
+              __sigma += __power4 * __ellint_rc(__alpha2, __beta);
+              __power4 *= __c0;
+              __xn = __c0 * (__xn + __lambda);
+              __yn = __c0 * (__yn + __lambda);
+              __zn = __c0 * (__zn + __lambda);
+              __pn = __c0 * (__pn + __lambda);
+            }
+
+          _Tp __ea = __xndev * (__yndev + __zndev) + __yndev * __zndev;
+          _Tp __eb = __xndev * __yndev * __zndev;
+          _Tp __ec = __pndev * __pndev;
+          _Tp __e2 = __ea - _Tp(3) * __ec;
+          _Tp __e3 = __eb + _Tp(2) * __pndev * (__ea - __ec);
+          _Tp __s1 = _Tp(1) + __e2 * (-__c1 + _Tp(3) * __c3 * __e2 / _Tp(4)
+                            - _Tp(3) * __c4 * __e3 / _Tp(2));
+          _Tp __s2 = __eb * (__c2 / _Tp(2)
+                   + __pndev * (-__c3 - __c3 + __pndev * __c4));
+          _Tp __s3 = __pndev * __ea * (__c2 - __pndev * __c3)
+                   - __c2 * __pndev * __ec;
+
+          return _Tp(3) * __sigma + __power4 * (__s1 + __s2 + __s3)
+                                             / (__mu * std::sqrt(__mu));
+        }
+    }
+# 661 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __comp_ellint_3(_Tp __k, _Tp __nu)
+    {
+
+      if (__isnan(__k) || __isnan(__nu))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__nu == _Tp(1))
+        return std::numeric_limits<_Tp>::infinity();
+      else if (std::abs(__k) > _Tp(1))
+        std::__throw_domain_error(("Bad argument in __comp_ellint_3."));
+      else
+        {
+          const _Tp __kk = __k * __k;
+
+          return __ellint_rf(_Tp(0), _Tp(1) - __kk, _Tp(1))
+               + __nu
+               * __ellint_rj(_Tp(0), _Tp(1) - __kk, _Tp(1), _Tp(1) - __nu)
+               / _Tp(3);
+        }
+    }
+# 701 "C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __ellint_3(_Tp __k, _Tp __nu, _Tp __phi)
+    {
+
+      if (__isnan(__k) || __isnan(__nu) || __isnan(__phi))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (std::abs(__k) > _Tp(1))
+        std::__throw_domain_error(("Bad argument in __ellint_3."));
+      else
+        {
+
+          const int __n = std::floor(__phi / __numeric_constants<_Tp>::__pi()
+                                   + _Tp(0.5L));
+          const _Tp __phi_red = __phi
+                              - __n * __numeric_constants<_Tp>::__pi();
+
+          const _Tp __kk = __k * __k;
+          const _Tp __s = std::sin(__phi_red);
+          const _Tp __ss = __s * __s;
+          const _Tp __sss = __ss * __s;
+          const _Tp __c = std::cos(__phi_red);
+          const _Tp __cc = __c * __c;
+
+          const _Tp __Pi = __s
+                         * __ellint_rf(__cc, _Tp(1) - __kk * __ss, _Tp(1))
+                         + __nu * __sss
+                         * __ellint_rj(__cc, _Tp(1) - __kk * __ss, _Tp(1),
+                                       _Tp(1) - __nu * __ss) / _Tp(3);
+
+          if (__n == 0)
+            return __Pi;
+          else
+            return __Pi + _Tp(2) * __n * __comp_ellint_3(__k, __nu);
+        }
+    }
+  }
+
+
+
+
+
+}
+# 51 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 1 3
+# 50 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+namespace std
+{
+
+# 64 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+  namespace __detail
+  {
+    template<typename _Tp> _Tp __expint_E1(_Tp);
+# 81 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_E1_series(_Tp __x)
+    {
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      _Tp __term = _Tp(1);
+      _Tp __esum = _Tp(0);
+      _Tp __osum = _Tp(0);
+      const unsigned int __max_iter = 1000;
+      for (unsigned int __i = 1; __i < __max_iter; ++__i)
+        {
+          __term *= - __x / __i;
+          if (std::abs(__term) < __eps)
+            break;
+          if (__term >= _Tp(0))
+            __esum += __term / __i;
+          else
+            __osum += __term / __i;
+        }
+
+      return - __esum - __osum
+             - __numeric_constants<_Tp>::__gamma_e() - std::log(__x);
+    }
+# 118 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_E1_asymp(_Tp __x)
+    {
+      _Tp __term = _Tp(1);
+      _Tp __esum = _Tp(1);
+      _Tp __osum = _Tp(0);
+      const unsigned int __max_iter = 1000;
+      for (unsigned int __i = 1; __i < __max_iter; ++__i)
+        {
+          _Tp __prev = __term;
+          __term *= - __i / __x;
+          if (std::abs(__term) > std::abs(__prev))
+            break;
+          if (__term >= _Tp(0))
+            __esum += __term;
+          else
+            __osum += __term;
+        }
+
+      return std::exp(- __x) * (__esum + __osum) / __x;
+    }
+# 155 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_En_series(unsigned int __n, _Tp __x)
+    {
+      const unsigned int __max_iter = 1000;
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      const int __nm1 = __n - 1;
+      _Tp __ans = (__nm1 != 0
+                ? _Tp(1) / __nm1 : -std::log(__x)
+                                   - __numeric_constants<_Tp>::__gamma_e());
+      _Tp __fact = _Tp(1);
+      for (int __i = 1; __i <= __max_iter; ++__i)
+        {
+          __fact *= -__x / _Tp(__i);
+          _Tp __del;
+          if ( __i != __nm1 )
+            __del = -__fact / _Tp(__i - __nm1);
+          else
+            {
+              _Tp __psi = -__numeric_constants<_Tp>::gamma_e();
+              for (int __ii = 1; __ii <= __nm1; ++__ii)
+                __psi += _Tp(1) / _Tp(__ii);
+              __del = __fact * (__psi - std::log(__x));
+            }
+          __ans += __del;
+          if (std::abs(__del) < __eps * std::abs(__ans))
+            return __ans;
+        }
+      std::__throw_runtime_error(("Series summation failed " "in __expint_En_series.")
+                                                              );
+    }
+# 201 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_En_cont_frac(unsigned int __n, _Tp __x)
+    {
+      const unsigned int __max_iter = 1000;
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      const _Tp __fp_min = std::numeric_limits<_Tp>::min();
+      const int __nm1 = __n - 1;
+      _Tp __b = __x + _Tp(__n);
+      _Tp __c = _Tp(1) / __fp_min;
+      _Tp __d = _Tp(1) / __b;
+      _Tp __h = __d;
+      for ( unsigned int __i = 1; __i <= __max_iter; ++__i )
+        {
+          _Tp __a = -_Tp(__i * (__nm1 + __i));
+          __b += _Tp(2);
+          __d = _Tp(1) / (__a * __d + __b);
+          __c = __b + __a / __c;
+          const _Tp __del = __c * __d;
+          __h *= __del;
+          if (std::abs(__del - _Tp(1)) < __eps)
+            {
+              const _Tp __ans = __h * std::exp(-__x);
+              return __ans;
+            }
+        }
+      std::__throw_runtime_error(("Continued fraction failed " "in __expint_En_cont_frac.")
+                                                                 );
+    }
+# 246 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_En_recursion(unsigned int __n, _Tp __x)
+    {
+      _Tp __En;
+      _Tp __E1 = __expint_E1(__x);
+      if (__x < _Tp(__n))
+        {
+
+          __En = __E1;
+          for (unsigned int __j = 2; __j < __n; ++__j)
+            __En = (std::exp(-__x) - __x * __En) / _Tp(__j - 1);
+        }
+      else
+        {
+
+          __En = _Tp(1);
+          const int __N = __n + 20;
+          _Tp __save = _Tp(0);
+          for (int __j = __N; __j > 0; --__j)
+            {
+              __En = (std::exp(-__x) - __j * __En) / __x;
+              if (__j == __n)
+                __save = __En;
+            }
+            _Tp __norm = __En / __E1;
+            __En /= __norm;
+        }
+
+      return __En;
+    }
+# 290 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_Ei_series(_Tp __x)
+    {
+      _Tp __term = _Tp(1);
+      _Tp __sum = _Tp(0);
+      const unsigned int __max_iter = 1000;
+      for (unsigned int __i = 1; __i < __max_iter; ++__i)
+        {
+          __term *= __x / __i;
+          __sum += __term / __i;
+          if (__term < std::numeric_limits<_Tp>::epsilon() * __sum)
+            break;
+        }
+
+      return __numeric_constants<_Tp>::__gamma_e() + __sum + std::log(__x);
+    }
+# 321 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_Ei_asymp(_Tp __x)
+    {
+      _Tp __term = _Tp(1);
+      _Tp __sum = _Tp(1);
+      const unsigned int __max_iter = 1000;
+      for (unsigned int __i = 1; __i < __max_iter; ++__i)
+        {
+          _Tp __prev = __term;
+          __term *= __i / __x;
+          if (__term < std::numeric_limits<_Tp>::epsilon())
+            break;
+          if (__term >= __prev)
+            break;
+          __sum += __term;
+        }
+
+      return std::exp(__x) * __sum / __x;
+    }
+# 354 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_Ei(_Tp __x)
+    {
+      if (__x < _Tp(0))
+        return -__expint_E1(-__x);
+      else if (__x < -std::log(std::numeric_limits<_Tp>::epsilon()))
+        return __expint_Ei_series(__x);
+      else
+        return __expint_Ei_asymp(__x);
+    }
+# 378 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_E1(_Tp __x)
+    {
+      if (__x < _Tp(0))
+        return -__expint_Ei(-__x);
+      else if (__x < _Tp(1))
+        return __expint_E1_series(__x);
+      else if (__x < _Tp(100))
+        return __expint_En_cont_frac(1, __x);
+      else
+        return __expint_E1_asymp(__x);
+    }
+# 408 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_asymp(unsigned int __n, _Tp __x)
+    {
+      _Tp __term = _Tp(1);
+      _Tp __sum = _Tp(1);
+      for (unsigned int __i = 1; __i <= __n; ++__i)
+        {
+          _Tp __prev = __term;
+          __term *= -(__n - __i + 1) / __x;
+          if (std::abs(__term) > std::abs(__prev))
+            break;
+          __sum += __term;
+        }
+
+      return std::exp(-__x) * __sum / __x;
+    }
+# 442 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint_large_n(unsigned int __n, _Tp __x)
+    {
+      const _Tp __xpn = __x + __n;
+      const _Tp __xpn2 = __xpn * __xpn;
+      _Tp __term = _Tp(1);
+      _Tp __sum = _Tp(1);
+      for (unsigned int __i = 1; __i <= __n; ++__i)
+        {
+          _Tp __prev = __term;
+          __term *= (__n - 2 * (__i - 1) * __x) / __xpn2;
+          if (std::abs(__term) < std::numeric_limits<_Tp>::epsilon())
+            break;
+          __sum += __term;
+        }
+
+      return std::exp(-__x) * __sum / __xpn;
+    }
+# 476 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __expint(unsigned int __n, _Tp __x)
+    {
+
+      if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__n <= 1 && __x == _Tp(0))
+        return std::numeric_limits<_Tp>::infinity();
+      else
+        {
+          _Tp __E0 = std::exp(__x) / __x;
+          if (__n == 0)
+            return __E0;
+
+          _Tp __E1 = __expint_E1(__x);
+          if (__n == 1)
+            return __E1;
+
+          if (__x == _Tp(0))
+            return _Tp(1) / static_cast<_Tp>(__n - 1);
+
+          _Tp __En = __expint_En_recursion(__n, __x);
+
+          return __En;
+        }
+    }
+# 516 "C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __expint(_Tp __x)
+    {
+      if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else
+        return __expint_Ei(__x);
+    }
+  }
+
+
+
+
+
+}
+# 52 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 1 3
+# 44 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+namespace std
+{
+
+# 60 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+  namespace __detail
+  {
+# 83 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __conf_hyperg_series(_Tp __a, _Tp __c, _Tp __x)
+    {
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+
+      _Tp __term = _Tp(1);
+      _Tp __Fac = _Tp(1);
+      const unsigned int __max_iter = 100000;
+      unsigned int __i;
+      for (__i = 0; __i < __max_iter; ++__i)
+        {
+          __term *= (__a + _Tp(__i)) * __x
+                  / ((__c + _Tp(__i)) * _Tp(1 + __i));
+          if (std::abs(__term) < __eps)
+            {
+              break;
+            }
+          __Fac += __term;
+        }
+      if (__i == __max_iter)
+        std::__throw_runtime_error(("Series failed to converge " "in __conf_hyperg_series.")
+                                                                  );
+
+      return __Fac;
+    }
+# 120 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __conf_hyperg_luke(_Tp __a, _Tp __c, _Tp __xin)
+    {
+      const _Tp __big = std::pow(std::numeric_limits<_Tp>::max(), _Tp(0.16L));
+      const int __nmax = 20000;
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      const _Tp __x = -__xin;
+      const _Tp __x3 = __x * __x * __x;
+      const _Tp __t0 = __a / __c;
+      const _Tp __t1 = (__a + _Tp(1)) / (_Tp(2) * __c);
+      const _Tp __t2 = (__a + _Tp(2)) / (_Tp(2) * (__c + _Tp(1)));
+      _Tp __F = _Tp(1);
+      _Tp __prec;
+
+      _Tp __Bnm3 = _Tp(1);
+      _Tp __Bnm2 = _Tp(1) + __t1 * __x;
+      _Tp __Bnm1 = _Tp(1) + __t2 * __x * (_Tp(1) + __t1 / _Tp(3) * __x);
+
+      _Tp __Anm3 = _Tp(1);
+      _Tp __Anm2 = __Bnm2 - __t0 * __x;
+      _Tp __Anm1 = __Bnm1 - __t0 * (_Tp(1) + __t2 * __x) * __x
+                 + __t0 * __t1 * (__c / (__c + _Tp(1))) * __x * __x;
+
+      int __n = 3;
+      while(1)
+        {
+          _Tp __npam1 = _Tp(__n - 1) + __a;
+          _Tp __npcm1 = _Tp(__n - 1) + __c;
+          _Tp __npam2 = _Tp(__n - 2) + __a;
+          _Tp __npcm2 = _Tp(__n - 2) + __c;
+          _Tp __tnm1 = _Tp(2 * __n - 1);
+          _Tp __tnm3 = _Tp(2 * __n - 3);
+          _Tp __tnm5 = _Tp(2 * __n - 5);
+          _Tp __F1 = (_Tp(__n - 2) - __a) / (_Tp(2) * __tnm3 * __npcm1);
+          _Tp __F2 = (_Tp(__n) + __a) * __npam1
+                   / (_Tp(4) * __tnm1 * __tnm3 * __npcm2 * __npcm1);
+          _Tp __F3 = -__npam2 * __npam1 * (_Tp(__n - 2) - __a)
+                   / (_Tp(8) * __tnm3 * __tnm3 * __tnm5
+                   * (_Tp(__n - 3) + __c) * __npcm2 * __npcm1);
+          _Tp __E = -__npam1 * (_Tp(__n - 1) - __c)
+                   / (_Tp(2) * __tnm3 * __npcm2 * __npcm1);
+
+          _Tp __An = (_Tp(1) + __F1 * __x) * __Anm1
+                   + (__E + __F2 * __x) * __x * __Anm2 + __F3 * __x3 * __Anm3;
+          _Tp __Bn = (_Tp(1) + __F1 * __x) * __Bnm1
+                   + (__E + __F2 * __x) * __x * __Bnm2 + __F3 * __x3 * __Bnm3;
+          _Tp __r = __An / __Bn;
+
+          __prec = std::abs((__F - __r) / __F);
+          __F = __r;
+
+          if (__prec < __eps || __n > __nmax)
+            break;
+
+          if (std::abs(__An) > __big || std::abs(__Bn) > __big)
+            {
+              __An /= __big;
+              __Bn /= __big;
+              __Anm1 /= __big;
+              __Bnm1 /= __big;
+              __Anm2 /= __big;
+              __Bnm2 /= __big;
+              __Anm3 /= __big;
+              __Bnm3 /= __big;
+            }
+          else if (std::abs(__An) < _Tp(1) / __big
+                || std::abs(__Bn) < _Tp(1) / __big)
+            {
+              __An *= __big;
+              __Bn *= __big;
+              __Anm1 *= __big;
+              __Bnm1 *= __big;
+              __Anm2 *= __big;
+              __Bnm2 *= __big;
+              __Anm3 *= __big;
+              __Bnm3 *= __big;
+            }
+
+          ++__n;
+          __Bnm3 = __Bnm2;
+          __Bnm2 = __Bnm1;
+          __Bnm1 = __Bn;
+          __Anm3 = __Anm2;
+          __Anm2 = __Anm1;
+          __Anm1 = __An;
+        }
+
+      if (__n >= __nmax)
+        std::__throw_runtime_error(("Iteration failed to converge " "in __conf_hyperg_luke.")
+                                                                );
+
+      return __F;
+    }
+# 227 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __conf_hyperg(_Tp __a, _Tp __c, _Tp __x)
+    {
+
+      const _Tp __c_nint = ::std::nearbyint(__c);
+
+
+
+      if (__isnan(__a) || __isnan(__c) || __isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__c_nint == __c && __c_nint <= 0)
+        return std::numeric_limits<_Tp>::infinity();
+      else if (__a == _Tp(0))
+        return _Tp(1);
+      else if (__c == __a)
+        return std::exp(__x);
+      else if (__x < _Tp(0))
+        return __conf_hyperg_luke(__a, __c, __x);
+      else
+        return __conf_hyperg_series(__a, __c, __x);
+    }
+# 271 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __hyperg_series(_Tp __a, _Tp __b, _Tp __c, _Tp __x)
+    {
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+
+      _Tp __term = _Tp(1);
+      _Tp __Fabc = _Tp(1);
+      const unsigned int __max_iter = 100000;
+      unsigned int __i;
+      for (__i = 0; __i < __max_iter; ++__i)
+        {
+          __term *= (__a + _Tp(__i)) * (__b + _Tp(__i)) * __x
+                  / ((__c + _Tp(__i)) * _Tp(1 + __i));
+          if (std::abs(__term) < __eps)
+            {
+              break;
+            }
+          __Fabc += __term;
+        }
+      if (__i == __max_iter)
+        std::__throw_runtime_error(("Series failed to converge " "in __hyperg_series.")
+                                                             );
+
+      return __Fabc;
+    }
+
+
+
+
+
+
+
+    template<typename _Tp>
+    _Tp
+    __hyperg_luke(_Tp __a, _Tp __b, _Tp __c, _Tp __xin)
+    {
+      const _Tp __big = std::pow(std::numeric_limits<_Tp>::max(), _Tp(0.16L));
+      const int __nmax = 20000;
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      const _Tp __x = -__xin;
+      const _Tp __x3 = __x * __x * __x;
+      const _Tp __t0 = __a * __b / __c;
+      const _Tp __t1 = (__a + _Tp(1)) * (__b + _Tp(1)) / (_Tp(2) * __c);
+      const _Tp __t2 = (__a + _Tp(2)) * (__b + _Tp(2))
+                     / (_Tp(2) * (__c + _Tp(1)));
+
+      _Tp __F = _Tp(1);
+
+      _Tp __Bnm3 = _Tp(1);
+      _Tp __Bnm2 = _Tp(1) + __t1 * __x;
+      _Tp __Bnm1 = _Tp(1) + __t2 * __x * (_Tp(1) + __t1 / _Tp(3) * __x);
+
+      _Tp __Anm3 = _Tp(1);
+      _Tp __Anm2 = __Bnm2 - __t0 * __x;
+      _Tp __Anm1 = __Bnm1 - __t0 * (_Tp(1) + __t2 * __x) * __x
+                 + __t0 * __t1 * (__c / (__c + _Tp(1))) * __x * __x;
+
+      int __n = 3;
+      while (1)
+        {
+          const _Tp __npam1 = _Tp(__n - 1) + __a;
+          const _Tp __npbm1 = _Tp(__n - 1) + __b;
+          const _Tp __npcm1 = _Tp(__n - 1) + __c;
+          const _Tp __npam2 = _Tp(__n - 2) + __a;
+          const _Tp __npbm2 = _Tp(__n - 2) + __b;
+          const _Tp __npcm2 = _Tp(__n - 2) + __c;
+          const _Tp __tnm1 = _Tp(2 * __n - 1);
+          const _Tp __tnm3 = _Tp(2 * __n - 3);
+          const _Tp __tnm5 = _Tp(2 * __n - 5);
+          const _Tp __n2 = __n * __n;
+          const _Tp __F1 = (_Tp(3) * __n2 + (__a + __b - _Tp(6)) * __n
+                         + _Tp(2) - __a * __b - _Tp(2) * (__a + __b))
+                         / (_Tp(2) * __tnm3 * __npcm1);
+          const _Tp __F2 = -(_Tp(3) * __n2 - (__a + __b + _Tp(6)) * __n
+                         + _Tp(2) - __a * __b) * __npam1 * __npbm1
+                         / (_Tp(4) * __tnm1 * __tnm3 * __npcm2 * __npcm1);
+          const _Tp __F3 = (__npam2 * __npam1 * __npbm2 * __npbm1
+                         * (_Tp(__n - 2) - __a) * (_Tp(__n - 2) - __b))
+                         / (_Tp(8) * __tnm3 * __tnm3 * __tnm5
+                         * (_Tp(__n - 3) + __c) * __npcm2 * __npcm1);
+          const _Tp __E = -__npam1 * __npbm1 * (_Tp(__n - 1) - __c)
+                         / (_Tp(2) * __tnm3 * __npcm2 * __npcm1);
+
+          _Tp __An = (_Tp(1) + __F1 * __x) * __Anm1
+                   + (__E + __F2 * __x) * __x * __Anm2 + __F3 * __x3 * __Anm3;
+          _Tp __Bn = (_Tp(1) + __F1 * __x) * __Bnm1
+                   + (__E + __F2 * __x) * __x * __Bnm2 + __F3 * __x3 * __Bnm3;
+          const _Tp __r = __An / __Bn;
+
+          const _Tp __prec = std::abs((__F - __r) / __F);
+          __F = __r;
+
+          if (__prec < __eps || __n > __nmax)
+            break;
+
+          if (std::abs(__An) > __big || std::abs(__Bn) > __big)
+            {
+              __An /= __big;
+              __Bn /= __big;
+              __Anm1 /= __big;
+              __Bnm1 /= __big;
+              __Anm2 /= __big;
+              __Bnm2 /= __big;
+              __Anm3 /= __big;
+              __Bnm3 /= __big;
+            }
+          else if (std::abs(__An) < _Tp(1) / __big
+                || std::abs(__Bn) < _Tp(1) / __big)
+            {
+              __An *= __big;
+              __Bn *= __big;
+              __Anm1 *= __big;
+              __Bnm1 *= __big;
+              __Anm2 *= __big;
+              __Bnm2 *= __big;
+              __Anm3 *= __big;
+              __Bnm3 *= __big;
+            }
+
+          ++__n;
+          __Bnm3 = __Bnm2;
+          __Bnm2 = __Bnm1;
+          __Bnm1 = __Bn;
+          __Anm3 = __Anm2;
+          __Anm2 = __Anm1;
+          __Anm1 = __An;
+        }
+
+      if (__n >= __nmax)
+        std::__throw_runtime_error(("Iteration failed to converge " "in __hyperg_luke.")
+                                                           );
+
+      return __F;
+    }
+# 438 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __hyperg_reflect(_Tp __a, _Tp __b, _Tp __c, _Tp __x)
+    {
+      const _Tp __d = __c - __a - __b;
+      const int __intd = std::floor(__d + _Tp(0.5L));
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      const _Tp __toler = _Tp(1000) * __eps;
+      const _Tp __log_max = std::log(std::numeric_limits<_Tp>::max());
+      const bool __d_integer = (std::abs(__d - __intd) < __toler);
+
+      if (__d_integer)
+        {
+          const _Tp __ln_omx = std::log(_Tp(1) - __x);
+          const _Tp __ad = std::abs(__d);
+          _Tp __F1, __F2;
+
+          _Tp __d1, __d2;
+          if (__d >= _Tp(0))
+            {
+              __d1 = __d;
+              __d2 = _Tp(0);
+            }
+          else
+            {
+              __d1 = _Tp(0);
+              __d2 = __d;
+            }
+
+          const _Tp __lng_c = __log_gamma(__c);
+
+
+          if (__ad < __eps)
+            {
+
+              __F1 = _Tp(0);
+            }
+          else
+            {
+
+              bool __ok_d1 = true;
+              _Tp __lng_ad, __lng_ad1, __lng_bd1;
+              try
+                {
+                  __lng_ad = __log_gamma(__ad);
+                  __lng_ad1 = __log_gamma(__a + __d1);
+                  __lng_bd1 = __log_gamma(__b + __d1);
+                }
+              catch(...)
+                {
+                  __ok_d1 = false;
+                }
+
+              if (__ok_d1)
+                {
+
+
+
+                  _Tp __sum1 = _Tp(1);
+                  _Tp __term = _Tp(1);
+                  _Tp __ln_pre1 = __lng_ad + __lng_c + __d2 * __ln_omx
+                                - __lng_ad1 - __lng_bd1;
+
+
+
+                  for (int __i = 1; __i < __ad; ++__i)
+                    {
+                      const int __j = __i - 1;
+                      __term *= (__a + __d2 + __j) * (__b + __d2 + __j)
+                              / (_Tp(1) + __d2 + __j) / __i * (_Tp(1) - __x);
+                      __sum1 += __term;
+                    }
+
+                  if (__ln_pre1 > __log_max)
+                    std::__throw_runtime_error(("Overflow of gamma functions" " in __hyperg_luke.")
+                                                                        );
+                  else
+                    __F1 = std::exp(__ln_pre1) * __sum1;
+                }
+              else
+                {
+
+
+                  __F1 = _Tp(0);
+                }
+            }
+
+
+          bool __ok_d2 = true;
+          _Tp __lng_ad2, __lng_bd2;
+          try
+            {
+              __lng_ad2 = __log_gamma(__a + __d2);
+              __lng_bd2 = __log_gamma(__b + __d2);
+            }
+          catch(...)
+            {
+              __ok_d2 = false;
+            }
+
+          if (__ok_d2)
+            {
+
+
+              const int __maxiter = 2000;
+              const _Tp __psi_1 = -__numeric_constants<_Tp>::__gamma_e();
+              const _Tp __psi_1pd = __psi(_Tp(1) + __ad);
+              const _Tp __psi_apd1 = __psi(__a + __d1);
+              const _Tp __psi_bpd1 = __psi(__b + __d1);
+
+              _Tp __psi_term = __psi_1 + __psi_1pd - __psi_apd1
+                             - __psi_bpd1 - __ln_omx;
+              _Tp __fact = _Tp(1);
+              _Tp __sum2 = __psi_term;
+              _Tp __ln_pre2 = __lng_c + __d1 * __ln_omx
+                            - __lng_ad2 - __lng_bd2;
+
+
+              int __j;
+              for (__j = 1; __j < __maxiter; ++__j)
+                {
+
+
+                  const _Tp __term1 = _Tp(1) / _Tp(__j)
+                                    + _Tp(1) / (__ad + __j);
+                  const _Tp __term2 = _Tp(1) / (__a + __d1 + _Tp(__j - 1))
+                                    + _Tp(1) / (__b + __d1 + _Tp(__j - 1));
+                  __psi_term += __term1 - __term2;
+                  __fact *= (__a + __d1 + _Tp(__j - 1))
+                          * (__b + __d1 + _Tp(__j - 1))
+                          / ((__ad + __j) * __j) * (_Tp(1) - __x);
+                  const _Tp __delta = __fact * __psi_term;
+                  __sum2 += __delta;
+                  if (std::abs(__delta) < __eps * std::abs(__sum2))
+                    break;
+                }
+              if (__j == __maxiter)
+                std::__throw_runtime_error(("Sum F2 failed to converge " "in __hyperg_reflect")
+                                                                     );
+
+              if (__sum2 == _Tp(0))
+                __F2 = _Tp(0);
+              else
+                __F2 = std::exp(__ln_pre2) * __sum2;
+            }
+          else
+            {
+
+
+              __F2 = _Tp(0);
+            }
+
+          const _Tp __sgn_2 = (__intd % 2 == 1 ? -_Tp(1) : _Tp(1));
+          const _Tp __F = __F1 + __sgn_2 * __F2;
+
+          return __F;
+        }
+      else
+        {
+
+
+
+
+          bool __ok1 = true;
+          _Tp __sgn_g1ca = _Tp(0), __ln_g1ca = _Tp(0);
+          _Tp __sgn_g1cb = _Tp(0), __ln_g1cb = _Tp(0);
+          try
+            {
+              __sgn_g1ca = __log_gamma_sign(__c - __a);
+              __ln_g1ca = __log_gamma(__c - __a);
+              __sgn_g1cb = __log_gamma_sign(__c - __b);
+              __ln_g1cb = __log_gamma(__c - __b);
+            }
+          catch(...)
+            {
+              __ok1 = false;
+            }
+
+          bool __ok2 = true;
+          _Tp __sgn_g2a = _Tp(0), __ln_g2a = _Tp(0);
+          _Tp __sgn_g2b = _Tp(0), __ln_g2b = _Tp(0);
+          try
+            {
+              __sgn_g2a = __log_gamma_sign(__a);
+              __ln_g2a = __log_gamma(__a);
+              __sgn_g2b = __log_gamma_sign(__b);
+              __ln_g2b = __log_gamma(__b);
+            }
+          catch(...)
+            {
+              __ok2 = false;
+            }
+
+          const _Tp __sgn_gc = __log_gamma_sign(__c);
+          const _Tp __ln_gc = __log_gamma(__c);
+          const _Tp __sgn_gd = __log_gamma_sign(__d);
+          const _Tp __ln_gd = __log_gamma(__d);
+          const _Tp __sgn_gmd = __log_gamma_sign(-__d);
+          const _Tp __ln_gmd = __log_gamma(-__d);
+
+          const _Tp __sgn1 = __sgn_gc * __sgn_gd * __sgn_g1ca * __sgn_g1cb;
+          const _Tp __sgn2 = __sgn_gc * __sgn_gmd * __sgn_g2a * __sgn_g2b;
+
+          _Tp __pre1, __pre2;
+          if (__ok1 && __ok2)
+            {
+              _Tp __ln_pre1 = __ln_gc + __ln_gd - __ln_g1ca - __ln_g1cb;
+              _Tp __ln_pre2 = __ln_gc + __ln_gmd - __ln_g2a - __ln_g2b
+                            + __d * std::log(_Tp(1) - __x);
+              if (__ln_pre1 < __log_max && __ln_pre2 < __log_max)
+                {
+                  __pre1 = std::exp(__ln_pre1);
+                  __pre2 = std::exp(__ln_pre2);
+                  __pre1 *= __sgn1;
+                  __pre2 *= __sgn2;
+                }
+              else
+                {
+                  std::__throw_runtime_error(("Overflow of gamma functions " "in __hyperg_reflect")
+                                                                       );
+                }
+            }
+          else if (__ok1 && !__ok2)
+            {
+              _Tp __ln_pre1 = __ln_gc + __ln_gd - __ln_g1ca - __ln_g1cb;
+              if (__ln_pre1 < __log_max)
+                {
+                  __pre1 = std::exp(__ln_pre1);
+                  __pre1 *= __sgn1;
+                  __pre2 = _Tp(0);
+                }
+              else
+                {
+                  std::__throw_runtime_error(("Overflow of gamma functions " "in __hyperg_reflect")
+                                                                       );
+                }
+            }
+          else if (!__ok1 && __ok2)
+            {
+              _Tp __ln_pre2 = __ln_gc + __ln_gmd - __ln_g2a - __ln_g2b
+                            + __d * std::log(_Tp(1) - __x);
+              if (__ln_pre2 < __log_max)
+                {
+                  __pre1 = _Tp(0);
+                  __pre2 = std::exp(__ln_pre2);
+                  __pre2 *= __sgn2;
+                }
+              else
+                {
+                  std::__throw_runtime_error(("Overflow of gamma functions " "in __hyperg_reflect")
+                                                                       );
+                }
+            }
+          else
+            {
+              __pre1 = _Tp(0);
+              __pre2 = _Tp(0);
+              std::__throw_runtime_error(("Underflow of gamma functions " "in __hyperg_reflect")
+                                                                   );
+            }
+
+          const _Tp __F1 = __hyperg_series(__a, __b, _Tp(1) - __d,
+                                           _Tp(1) - __x);
+          const _Tp __F2 = __hyperg_series(__c - __a, __c - __b, _Tp(1) + __d,
+                                           _Tp(1) - __x);
+
+          const _Tp __F = __pre1 * __F1 + __pre2 * __F2;
+
+          return __F;
+        }
+    }
+# 728 "C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __hyperg(_Tp __a, _Tp __b, _Tp __c, _Tp __x)
+    {
+
+      const _Tp __a_nint = ::std::nearbyint(__a);
+      const _Tp __b_nint = ::std::nearbyint(__b);
+      const _Tp __c_nint = ::std::nearbyint(__c);
+
+
+
+
+
+      const _Tp __toler = _Tp(1000) * std::numeric_limits<_Tp>::epsilon();
+      if (std::abs(__x) >= _Tp(1))
+        std::__throw_domain_error(("Argument outside unit circle " "in __hyperg.")
+                                                     );
+      else if (__isnan(__a) || __isnan(__b)
+            || __isnan(__c) || __isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__c_nint == __c && __c_nint <= _Tp(0))
+        return std::numeric_limits<_Tp>::infinity();
+      else if (std::abs(__c - __b) < __toler || std::abs(__c - __a) < __toler)
+        return std::pow(_Tp(1) - __x, __c - __a - __b);
+      else if (__a >= _Tp(0) && __b >= _Tp(0) && __c >= _Tp(0)
+            && __x >= _Tp(0) && __x < _Tp(0.995L))
+        return __hyperg_series(__a, __b, __c, __x);
+      else if (std::abs(__a) < _Tp(10) && std::abs(__b) < _Tp(10))
+        {
+
+
+          if (__a < _Tp(0) && std::abs(__a - __a_nint) < __toler)
+            return __hyperg_series(__a_nint, __b, __c, __x);
+          else if (__b < _Tp(0) && std::abs(__b - __b_nint) < __toler)
+            return __hyperg_series(__a, __b_nint, __c, __x);
+          else if (__x < -_Tp(0.25L))
+            return __hyperg_luke(__a, __b, __c, __x);
+          else if (__x < _Tp(0.5L))
+            return __hyperg_series(__a, __b, __c, __x);
+          else
+            if (std::abs(__c) > _Tp(10))
+              return __hyperg_series(__a, __b, __c, __x);
+            else
+              return __hyperg_reflect(__a, __b, __c, __x);
+        }
+      else
+        return __hyperg_luke(__a, __b, __c, __x);
+    }
+  }
+
+
+
+
+
+
+}
+# 53 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc" 1 3
+# 49 "C:/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc" 3
+namespace std
+{
+
+# 65 "C:/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc" 3
+  namespace __detail
+  {
+# 80 "C:/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __poly_legendre_p(unsigned int __l, _Tp __x)
+    {
+
+      if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__x == +_Tp(1))
+        return +_Tp(1);
+      else if (__x == -_Tp(1))
+        return (__l % 2 == 1 ? -_Tp(1) : +_Tp(1));
+      else
+        {
+          _Tp __p_lm2 = _Tp(1);
+          if (__l == 0)
+            return __p_lm2;
+
+          _Tp __p_lm1 = __x;
+          if (__l == 1)
+            return __p_lm1;
+
+          _Tp __p_l = 0;
+          for (unsigned int __ll = 2; __ll <= __l; ++__ll)
+            {
+
+
+              __p_l = _Tp(2) * __x * __p_lm1 - __p_lm2
+                    - (__x * __p_lm1 - __p_lm2) / _Tp(__ll);
+              __p_lm2 = __p_lm1;
+              __p_lm1 = __p_l;
+            }
+
+          return __p_l;
+        }
+    }
+# 136 "C:/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __assoc_legendre_p(unsigned int __l, unsigned int __m, _Tp __x,
+         _Tp __phase = _Tp(+1))
+    {
+
+      if (__m > __l)
+        return _Tp(0);
+      else if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__m == 0)
+        return __poly_legendre_p(__l, __x);
+      else
+        {
+          _Tp __p_mm = _Tp(1);
+          if (__m > 0)
+            {
+
+
+              _Tp __root = std::sqrt(_Tp(1) - __x) * std::sqrt(_Tp(1) + __x);
+              _Tp __fact = _Tp(1);
+              for (unsigned int __i = 1; __i <= __m; ++__i)
+                {
+                  __p_mm *= __phase * __fact * __root;
+                  __fact += _Tp(2);
+                }
+            }
+          if (__l == __m)
+            return __p_mm;
+
+          _Tp __p_mp1m = _Tp(2 * __m + 1) * __x * __p_mm;
+          if (__l == __m + 1)
+            return __p_mp1m;
+
+          _Tp __p_lm2m = __p_mm;
+          _Tp __P_lm1m = __p_mp1m;
+          _Tp __p_lm = _Tp(0);
+          for (unsigned int __j = __m + 2; __j <= __l; ++__j)
+            {
+              __p_lm = (_Tp(2 * __j - 1) * __x * __P_lm1m
+                      - _Tp(__j + __m - 1) * __p_lm2m) / _Tp(__j - __m);
+              __p_lm2m = __P_lm1m;
+              __P_lm1m = __p_lm;
+            }
+
+          return __p_lm;
+        }
+    }
+# 214 "C:/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc" 3
+    template <typename _Tp>
+    _Tp
+    __sph_legendre(unsigned int __l, unsigned int __m, _Tp __theta)
+    {
+      if (__isnan(__theta))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+
+      const _Tp __x = std::cos(__theta);
+
+      if (__m > __l)
+        return _Tp(0);
+      else if (__m == 0)
+        {
+          _Tp __P = __poly_legendre_p(__l, __x);
+          _Tp __fact = std::sqrt(_Tp(2 * __l + 1)
+                     / (_Tp(4) * __numeric_constants<_Tp>::__pi()));
+          __P *= __fact;
+          return __P;
+        }
+      else if (__x == _Tp(1) || __x == -_Tp(1))
+        {
+
+          return _Tp(0);
+        }
+      else
+        {
+
+
+
+
+
+          const _Tp __sgn = ( __m % 2 == 1 ? -_Tp(1) : _Tp(1));
+          const _Tp __y_mp1m_factor = __x * std::sqrt(_Tp(2 * __m + 3));
+
+          const _Tp __lncirc = ::std::log1p(-__x * __x);
+
+
+
+
+
+          const _Tp __lnpoch = ::std::lgamma(_Tp(__m + _Tp(0.5L)))
+                             - ::std::lgamma(_Tp(__m));
+
+
+
+
+          const _Tp __lnpre_val =
+                    -_Tp(0.25L) * __numeric_constants<_Tp>::__lnpi()
+                    + _Tp(0.5L) * (__lnpoch + __m * __lncirc);
+          const _Tp __sr = std::sqrt((_Tp(2) + _Tp(1) / __m)
+                         / (_Tp(4) * __numeric_constants<_Tp>::__pi()));
+          _Tp __y_mm = __sgn * __sr * std::exp(__lnpre_val);
+          _Tp __y_mp1m = __y_mp1m_factor * __y_mm;
+
+          if (__l == __m)
+            return __y_mm;
+          else if (__l == __m + 1)
+            return __y_mp1m;
+          else
+            {
+              _Tp __y_lm = _Tp(0);
+
+
+              for (unsigned int __ll = __m + 2; __ll <= __l; ++__ll)
+                {
+                  const _Tp __rat1 = _Tp(__ll - __m) / _Tp(__ll + __m);
+                  const _Tp __rat2 = _Tp(__ll - __m - 1) / _Tp(__ll + __m - 1);
+                  const _Tp __fact1 = std::sqrt(__rat1 * _Tp(2 * __ll + 1)
+                                                       * _Tp(2 * __ll - 1));
+                  const _Tp __fact2 = std::sqrt(__rat1 * __rat2 * _Tp(2 * __ll + 1)
+                                                                / _Tp(2 * __ll - 3));
+                  __y_lm = (__x * __y_mp1m * __fact1
+                         - (__ll + __m - 1) * __y_mm * __fact2) / _Tp(__ll - __m);
+                  __y_mm = __y_mp1m;
+                  __y_mp1m = __y_lm;
+                }
+
+              return __y_lm;
+            }
+        }
+    }
+  }
+
+
+
+
+
+
+}
+# 54 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 1 3
+# 51 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 3
+namespace std
+{
+
+# 65 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 3
+  namespace __detail
+  {
+# 83 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 3
+    template <typename _Tp>
+    void
+    __bessel_ik(_Tp __nu, _Tp __x,
+                _Tp & __Inu, _Tp & __Knu, _Tp & __Ipnu, _Tp & __Kpnu)
+    {
+      if (__x == _Tp(0))
+        {
+          if (__nu == _Tp(0))
+            {
+              __Inu = _Tp(1);
+              __Ipnu = _Tp(0);
+            }
+          else if (__nu == _Tp(1))
+            {
+              __Inu = _Tp(0);
+              __Ipnu = _Tp(0.5L);
+            }
+          else
+            {
+              __Inu = _Tp(0);
+              __Ipnu = _Tp(0);
+            }
+          __Knu = std::numeric_limits<_Tp>::infinity();
+          __Kpnu = -std::numeric_limits<_Tp>::infinity();
+          return;
+        }
+
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+      const _Tp __fp_min = _Tp(10) * std::numeric_limits<_Tp>::epsilon();
+      const int __max_iter = 15000;
+      const _Tp __x_min = _Tp(2);
+
+      const int __nl = static_cast<int>(__nu + _Tp(0.5L));
+
+      const _Tp __mu = __nu - __nl;
+      const _Tp __mu2 = __mu * __mu;
+      const _Tp __xi = _Tp(1) / __x;
+      const _Tp __xi2 = _Tp(2) * __xi;
+      _Tp __h = __nu * __xi;
+      if ( __h < __fp_min )
+        __h = __fp_min;
+      _Tp __b = __xi2 * __nu;
+      _Tp __d = _Tp(0);
+      _Tp __c = __h;
+      int __i;
+      for ( __i = 1; __i <= __max_iter; ++__i )
+        {
+          __b += __xi2;
+          __d = _Tp(1) / (__b + __d);
+          __c = __b + _Tp(1) / __c;
+          const _Tp __del = __c * __d;
+          __h *= __del;
+          if (std::abs(__del - _Tp(1)) < __eps)
+            break;
+        }
+      if (__i > __max_iter)
+        std::__throw_runtime_error(("Argument x too large " "in __bessel_ik; " "try asymptotic expansion.")
+
+                                                                   );
+      _Tp __Inul = __fp_min;
+      _Tp __Ipnul = __h * __Inul;
+      _Tp __Inul1 = __Inul;
+      _Tp __Ipnu1 = __Ipnul;
+      _Tp __fact = __nu * __xi;
+      for (int __l = __nl; __l >= 1; --__l)
+        {
+          const _Tp __Inutemp = __fact * __Inul + __Ipnul;
+          __fact -= __xi;
+          __Ipnul = __fact * __Inutemp + __Inul;
+          __Inul = __Inutemp;
+        }
+      _Tp __f = __Ipnul / __Inul;
+      _Tp __Kmu, __Knu1;
+      if (__x < __x_min)
+        {
+          const _Tp __x2 = __x / _Tp(2);
+          const _Tp __pimu = __numeric_constants<_Tp>::__pi() * __mu;
+          const _Tp __fact = (std::abs(__pimu) < __eps
+                            ? _Tp(1) : __pimu / std::sin(__pimu));
+          _Tp __d = -std::log(__x2);
+          _Tp __e = __mu * __d;
+          const _Tp __fact2 = (std::abs(__e) < __eps
+                            ? _Tp(1) : std::sinh(__e) / __e);
+          _Tp __gam1, __gam2, __gampl, __gammi;
+          __gamma_temme(__mu, __gam1, __gam2, __gampl, __gammi);
+          _Tp __ff = __fact
+                   * (__gam1 * std::cosh(__e) + __gam2 * __fact2 * __d);
+          _Tp __sum = __ff;
+          __e = std::exp(__e);
+          _Tp __p = __e / (_Tp(2) * __gampl);
+          _Tp __q = _Tp(1) / (_Tp(2) * __e * __gammi);
+          _Tp __c = _Tp(1);
+          __d = __x2 * __x2;
+          _Tp __sum1 = __p;
+          int __i;
+          for (__i = 1; __i <= __max_iter; ++__i)
+            {
+              __ff = (__i * __ff + __p + __q) / (__i * __i - __mu2);
+              __c *= __d / __i;
+              __p /= __i - __mu;
+              __q /= __i + __mu;
+              const _Tp __del = __c * __ff;
+              __sum += __del;
+              const _Tp __del1 = __c * (__p - __i * __ff);
+              __sum1 += __del1;
+              if (std::abs(__del) < __eps * std::abs(__sum))
+                break;
+            }
+          if (__i > __max_iter)
+            std::__throw_runtime_error(("Bessel k series failed to converge " "in __bessel_ik.")
+                                                             );
+          __Kmu = __sum;
+          __Knu1 = __sum1 * __xi2;
+        }
+      else
+        {
+          _Tp __b = _Tp(2) * (_Tp(1) + __x);
+          _Tp __d = _Tp(1) / __b;
+          _Tp __delh = __d;
+          _Tp __h = __delh;
+          _Tp __q1 = _Tp(0);
+          _Tp __q2 = _Tp(1);
+          _Tp __a1 = _Tp(0.25L) - __mu2;
+          _Tp __q = __c = __a1;
+          _Tp __a = -__a1;
+          _Tp __s = _Tp(1) + __q * __delh;
+          int __i;
+          for (__i = 2; __i <= __max_iter; ++__i)
+            {
+              __a -= 2 * (__i - 1);
+              __c = -__a * __c / __i;
+              const _Tp __qnew = (__q1 - __b * __q2) / __a;
+              __q1 = __q2;
+              __q2 = __qnew;
+              __q += __c * __qnew;
+              __b += _Tp(2);
+              __d = _Tp(1) / (__b + __a * __d);
+              __delh = (__b * __d - _Tp(1)) * __delh;
+              __h += __delh;
+              const _Tp __dels = __q * __delh;
+              __s += __dels;
+              if ( std::abs(__dels / __s) < __eps )
+                break;
+            }
+          if (__i > __max_iter)
+            std::__throw_runtime_error(("Steed's method failed " "in __bessel_ik.")
+                                                             );
+          __h = __a1 * __h;
+          __Kmu = std::sqrt(__numeric_constants<_Tp>::__pi() / (_Tp(2) * __x))
+                * std::exp(-__x) / __s;
+          __Knu1 = __Kmu * (__mu + __x + _Tp(0.5L) - __h) * __xi;
+        }
+
+      _Tp __Kpmu = __mu * __xi * __Kmu - __Knu1;
+      _Tp __Inumu = __xi / (__f * __Kmu - __Kpmu);
+      __Inu = __Inumu * __Inul1 / __Inul;
+      __Ipnu = __Inumu * __Ipnu1 / __Inul;
+      for ( __i = 1; __i <= __nl; ++__i )
+        {
+          const _Tp __Knutemp = (__mu + __i) * __xi2 * __Knu1 + __Kmu;
+          __Kmu = __Knu1;
+          __Knu1 = __Knutemp;
+        }
+      __Knu = __Kmu;
+      __Kpnu = __nu * __xi * __Kmu - __Knu1;
+
+      return;
+    }
+# 267 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __cyl_bessel_i(_Tp __nu, _Tp __x)
+    {
+      if (__nu < _Tp(0) || __x < _Tp(0))
+        std::__throw_domain_error(("Bad argument " "in __cyl_bessel_i.")
+                                                           );
+      else if (__isnan(__nu) || __isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__x * __x < _Tp(10) * (__nu + _Tp(1)))
+        return __cyl_bessel_ij_series(__nu, __x, +_Tp(1), 200);
+      else
+        {
+          _Tp __I_nu, __K_nu, __Ip_nu, __Kp_nu;
+          __bessel_ik(__nu, __x, __I_nu, __K_nu, __Ip_nu, __Kp_nu);
+          return __I_nu;
+        }
+    }
+# 303 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __cyl_bessel_k(_Tp __nu, _Tp __x)
+    {
+      if (__nu < _Tp(0) || __x < _Tp(0))
+        std::__throw_domain_error(("Bad argument " "in __cyl_bessel_k.")
+                                                           );
+      else if (__isnan(__nu) || __isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else
+        {
+          _Tp __I_nu, __K_nu, __Ip_nu, __Kp_nu;
+          __bessel_ik(__nu, __x, __I_nu, __K_nu, __Ip_nu, __Kp_nu);
+          return __K_nu;
+        }
+    }
+# 337 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 3
+    template <typename _Tp>
+    void
+    __sph_bessel_ik(unsigned int __n, _Tp __x,
+                    _Tp & __i_n, _Tp & __k_n, _Tp & __ip_n, _Tp & __kp_n)
+    {
+      const _Tp __nu = _Tp(__n) + _Tp(0.5L);
+
+      _Tp __I_nu, __Ip_nu, __K_nu, __Kp_nu;
+      __bessel_ik(__nu, __x, __I_nu, __K_nu, __Ip_nu, __Kp_nu);
+
+      const _Tp __factor = __numeric_constants<_Tp>::__sqrtpio2()
+                         / std::sqrt(__x);
+
+      __i_n = __factor * __I_nu;
+      __k_n = __factor * __K_nu;
+      __ip_n = __factor * __Ip_nu - __i_n / (_Tp(2) * __x);
+      __kp_n = __factor * __Kp_nu - __k_n / (_Tp(2) * __x);
+
+      return;
+    }
+# 373 "C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc" 3
+    template <typename _Tp>
+    void
+    __airy(_Tp __x, _Tp & __Ai, _Tp & __Bi, _Tp & __Aip, _Tp & __Bip)
+    {
+      const _Tp __absx = std::abs(__x);
+      const _Tp __rootx = std::sqrt(__absx);
+      const _Tp __z = _Tp(2) * __absx * __rootx / _Tp(3);
+      const _Tp _S_inf = std::numeric_limits<_Tp>::infinity();
+
+      if (__isnan(__x))
+        __Bip = __Aip = __Bi = __Ai = std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__z == _S_inf)
+        {
+   __Aip = __Ai = _Tp(0);
+   __Bip = __Bi = _S_inf;
+ }
+      else if (__z == -_S_inf)
+ __Bip = __Aip = __Bi = __Ai = _Tp(0);
+      else if (__x > _Tp(0))
+        {
+          _Tp __I_nu, __Ip_nu, __K_nu, __Kp_nu;
+
+          __bessel_ik(_Tp(1) / _Tp(3), __z, __I_nu, __K_nu, __Ip_nu, __Kp_nu);
+          __Ai = __rootx * __K_nu
+               / (__numeric_constants<_Tp>::__sqrt3()
+                * __numeric_constants<_Tp>::__pi());
+          __Bi = __rootx * (__K_nu / __numeric_constants<_Tp>::__pi()
+                 + _Tp(2) * __I_nu / __numeric_constants<_Tp>::__sqrt3());
+
+          __bessel_ik(_Tp(2) / _Tp(3), __z, __I_nu, __K_nu, __Ip_nu, __Kp_nu);
+          __Aip = -__x * __K_nu
+                / (__numeric_constants<_Tp>::__sqrt3()
+                 * __numeric_constants<_Tp>::__pi());
+          __Bip = __x * (__K_nu / __numeric_constants<_Tp>::__pi()
+                      + _Tp(2) * __I_nu
+                      / __numeric_constants<_Tp>::__sqrt3());
+        }
+      else if (__x < _Tp(0))
+        {
+          _Tp __J_nu, __Jp_nu, __N_nu, __Np_nu;
+
+          __bessel_jn(_Tp(1) / _Tp(3), __z, __J_nu, __N_nu, __Jp_nu, __Np_nu);
+          __Ai = __rootx * (__J_nu
+                    - __N_nu / __numeric_constants<_Tp>::__sqrt3()) / _Tp(2);
+          __Bi = -__rootx * (__N_nu
+                    + __J_nu / __numeric_constants<_Tp>::__sqrt3()) / _Tp(2);
+
+          __bessel_jn(_Tp(2) / _Tp(3), __z, __J_nu, __N_nu, __Jp_nu, __Np_nu);
+          __Aip = __absx * (__N_nu / __numeric_constants<_Tp>::__sqrt3()
+                          + __J_nu) / _Tp(2);
+          __Bip = __absx * (__J_nu / __numeric_constants<_Tp>::__sqrt3()
+                          - __N_nu) / _Tp(2);
+        }
+      else
+        {
+
+
+
+          __Ai = _Tp(0.35502805388781723926L);
+          __Bi = __Ai * __numeric_constants<_Tp>::__sqrt3();
+
+
+
+
+          __Aip = -_Tp(0.25881940379280679840L);
+          __Bip = -__Aip * __numeric_constants<_Tp>::__sqrt3();
+        }
+
+      return;
+    }
+  }
+
+
+
+
+
+}
+# 55 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc" 1 3
+# 42 "C:/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc" 3
+namespace std
+{
+
+# 56 "C:/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc" 3
+  namespace __detail
+  {
+# 72 "C:/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __poly_hermite_recursion(unsigned int __n, _Tp __x)
+    {
+
+      _Tp __H_0 = 1;
+      if (__n == 0)
+        return __H_0;
+
+
+      _Tp __H_1 = 2 * __x;
+      if (__n == 1)
+        return __H_1;
+
+
+      _Tp __H_n, __H_nm1, __H_nm2;
+      unsigned int __i;
+      for (__H_nm2 = __H_0, __H_nm1 = __H_1, __i = 2; __i <= __n; ++__i)
+        {
+          __H_n = 2 * (__x * __H_nm1 - (__i - 1) * __H_nm2);
+          __H_nm2 = __H_nm1;
+          __H_nm1 = __H_n;
+        }
+
+      return __H_n;
+    }
+# 114 "C:/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __poly_hermite(unsigned int __n, _Tp __x)
+    {
+      if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else
+        return __poly_hermite_recursion(__n, __x);
+    }
+  }
+
+
+
+
+
+}
+# 56 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 1 3
+# 44 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+namespace std
+{
+
+# 60 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+  namespace __detail
+  {
+# 75 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+    template<typename _Tpa, typename _Tp>
+    _Tp
+    __poly_laguerre_large_n(unsigned __n, _Tpa __alpha1, _Tp __x)
+    {
+      const _Tp __a = -_Tp(__n);
+      const _Tp __b = _Tp(__alpha1) + _Tp(1);
+      const _Tp __eta = _Tp(2) * __b - _Tp(4) * __a;
+      const _Tp __cos2th = __x / __eta;
+      const _Tp __sin2th = _Tp(1) - __cos2th;
+      const _Tp __th = std::acos(std::sqrt(__cos2th));
+      const _Tp __pre_h = __numeric_constants<_Tp>::__pi_2()
+                        * __numeric_constants<_Tp>::__pi_2()
+                        * __eta * __eta * __cos2th * __sin2th;
+
+
+      const _Tp __lg_b = ::std::lgamma(_Tp(__n) + __b);
+      const _Tp __lnfact = ::std::lgamma(_Tp(__n + 1));
+
+
+
+
+
+      _Tp __pre_term1 = _Tp(0.5L) * (_Tp(1) - __b)
+                      * std::log(_Tp(0.25L) * __x * __eta);
+      _Tp __pre_term2 = _Tp(0.25L) * std::log(__pre_h);
+      _Tp __lnpre = __lg_b - __lnfact + _Tp(0.5L) * __x
+                      + __pre_term1 - __pre_term2;
+      _Tp __ser_term1 = std::sin(__a * __numeric_constants<_Tp>::__pi());
+      _Tp __ser_term2 = std::sin(_Tp(0.25L) * __eta
+                              * (_Tp(2) * __th
+                               - std::sin(_Tp(2) * __th))
+                               + __numeric_constants<_Tp>::__pi_4());
+      _Tp __ser = __ser_term1 + __ser_term2;
+
+      return std::exp(__lnpre) * __ser;
+    }
+# 129 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+    template<typename _Tpa, typename _Tp>
+    _Tp
+    __poly_laguerre_hyperg(unsigned int __n, _Tpa __alpha1, _Tp __x)
+    {
+      const _Tp __b = _Tp(__alpha1) + _Tp(1);
+      const _Tp __mx = -__x;
+      const _Tp __tc_sgn = (__x < _Tp(0) ? _Tp(1)
+                         : ((__n % 2 == 1) ? -_Tp(1) : _Tp(1)));
+
+      _Tp __tc = _Tp(1);
+      const _Tp __ax = std::abs(__x);
+      for (unsigned int __k = 1; __k <= __n; ++__k)
+        __tc *= (__ax / __k);
+
+      _Tp __term = __tc * __tc_sgn;
+      _Tp __sum = __term;
+      for (int __k = int(__n) - 1; __k >= 0; --__k)
+        {
+          __term *= ((__b + _Tp(__k)) / _Tp(int(__n) - __k))
+                  * _Tp(__k + 1) / __mx;
+          __sum += __term;
+        }
+
+      return __sum;
+    }
+# 185 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+    template<typename _Tpa, typename _Tp>
+    _Tp
+    __poly_laguerre_recursion(unsigned int __n, _Tpa __alpha1, _Tp __x)
+    {
+
+      _Tp __l_0 = _Tp(1);
+      if (__n == 0)
+        return __l_0;
+
+
+      _Tp __l_1 = -__x + _Tp(1) + _Tp(__alpha1);
+      if (__n == 1)
+        return __l_1;
+
+
+      _Tp __l_n2 = __l_0;
+      _Tp __l_n1 = __l_1;
+      _Tp __l_n = _Tp(0);
+      for (unsigned int __nn = 2; __nn <= __n; ++__nn)
+        {
+            __l_n = (_Tp(2 * __nn - 1) + _Tp(__alpha1) - __x)
+                  * __l_n1 / _Tp(__nn)
+                  - (_Tp(__nn - 1) + _Tp(__alpha1)) * __l_n2 / _Tp(__nn);
+            __l_n2 = __l_n1;
+            __l_n1 = __l_n;
+        }
+
+      return __l_n;
+    }
+# 244 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+    template<typename _Tpa, typename _Tp>
+    _Tp
+    __poly_laguerre(unsigned int __n, _Tpa __alpha1, _Tp __x)
+    {
+      if (__x < _Tp(0))
+        std::__throw_domain_error(("Negative argument " "in __poly_laguerre.")
+                                                            );
+
+      else if (__isnan(__x))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__n == 0)
+        return _Tp(1);
+      else if (__n == 1)
+        return _Tp(1) + _Tp(__alpha1) - __x;
+      else if (__x == _Tp(0))
+        {
+          _Tp __prod = _Tp(__alpha1) + _Tp(1);
+          for (unsigned int __k = 2; __k <= __n; ++__k)
+            __prod *= (_Tp(__alpha1) + _Tp(__k)) / _Tp(__k);
+          return __prod;
+        }
+      else if (__n > 10000000 && _Tp(__alpha1) > -_Tp(1)
+            && __x < _Tp(2) * (_Tp(__alpha1) + _Tp(1)) + _Tp(4 * __n))
+        return __poly_laguerre_large_n(__n, __alpha1, __x);
+      else if (_Tp(__alpha1) >= _Tp(0)
+           || (__x > _Tp(0) && _Tp(__alpha1) < -_Tp(__n + 1)))
+        return __poly_laguerre_recursion(__n, __alpha1, __x);
+      else
+        return __poly_laguerre_hyperg(__n, __alpha1, __x);
+    }
+# 296 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __assoc_laguerre(unsigned int __n, unsigned int __m, _Tp __x)
+    { return __poly_laguerre<unsigned int, _Tp>(__n, __m, __x); }
+# 316 "C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __laguerre(unsigned int __n, _Tp __x)
+    { return __poly_laguerre<unsigned int, _Tp>(__n, 0, __x); }
+  }
+
+
+
+
+
+
+}
+# 57 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+# 1 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 1 3
+# 47 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+namespace std
+{
+
+# 63 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+  namespace __detail
+  {
+# 78 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __riemann_zeta_sum(_Tp __s)
+    {
+
+      if (__s < _Tp(1))
+        std::__throw_domain_error(("Bad argument in zeta sum."));
+
+      const unsigned int max_iter = 10000;
+      _Tp __zeta = _Tp(0);
+      for (unsigned int __k = 1; __k < max_iter; ++__k)
+        {
+          _Tp __term = std::pow(static_cast<_Tp>(__k), -__s);
+          if (__term < std::numeric_limits<_Tp>::epsilon())
+            {
+              break;
+            }
+          __zeta += __term;
+        }
+
+      return __zeta;
+    }
+# 115 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __riemann_zeta_alt(_Tp __s)
+    {
+      _Tp __sgn = _Tp(1);
+      _Tp __zeta = _Tp(0);
+      for (unsigned int __i = 1; __i < 10000000; ++__i)
+        {
+          _Tp __term = __sgn / std::pow(__i, __s);
+          if (std::abs(__term) < std::numeric_limits<_Tp>::epsilon())
+            break;
+          __zeta += __term;
+          __sgn *= _Tp(-1);
+        }
+      __zeta /= _Tp(1) - std::pow(_Tp(2), _Tp(1) - __s);
+
+      return __zeta;
+    }
+# 157 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __riemann_zeta_glob(_Tp __s)
+    {
+      _Tp __zeta = _Tp(0);
+
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+
+      const _Tp __max_bincoeff = std::numeric_limits<_Tp>::max_exponent10
+                               * std::log(_Tp(10)) - _Tp(1);
+
+
+
+      if (__s < _Tp(0))
+        {
+
+          if (::std::fmod(__s,_Tp(2)) == _Tp(0))
+            return _Tp(0);
+          else
+
+            {
+              _Tp __zeta = __riemann_zeta_glob(_Tp(1) - __s);
+              __zeta *= std::pow(_Tp(2)
+                     * __numeric_constants<_Tp>::__pi(), __s)
+                     * std::sin(__numeric_constants<_Tp>::__pi_2() * __s)
+
+                     * std::exp(::std::lgamma(_Tp(1) - __s))
+
+
+
+                     / __numeric_constants<_Tp>::__pi();
+              return __zeta;
+            }
+        }
+
+      _Tp __num = _Tp(0.5L);
+      const unsigned int __maxit = 10000;
+      for (unsigned int __i = 0; __i < __maxit; ++__i)
+        {
+          bool __punt = false;
+          _Tp __sgn = _Tp(1);
+          _Tp __term = _Tp(0);
+          for (unsigned int __j = 0; __j <= __i; ++__j)
+            {
+
+              _Tp __bincoeff = ::std::lgamma(_Tp(1 + __i))
+                              - ::std::lgamma(_Tp(1 + __j))
+                              - ::std::lgamma(_Tp(1 + __i - __j));
+
+
+
+
+
+              if (__bincoeff > __max_bincoeff)
+                {
+
+                  __punt = true;
+                  break;
+                }
+              __bincoeff = std::exp(__bincoeff);
+              __term += __sgn * __bincoeff * std::pow(_Tp(1 + __j), -__s);
+              __sgn *= _Tp(-1);
+            }
+          if (__punt)
+            break;
+          __term *= __num;
+          __zeta += __term;
+          if (std::abs(__term/__zeta) < __eps)
+            break;
+          __num *= _Tp(0.5L);
+        }
+
+      __zeta /= _Tp(1) - std::pow(_Tp(2), _Tp(1) - __s);
+
+      return __zeta;
+    }
+# 252 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __riemann_zeta_product(_Tp __s)
+    {
+      static const _Tp __prime[] = {
+        _Tp(2), _Tp(3), _Tp(5), _Tp(7), _Tp(11), _Tp(13), _Tp(17), _Tp(19),
+        _Tp(23), _Tp(29), _Tp(31), _Tp(37), _Tp(41), _Tp(43), _Tp(47),
+        _Tp(53), _Tp(59), _Tp(61), _Tp(67), _Tp(71), _Tp(73), _Tp(79),
+        _Tp(83), _Tp(89), _Tp(97), _Tp(101), _Tp(103), _Tp(107), _Tp(109)
+      };
+      static const unsigned int __num_primes = sizeof(__prime) / sizeof(_Tp);
+
+      _Tp __zeta = _Tp(1);
+      for (unsigned int __i = 0; __i < __num_primes; ++__i)
+        {
+          const _Tp __fact = _Tp(1) - std::pow(__prime[__i], -__s);
+          __zeta *= __fact;
+          if (_Tp(1) - __fact < std::numeric_limits<_Tp>::epsilon())
+            break;
+        }
+
+      __zeta = _Tp(1) / __zeta;
+
+      return __zeta;
+    }
+# 293 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __riemann_zeta(_Tp __s)
+    {
+      if (__isnan(__s))
+        return std::numeric_limits<_Tp>::quiet_NaN();
+      else if (__s == _Tp(1))
+        return std::numeric_limits<_Tp>::infinity();
+      else if (__s < -_Tp(19))
+        {
+          _Tp __zeta = __riemann_zeta_product(_Tp(1) - __s);
+          __zeta *= std::pow(_Tp(2) * __numeric_constants<_Tp>::__pi(), __s)
+                 * std::sin(__numeric_constants<_Tp>::__pi_2() * __s)
+
+                 * std::exp(::std::lgamma(_Tp(1) - __s))
+
+
+
+                 / __numeric_constants<_Tp>::__pi();
+          return __zeta;
+        }
+      else if (__s < _Tp(20))
+        {
+
+          bool __glob = true;
+          if (__glob)
+            return __riemann_zeta_glob(__s);
+          else
+            {
+              if (__s > _Tp(1))
+                return __riemann_zeta_sum(__s);
+              else
+                {
+                  _Tp __zeta = std::pow(_Tp(2)
+                                * __numeric_constants<_Tp>::__pi(), __s)
+                         * std::sin(__numeric_constants<_Tp>::__pi_2() * __s)
+
+                             * ::std::tgamma(_Tp(1) - __s)
+
+
+
+                             * __riemann_zeta_sum(_Tp(1) - __s);
+                  return __zeta;
+                }
+            }
+        }
+      else
+        return __riemann_zeta_product(__s);
+    }
+# 365 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+    template<typename _Tp>
+    _Tp
+    __hurwitz_zeta_glob(_Tp __a, _Tp __s)
+    {
+      _Tp __zeta = _Tp(0);
+
+      const _Tp __eps = std::numeric_limits<_Tp>::epsilon();
+
+      const _Tp __max_bincoeff = std::numeric_limits<_Tp>::max_exponent10
+                               * std::log(_Tp(10)) - _Tp(1);
+
+      const unsigned int __maxit = 10000;
+      for (unsigned int __i = 0; __i < __maxit; ++__i)
+        {
+          bool __punt = false;
+          _Tp __sgn = _Tp(1);
+          _Tp __term = _Tp(0);
+          for (unsigned int __j = 0; __j <= __i; ++__j)
+            {
+
+              _Tp __bincoeff = ::std::lgamma(_Tp(1 + __i))
+                              - ::std::lgamma(_Tp(1 + __j))
+                              - ::std::lgamma(_Tp(1 + __i - __j));
+
+
+
+
+
+              if (__bincoeff > __max_bincoeff)
+                {
+
+                  __punt = true;
+                  break;
+                }
+              __bincoeff = std::exp(__bincoeff);
+              __term += __sgn * __bincoeff * std::pow(_Tp(__a + __j), -__s);
+              __sgn *= _Tp(-1);
+            }
+          if (__punt)
+            break;
+          __term /= _Tp(__i + 1);
+          if (std::abs(__term / __zeta) < __eps)
+            break;
+          __zeta += __term;
+        }
+
+      __zeta /= __s - _Tp(1);
+
+      return __zeta;
+    }
+# 430 "C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc" 3
+    template<typename _Tp>
+    inline _Tp
+    __hurwitz_zeta(_Tp __a, _Tp __s)
+    { return __hurwitz_zeta_glob(__a, __s); }
+  }
+
+
+
+
+
+
+}
+# 58 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 2 3
+
+namespace std
+{
+
+# 203 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  assoc_laguerref(unsigned int __n, unsigned int __m, float __x)
+  { return __detail::__assoc_laguerre<float>(__n, __m, __x); }
+
+
+
+
+
+
+
+  inline long double
+  assoc_laguerrel(unsigned int __n, unsigned int __m, long double __x)
+  { return __detail::__assoc_laguerre<long double>(__n, __m, __x); }
+# 248 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    assoc_laguerre(unsigned int __n, unsigned int __m, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__assoc_laguerre<__type>(__n, __m, __x);
+    }
+# 264 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  assoc_legendref(unsigned int __l, unsigned int __m, float __x)
+  { return __detail::__assoc_legendre_p<float>(__l, __m, __x); }
+
+
+
+
+
+
+  inline long double
+  assoc_legendrel(unsigned int __l, unsigned int __m, long double __x)
+  { return __detail::__assoc_legendre_p<long double>(__l, __m, __x); }
+# 294 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    assoc_legendre(unsigned int __l, unsigned int __m, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__assoc_legendre_p<__type>(__l, __m, __x);
+    }
+# 309 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  betaf(float __a, float __b)
+  { return __detail::__beta<float>(__a, __b); }
+
+
+
+
+
+
+
+  inline long double
+  betal(long double __a, long double __b)
+  { return __detail::__beta<long double>(__a, __b); }
+# 339 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tpa, typename _Tpb>
+    inline typename __gnu_cxx::__promote_2<_Tpa, _Tpb>::__type
+    beta(_Tpa __a, _Tpb __b)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tpa, _Tpb>::__type __type;
+      return __detail::__beta<__type>(__a, __b);
+    }
+# 355 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  comp_ellint_1f(float __k)
+  { return __detail::__comp_ellint_1<float>(__k); }
+
+
+
+
+
+
+
+  inline long double
+  comp_ellint_1l(long double __k)
+  { return __detail::__comp_ellint_1<long double>(__k); }
+# 387 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    comp_ellint_1(_Tp __k)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__comp_ellint_1<__type>(__k);
+    }
+# 403 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  comp_ellint_2f(float __k)
+  { return __detail::__comp_ellint_2<float>(__k); }
+
+
+
+
+
+
+
+  inline long double
+  comp_ellint_2l(long double __k)
+  { return __detail::__comp_ellint_2<long double>(__k); }
+# 434 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    comp_ellint_2(_Tp __k)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__comp_ellint_2<__type>(__k);
+    }
+# 450 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  comp_ellint_3f(float __k, float __nu)
+  { return __detail::__comp_ellint_3<float>(__k, __nu); }
+
+
+
+
+
+
+
+  inline long double
+  comp_ellint_3l(long double __k, long double __nu)
+  { return __detail::__comp_ellint_3<long double>(__k, __nu); }
+# 485 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp, typename _Tpn>
+    inline typename __gnu_cxx::__promote_2<_Tp, _Tpn>::__type
+    comp_ellint_3(_Tp __k, _Tpn __nu)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Tpn>::__type __type;
+      return __detail::__comp_ellint_3<__type>(__k, __nu);
+    }
+# 501 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  cyl_bessel_if(float __nu, float __x)
+  { return __detail::__cyl_bessel_i<float>(__nu, __x); }
+
+
+
+
+
+
+
+  inline long double
+  cyl_bessel_il(long double __nu, long double __x)
+  { return __detail::__cyl_bessel_i<long double>(__nu, __x); }
+# 531 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tpnu, typename _Tp>
+    inline typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type
+    cyl_bessel_i(_Tpnu __nu, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type __type;
+      return __detail::__cyl_bessel_i<__type>(__nu, __x);
+    }
+# 547 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  cyl_bessel_jf(float __nu, float __x)
+  { return __detail::__cyl_bessel_j<float>(__nu, __x); }
+
+
+
+
+
+
+
+  inline long double
+  cyl_bessel_jl(long double __nu, long double __x)
+  { return __detail::__cyl_bessel_j<long double>(__nu, __x); }
+# 577 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tpnu, typename _Tp>
+    inline typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type
+    cyl_bessel_j(_Tpnu __nu, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type __type;
+      return __detail::__cyl_bessel_j<__type>(__nu, __x);
+    }
+# 593 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  cyl_bessel_kf(float __nu, float __x)
+  { return __detail::__cyl_bessel_k<float>(__nu, __x); }
+
+
+
+
+
+
+
+  inline long double
+  cyl_bessel_kl(long double __nu, long double __x)
+  { return __detail::__cyl_bessel_k<long double>(__nu, __x); }
+# 629 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tpnu, typename _Tp>
+    inline typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type
+    cyl_bessel_k(_Tpnu __nu, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type __type;
+      return __detail::__cyl_bessel_k<__type>(__nu, __x);
+    }
+# 645 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  cyl_neumannf(float __nu, float __x)
+  { return __detail::__cyl_neumann_n<float>(__nu, __x); }
+
+
+
+
+
+
+
+  inline long double
+  cyl_neumannl(long double __nu, long double __x)
+  { return __detail::__cyl_neumann_n<long double>(__nu, __x); }
+# 677 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tpnu, typename _Tp>
+    inline typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type
+    cyl_neumann(_Tpnu __nu, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tpnu, _Tp>::__type __type;
+      return __detail::__cyl_neumann_n<__type>(__nu, __x);
+    }
+# 693 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  ellint_1f(float __k, float __phi)
+  { return __detail::__ellint_1<float>(__k, __phi); }
+
+
+
+
+
+
+
+  inline long double
+  ellint_1l(long double __k, long double __phi)
+  { return __detail::__ellint_1<long double>(__k, __phi); }
+# 725 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp, typename _Tpp>
+    inline typename __gnu_cxx::__promote_2<_Tp, _Tpp>::__type
+    ellint_1(_Tp __k, _Tpp __phi)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Tpp>::__type __type;
+      return __detail::__ellint_1<__type>(__k, __phi);
+    }
+# 741 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  ellint_2f(float __k, float __phi)
+  { return __detail::__ellint_2<float>(__k, __phi); }
+
+
+
+
+
+
+
+  inline long double
+  ellint_2l(long double __k, long double __phi)
+  { return __detail::__ellint_2<long double>(__k, __phi); }
+# 773 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp, typename _Tpp>
+    inline typename __gnu_cxx::__promote_2<_Tp, _Tpp>::__type
+    ellint_2(_Tp __k, _Tpp __phi)
+    {
+      typedef typename __gnu_cxx::__promote_2<_Tp, _Tpp>::__type __type;
+      return __detail::__ellint_2<__type>(__k, __phi);
+    }
+# 789 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  ellint_3f(float __k, float __nu, float __phi)
+  { return __detail::__ellint_3<float>(__k, __nu, __phi); }
+
+
+
+
+
+
+
+  inline long double
+  ellint_3l(long double __k, long double __nu, long double __phi)
+  { return __detail::__ellint_3<long double>(__k, __nu, __phi); }
+# 826 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp, typename _Tpn, typename _Tpp>
+    inline typename __gnu_cxx::__promote_3<_Tp, _Tpn, _Tpp>::__type
+    ellint_3(_Tp __k, _Tpn __nu, _Tpp __phi)
+    {
+      typedef typename __gnu_cxx::__promote_3<_Tp, _Tpn, _Tpp>::__type __type;
+      return __detail::__ellint_3<__type>(__k, __nu, __phi);
+    }
+# 841 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  expintf(float __x)
+  { return __detail::__expint<float>(__x); }
+
+
+
+
+
+
+
+  inline long double
+  expintl(long double __x)
+  { return __detail::__expint<long double>(__x); }
+# 866 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    expint(_Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__expint<__type>(__x);
+    }
+# 882 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  hermitef(unsigned int __n, float __x)
+  { return __detail::__poly_hermite<float>(__n, __x); }
+
+
+
+
+
+
+
+  inline long double
+  hermitel(unsigned int __n, long double __x)
+  { return __detail::__poly_hermite<long double>(__n, __x); }
+# 914 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    hermite(unsigned int __n, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__poly_hermite<__type>(__n, __x);
+    }
+# 930 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  laguerref(unsigned int __n, float __x)
+  { return __detail::__laguerre<float>(__n, __x); }
+
+
+
+
+
+
+
+  inline long double
+  laguerrel(unsigned int __n, long double __x)
+  { return __detail::__laguerre<long double>(__n, __x); }
+# 958 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    laguerre(unsigned int __n, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__laguerre<__type>(__n, __x);
+    }
+# 974 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  legendref(unsigned int __l, float __x)
+  { return __detail::__poly_legendre_p<float>(__l, __x); }
+
+
+
+
+
+
+
+  inline long double
+  legendrel(unsigned int __l, long double __x)
+  { return __detail::__poly_legendre_p<long double>(__l, __x); }
+# 1003 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    legendre(unsigned int __l, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__poly_legendre_p<__type>(__l, __x);
+    }
+# 1019 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  riemann_zetaf(float __s)
+  { return __detail::__riemann_zeta<float>(__s); }
+
+
+
+
+
+
+
+  inline long double
+  riemann_zetal(long double __s)
+  { return __detail::__riemann_zeta<long double>(__s); }
+# 1054 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    riemann_zeta(_Tp __s)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__riemann_zeta<__type>(__s);
+    }
+# 1070 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  sph_besself(unsigned int __n, float __x)
+  { return __detail::__sph_bessel<float>(__n, __x); }
+
+
+
+
+
+
+
+  inline long double
+  sph_bessell(unsigned int __n, long double __x)
+  { return __detail::__sph_bessel<long double>(__n, __x); }
+# 1098 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    sph_bessel(unsigned int __n, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__sph_bessel<__type>(__n, __x);
+    }
+# 1114 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  sph_legendref(unsigned int __l, unsigned int __m, float __theta)
+  { return __detail::__sph_legendre<float>(__l, __m, __theta); }
+# 1125 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline long double
+  sph_legendrel(unsigned int __l, unsigned int __m, long double __theta)
+  { return __detail::__sph_legendre<long double>(__l, __m, __theta); }
+# 1145 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    sph_legendre(unsigned int __l, unsigned int __m, _Tp __theta)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__sph_legendre<__type>(__l, __m, __theta);
+    }
+# 1161 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  sph_neumannf(unsigned int __n, float __x)
+  { return __detail::__sph_neumann<float>(__n, __x); }
+
+
+
+
+
+
+
+  inline long double
+  sph_neumannl(unsigned int __n, long double __x)
+  { return __detail::__sph_neumann<long double>(__n, __x); }
+# 1189 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    sph_neumann(unsigned int __n, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      return __detail::__sph_neumann<__type>(__n, __x);
+    }
+
+
+
+
+}
+
+
+namespace __gnu_cxx
+{
+
+# 1216 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  airy_aif(float __x)
+  {
+    float __Ai, __Bi, __Aip, __Bip;
+    std::__detail::__airy<float>(__x, __Ai, __Bi, __Aip, __Bip);
+    return __Ai;
+  }
+
+
+
+
+  inline long double
+  airy_ail(long double __x)
+  {
+    long double __Ai, __Bi, __Aip, __Bip;
+    std::__detail::__airy<long double>(__x, __Ai, __Bi, __Aip, __Bip);
+    return __Ai;
+  }
+
+
+
+
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    airy_ai(_Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      __type __Ai, __Bi, __Aip, __Bip;
+      std::__detail::__airy<__type>(__x, __Ai, __Bi, __Aip, __Bip);
+      return __Ai;
+    }
+
+
+
+
+  inline float
+  airy_bif(float __x)
+  {
+    float __Ai, __Bi, __Aip, __Bip;
+    std::__detail::__airy<float>(__x, __Ai, __Bi, __Aip, __Bip);
+    return __Bi;
+  }
+
+
+
+
+  inline long double
+  airy_bil(long double __x)
+  {
+    long double __Ai, __Bi, __Aip, __Bip;
+    std::__detail::__airy<long double>(__x, __Ai, __Bi, __Aip, __Bip);
+    return __Bi;
+  }
+
+
+
+
+  template<typename _Tp>
+    inline typename __gnu_cxx::__promote<_Tp>::__type
+    airy_bi(_Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+      __type __Ai, __Bi, __Aip, __Bip;
+      std::__detail::__airy<__type>(__x, __Ai, __Bi, __Aip, __Bip);
+      return __Bi;
+    }
+# 1292 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  conf_hypergf(float __a, float __c, float __x)
+  { return std::__detail::__conf_hyperg<float>(__a, __c, __x); }
+# 1303 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline long double
+  conf_hypergl(long double __a, long double __c, long double __x)
+  { return std::__detail::__conf_hyperg<long double>(__a, __c, __x); }
+# 1323 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tpa, typename _Tpc, typename _Tp>
+    inline typename __gnu_cxx::__promote_3<_Tpa, _Tpc, _Tp>::__type
+    conf_hyperg(_Tpa __a, _Tpc __c, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote_3<_Tpa, _Tpc, _Tp>::__type __type;
+      return std::__detail::__conf_hyperg<__type>(__a, __c, __x);
+    }
+# 1340 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline float
+  hypergf(float __a, float __b, float __c, float __x)
+  { return std::__detail::__hyperg<float>(__a, __b, __c, __x); }
+# 1351 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  inline long double
+  hypergl(long double __a, long double __b, long double __c, long double __x)
+  { return std::__detail::__hyperg<long double>(__a, __b, __c, __x); }
+# 1372 "C:/mingw64/include/c++/14.2.0/bits/specfun.h" 3
+  template<typename _Tpa, typename _Tpb, typename _Tpc, typename _Tp>
+    inline typename __gnu_cxx::__promote_4<_Tpa, _Tpb, _Tpc, _Tp>::__type
+    hyperg(_Tpa __a, _Tpb __b, _Tpc __c, _Tp __x)
+    {
+      typedef typename __gnu_cxx::__promote_4<_Tpa, _Tpb, _Tpc, _Tp>
+  ::__type __type;
+      return std::__detail::__hyperg<__type>(__a, __b, __c, __x);
+    }
+
+
+
+}
+# 3899 "C:/mingw64/include/c++/14.2.0/cmath" 2 3
+
+
+}
+# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h" 1
 
 
 
@@ -107297,83 +117729,89 @@ namespace std
 
 
 
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/pilka.h" 1
-       
 
 
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/paletka.h" 1
-       
+# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h"
+using namespace std;
 
-
-
-
-
-# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/paletka.h"
-class Paletka {
+class Ship {
 private:
     float x;
     float y;
     float szerokosc;
     float wysokosc;
     float vx;
+    float vy;
+    int zycie;
+    sf::Texture texture;
+    public:
     sf::RectangleShape shape;
-
-public:
-    Paletka(float startX, float startY, float startszerokosc, float startwysokosc, float startVx)
-       :x(startX), y(startY), szerokosc(startszerokosc), wysokosc(startwysokosc), vx(startVx) {
-        shape.setSize(sf::Vector2f(szerokosc, wysokosc));
-        shape.setOrigin(sf::Vector2f(szerokosc / 2, wysokosc / 2));
-        shape.setPosition(sf::Vector2f(x, y));
-        shape.setFillColor(sf::Color::Cyan);
+Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
+    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie) {
+    if (!texture.loadFromFile("../assets/statek1.png")) {
+        std::cerr << "Blad: nie mozna zaladowac statek.png\n";
     }
-
-void moveLeft() {
-        x-=vx;
+    shape.setSize(sf::Vector2f(szerokosc, wysokosc));
+    shape.setOrigin(sf::Vector2f(szerokosc / 2, wysokosc / 2));
+    shape.setPosition(sf::Vector2f(x, y));
+    shape.setTexture(&texture);
+}
+    void moveleft(float dt)
+    {
+        x-=vx *dt;
         shape.setPosition(sf::Vector2f(x, y));
-    }
-
-    void moveRight() {
-        x+=vx;
-        shape.setPosition(sf::Vector2f(x, y));
-    }
-    void moveup() {
-        y-=10;
-        shape.setPosition(sf::Vector2f(x, y));
-    }
-    void movedown() {
-        y+=10;
-        shape.setPosition(sf::Vector2f(x, y));
-    }
-    void rotateLeft() {
-        shape.rotate(sf::degrees(-10));
     }
 
-    void rotateRight() {
-        shape.rotate(sf::degrees(10));
-    }
-    void setColor(const sf::Color& color) {
-        shape.setFillColor(color);
-    }
+    void moveright(float dt) {
+    x+=vx *dt;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void moveup(float dt) {
+    y-=vy *dt;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void movedown(float dt) {
+    y+=vy *dt;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void clambToBounds(float width, float height) {
+    if (x < szerokosc / 2)
+        x = szerokosc / 2;
 
-    void clampToBounds(float width) {
-        if (x-szerokosc/2 < 0) {
-            x=szerokosc/2;
-        }
-        if (x+szerokosc/2 > width) {
-            x=width-szerokosc/2;
-        }
-        shape.setPosition(sf::Vector2f(x, y));
-    }
+    if (x > width - szerokosc / 2)
+        x = width - szerokosc / 2;
+
+    if (y < wysokosc / 2)
+        y = wysokosc / 2;
+
+    if (y > height - wysokosc / 2)
+        y = height - wysokosc / 2;
+
+    shape.setPosition(sf::Vector2f(x, y));
+}
     void draw(sf::RenderTarget& target) {
-        target.draw(shape);
-    }
+    target.draw(shape);
+}
+    void odejmijZycie(int ile) {
+    zycie -= ile;
+    if (zycie < 0) zycie =0;
+}
+    void dodajZycie(int ile1) {
+    zycie += ile1;
+    if (zycie > 3) zycie=3;
+}
     float getX() const{return x;}
     float getY() const{return y;}
     float getSzerokosc() const{return szerokosc;}
     float getWysokosc() const{return wysokosc;}
-
+    int getZycie() const{return zycie;}
 };
-# 5 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/pilka.h" 2
+# 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/pilka.h" 1
+       
+
+
+
 
 
 
@@ -107387,18 +117825,23 @@ private:
     float radius;
 
 public:
+    sf::Texture texture;
     sf::CircleShape shape;
     Pilka(float startX, float startY, float velX, float velY, float r)
         :x(startX), y(startY), vx(velX), vy(velY), radius(r) {
+        if (!texture.loadFromFile("../assets/kometa.png")) {
+            std::cerr << "Blad: nie mozna zaladowac komety.png\n";
+        }
         shape.setRadius(radius);
         shape.setOrigin(sf::Vector2f(radius, radius));
         shape.setPosition(sf::Vector2f(x,y));
         shape.setFillColor(sf::Color::White);
+        shape.setTexture(&texture);
     }
 
-    void move() {
-        x+= vx;
-        y+= vy;
+    void move(float dt) {
+        x+= vx*dt;
+        y+= vy*dt;
         shape.setPosition(sf::Vector2f(x,y));
     }
 
@@ -107407,9 +117850,6 @@ public:
     }
     void bounceY() {
         vy=-vy;
-    }
-    void setColor(const sf::Color& color) {
-        shape.setFillColor(color);
     }
 void collideWalls(float width, float height) {
         if (x-radius<= 0) {
@@ -107425,20 +117865,29 @@ void collideWalls(float width, float height) {
             y=radius;
             bounceY();
         }
+        else if (y+ radius >= height) {
+            y= height - radius;
+            bounceY();
+        }
+        shape.setPosition(sf::Vector2f(x,y));
     }
-    bool collidePaddle(const Paletka& p) {
-        float palX=p.getX();
-        float palY=p.getY();
-        float palW=p.getSzerokosc();
-        float palH=p.getWysokosc();
+    bool collideShip( Ship& s) {
+        float palX=s.getX();
+        float palY=s.getY();
+        float palW=s.getSzerokosc();
+        float palH=s.getWysokosc();
         bool overlappedX = (x >= palX - palW / 2) && (x <= palX + palW / 2);
         bool touchedY = (y + radius >= palY - palH / 2) && (y - radius <= palY + palH / 2);
 
         if (overlappedX && touchedY) {
-            vy = -std::abs(vy);
-            y= (palY-palH/2) - radius;
-            shape.setPosition(sf::Vector2f(x,y));
+            s.odejmijZycie(1);
+            if (vy > 0) {
+                y = palY + palH / 2 + radius;
+            } else {
+                y = palY - palH / 2 - radius;
+            }
             return true;
+
         }
         return false;
     }
@@ -107454,101 +117903,44 @@ void draw (sf::RenderTarget& target) {
     float getVy() const {return vy;}
     float getRadius() const {return radius;}
 };
-# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.h" 2
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/brick.h" 1
+# 8 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/meteoryt.h" 1
        
 
 
-
-
-
-
-
-class Brick: public sf::RectangleShape {
-    private:
-    int punktyZycia;
-    bool jestZniszczony;
-    static const std::array<sf::Color, 4> colorLUT;
-
-    public:
-        Brick(sf::Vector2f startPo, sf::Vector2f rozmiar, int Lzycie);
-
-    inline void aktualizujKolor();
-    inline void trafienie();
-    inline void draw(sf::RenderTarget &window);
-    inline bool czyZniszczony() const { return jestZniszczony; }
-    int getHP() const {return punktyZycia;}
-    float getX() const {return getPosition().x;}
-    float getY() const {return getPosition().y;}
-};
-
-inline Brick::Brick(sf::Vector2f startPo, sf::Vector2f rozmiar, int Lzycie) {
-    setPosition(startPo);
-    setSize(rozmiar);
-    punktyZycia = Lzycie;
-    jestZniszczony = false;
-    setOutlineThickness(-1.f);
-    aktualizujKolor();
-    this->setOutlineColor(sf::Color::White);
-}
-inline const std::array<sf::Color,4> Brick::colorLUT ={
-    sf::Color::Transparent,
-            sf::Color::Yellow,
-            sf::Color::Magenta,
-            sf::Color::Red
-
-};
-
-inline void Brick::trafienie() {
-    if (jestZniszczony==true)
-        return;
-    punktyZycia--;
-    aktualizujKolor();
-    if (punktyZycia<=0)
-        jestZniszczony=true;
-}
-
-inline void Brick::aktualizujKolor() {
-    if (punktyZycia>=0 && punktyZycia<=3)
-    this->setFillColor(colorLUT[punktyZycia]);
-
-}
-inline void Brick::draw(sf::RenderTarget &window) {
-    window.draw(*this);
-}
-# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.h" 2
-
-
-
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/gamestate.h" 1
-       
-
-
-
-
-
-
-struct BlockData {
-    float x, y;
-    int hp;
-};
-
-class GameState {
+class Meteoryt {
 private:
-    sf::Vector2f paddlePosition;
-    sf::Vector2f ballPosition;
-    sf::Vector2f ballVelocity;
-    std::vector<BlockData> blocks;
-
+   inline static sf::Texture texture;
 public:
-    GameState()=default;
-    void capture(const Paletka& paddle, const Pilka& ball, const std::vector<Brick>& bricks);
-    const sf::Vector2f& getPaddlePosition() const {return paddlePosition;}
-    const sf::Vector2f& getBallPosition() const {return ballPosition;}
-    const sf::Vector2f& getBallVelocity() const {return ballVelocity;}
-    const std::vector<BlockData>& getBlocks() const {return blocks;}
+    sf::CircleShape shape;
+    float speed;
+    Meteoryt(float startX, float startY, float radius, float speed)
+        : speed(speed)
+    {
+        texture.loadFromFile("../assets/meteor.png");
+        shape.setRadius(radius);
+        shape.setPosition(sf::Vector2f(startX, startY));
+        shape.setTexture(&texture);
+    }
+
+    void update(float dt) {
+        shape.move(sf::Vector2f(0, speed * dt));
+    }
+    void setSpeed(float newSpeed) { speed = newSpeed; }
+    float getSpeed() const {return speed;}
 };
-# 14 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.h" 2
+# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 1
+       
+
+
+
+
+# 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
+# 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
+       
+# 40 "C:/mingw64/include/c++/14.2.0/cmath" 3
+# 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 
 
 
@@ -107557,174 +117949,169 @@ class Game {
 public:
     Game();
     void run();
-    void loadlevel();
+
+private:
     void processEvents();
-    void update(sf::Time dt);
+    void update(float dt);
     void render();
-    private:
-    GameState snapshot;
-    sf::RenderWindow m_window;
-    sf::Clock m_deltaclock;
-    Paletka m_paletka;
-    Pilka m_pilka;
-    std::vector<Brick> m_bloki;
+
+    bool checkCollision(const Meteoryt& ball, const Ship& ship);
 
 
-    bool m_gameOver = false;
-    sf::Color m_backgroundColor;
+    sf::RenderWindow g_window;
+    sf::Texture backgroundTexture;
+    sf::RectangleShape backgroundRect;
+
+    sf::Font font;
+    sf::Text textpunktyzycia;
+    sf::Text punktytekst;
+
+    Ship ship;
+    Pilka pilka;
+    std::vector<Meteoryt> meteoryty;
+
+    sf::Clock clock;
+    sf::Clock spawnclock;
+    sf::Clock healcoldown;
+    sf::Clock clocksurvival;
+
+    float czasrespawnu= 0.2f;
+    int punkty=0;
+    bool gameOver= false;
+
+    const float windowWidth = 800;
+    const float windowHeight = 600;
 };
-# 8 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Game.cpp" 2
-
-
-
-
-using namespace std;
-using namespace sf;
+# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
 
 Game::Game()
-    :m_window(VideoMode({800, 600}), "Arkanoid demo (SFML 3)"),
-     m_paletka(400, 550, 120, 20, 15),
-     m_pilka(400, 300, 4, -3.5, 10),
-     m_backgroundColor(sf::Color::Black)
-
-
+    :g_window(sf::VideoMode({800u, 600u}), "Gra demo na projekt (SFML 3)"),
+    textpunktyzycia(font),
+    punktytekst(font),
+    ship(520,500,60, 60, 200, 200, 3),
+    pilka(200,200,100,100,40)
 {
-    m_window.setFramerateLimit(60);
-    loadlevel();
+    g_window.setFramerateLimit(60);
+    backgroundTexture.loadFromFile("assets/tlo.jpg");
+    backgroundRect.setSize(sf::Vector2f(windowWidth, windowHeight));
+    backgroundRect.setTexture(&backgroundTexture);
+    font.openFromFile("arial.ttf");
+    textpunktyzycia.setFont(font);
+    textpunktyzycia.setCharacterSize(24);
+    textpunktyzycia.setFillColor(sf::Color::White);
+    punktytekst.setFont(font);
+    punktytekst.setCharacterSize(24);
+    punktytekst.setFillColor(sf::Color::Magenta);
+    punktytekst.setPosition(sf::Vector2f(1, 30));
+    clock.restart();
+    spawnclock.restart();
+    healcoldown.restart();
+    clocksurvival.restart();
 }
 
-inline void Game::loadlevel() {
-    m_bloki.clear();
-    const int ILOSC_KOLUMN = 11;
-    const int ILOSC_WIERSZY = 10;
-    float ROZMIAR_BLOKU_X = (m_window.getSize().x - (ILOSC_KOLUMN - 1) * 2.f) / ILOSC_KOLUMN;
-    float ROZMIAR_BLOKU_Y = 20.f;
-
-    for (int y = 0; y < ILOSC_WIERSZY; y++) {
-        for (int x = 0; x < ILOSC_KOLUMN; x++) {
-            float posX = x * (ROZMIAR_BLOKU_X + 2.f);
-            float posY = y * (ROZMIAR_BLOKU_Y + 2.f) + 60.f;
-            int zycie;
-            if (y < 3)
-                zycie = 3;
-            else if (y < 5 && y >= 3) {
-                zycie = 2;
-            }
-            else
-                zycie = 1;
-            m_bloki.emplace_back(sf::Vector2f(posX, posY), sf::Vector2f(ROZMIAR_BLOKU_X, ROZMIAR_BLOKU_Y), zycie);
-        }
-    }
-}
 void Game::run() {
-    while (m_window.isOpen()) {
-        sf::Time dt = m_deltaclock.restart();
+    while (g_window.isOpen()) {
         processEvents();
-        update(dt);
+        if (!gameOver) {
+            float dt = clock.restart().asSeconds();
+            update(dt);
+        }
         render();
     }
 }
-
 void Game::processEvents() {
-    while (auto event = m_window.pollEvent()) {
-        if (event->is<Event::Closed>()) {
-            m_window.close();
-        }
+    while (const std::optional event = g_window.pollEvent()) {
+        if (event->is<sf::Event::Closed>())
+            g_window.close();
     }
 }
-
-void Game::update(sf::Time dt) {
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::Space) && m_gameOver==true) {
-        m_gameOver = false;
-        m_pilka = Pilka(400, 300, 4, -3.5, 10);
-        loadlevel();
+void Game::update(float dt) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+        ship.moveleft(dt);
     }
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::P)){
-        snapshot.capture(m_paletka,m_pilka,m_bloki);
-        std::cout << "Stan gry zapisany!" << std::endl;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+        ship.moveright(dt);
     }
-    if (m_gameOver){
-        return;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+        ship.moveup(dt);
     }
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::Left) || sf::Keyboard::isKeyPressed(Keyboard::Key::A)) {
-        m_paletka.moveLeft();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+        ship.movedown(dt);
     }
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::Right)|| sf::Keyboard::isKeyPressed(Keyboard::Key::D)) {
-        m_paletka.moveRight();
+    if (clocksurvival.getElapsedTime().asSeconds() >= 1.0f) {
+        punkty+=10;
+        clocksurvival.restart();
     }
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::W)) {
-        m_paletka.moveup();
+    if (spawnclock.getElapsedTime().asSeconds() > czasrespawnu) {
+        float x = rand() % (int)(windowWidth - 40);
+        meteoryty.emplace_back(x, -50, 15.0f, 200.0f);
+        spawnclock.restart();
     }
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::S)) {
-        m_paletka.movedown();
-    }
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::Q)) {
-        m_paletka.rotateLeft();
-    }
-    if (sf::Keyboard::isKeyPressed(Keyboard::Key::E)) {
-        m_paletka.rotateRight();
-    }
-
-    m_paletka.clampToBounds(m_window.getSize().x);
-    m_pilka.move();
-    m_pilka.collideWalls(m_window.getSize().x, m_window.getSize().y);
-
-    if (m_pilka.collidePaddle(m_paletka)) {
-        sf::Color newBgColor(
-            rand() % 256, rand() % 256, rand() % 256
-        );
-        m_backgroundColor = newBgColor;
-        sf::Color paddleColor(
-            rand() % 256, rand() % 256, rand() % 256
-        );
-        m_paletka.setColor(paddleColor);
-        m_pilka.setColor(sf::Color(
-            rand() % 256, rand() % 256, rand() % 256
-        ));
-    }
-    if (m_pilka.getY() - m_pilka.getRadius() > m_window.getSize().y) {
-        cout << "MISS GAME OVER!" << endl;
-        cout << "Nacisnij SPACJE, aby zrestartowac gre." << endl;
-        m_gameOver = true;
-    }
-    bool wszystkieZniszczone= true;
-    for (auto& blk : m_bloki) {
-        if (!blk.czyZniszczony() && m_pilka.shape.getGlobalBounds().findIntersection(blk.getGlobalBounds())) {
-            blk.trafienie();
-            m_pilka.bounceY();
-            break;
+    pilka.move(dt);
+    for (int i = 0; i < meteoryty.size(); i++) {
+        meteoryty[i].update(dt);
+        if (checkCollision(meteoryty[i], ship)) {
+            ship.odejmijZycie(1);
+            meteoryty.erase(meteoryty.begin() + i);
+            i--;
+            continue;
         }
-    }
-    for (auto &blk : m_bloki) {
-        if (!blk.czyZniszczony()) {
-            wszystkieZniszczone = false;
-            break;
+        if (meteoryty[i].shape.getPosition().y > windowHeight + 50) {
+            meteoryty.erase(meteoryty.begin() + i);
+            i--;
+            continue;
         }
     }
 
-
-    m_bloki.erase(
-        remove_if(m_bloki.begin(), m_bloki.end(),
-                  [](auto &b){ return b.czyZniszczony(); }),
-        m_bloki.end()
-    );
-
-    if (m_bloki.empty()) {
-        m_gameOver = true;
-        std::cout << "Wygrales! Wszystkie cegly zniszczone!" << std::endl;
+    if (punkty >= 100) {
+        czasrespawnu = 0.1f;
+        for (auto& m : meteoryty) m.setSpeed(300.0f);
     }
 
-    if (m_pilka.getY() - m_pilka.getRadius() > m_window.getSize().y) {
-        m_gameOver = true;
-        std::cout << "MISS GAME OVER!" << std::endl;
+    if (punkty >= 220) {
+        czasrespawnu = 0.07f;
+        for (auto& m : meteoryty) m.setSpeed(350.0f);
     }
+
+    if (punkty >= 400) {
+        czasrespawnu = 0.05f;
+        for (auto& m : meteoryty) m.setSpeed(400.0f);
+    }
+
+    if (ship.getZycie() < 3) {
+        if (healcoldown.getElapsedTime().asSeconds() >= 10.0f) {
+            ship.dodajZycie(1);
+            healcoldown.restart();
+        }
+    } else {
+        healcoldown.restart();
+    }
+    pilka.collideWalls(windowWidth, windowHeight);
+    pilka.collideShip(ship);
+
+    ship.clambToBounds(windowWidth, windowHeight);
+
+    textpunktyzycia.setString("Zycia: " + std::to_string(ship.getZycie()));
+    punktytekst.setString("Punkty: " + std::to_string(punkty));
+    if (ship.getZycie() <= 0) {
+        gameOver = true;
+    }
+
 }
+
+bool Game::checkCollision(const Meteoryt& ball, const Ship& ship) {
+    return ball.shape.getGlobalBounds().findIntersection(ship.shape.getGlobalBounds()).has_value();
+}
+
 void Game::render() {
-        m_window.clear((m_backgroundColor));
-        m_paletka.draw(m_window);
-        m_pilka.draw(m_window);
-        for (auto& blk : m_bloki) {
-            blk.draw(m_window);
-        }
-        m_window.display();
+    g_window.clear();
+    g_window.draw(backgroundRect);
+    ship.draw(g_window);
+    for (auto& s : meteoryty) {
+        g_window.draw(s.shape);
     }
+    g_window.draw(pilka.shape);
+    g_window.draw(textpunktyzycia);
+    g_window.draw(punktytekst);
+    g_window.display();
+}

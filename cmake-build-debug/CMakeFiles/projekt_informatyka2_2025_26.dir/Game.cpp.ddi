@@ -1,7 +1,7 @@
 {
 "rules": [
 {
-"primary-output": "CMakeFiles/projekt_informatyka2_2025_26.dir/Game.cpp.o",
+"primary-output": "CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.o",
 "requires": [
 ]
 }

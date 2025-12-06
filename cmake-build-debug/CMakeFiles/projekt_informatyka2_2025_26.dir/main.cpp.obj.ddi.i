@@ -3,6 +3,8 @@
 # 0 "<built-in>"
 # 0 "<command-line>"
 # 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp"
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 1
+       
 # 1 "C:/SFML/include/SFML/Graphics.hpp" 1 3 4
 # 25 "C:/SFML/include/SFML/Graphics.hpp" 3 4
        
@@ -107255,7 +107257,7 @@ void __attribute__((dllimport)) sleep(Time duration);
 # 41 "C:/SFML/include/SFML/System.hpp" 2 3 4
 # 47 "C:/SFML/include/SFML/Window.hpp" 2 3 4
 # 60 "C:/SFML/include/SFML/Graphics.hpp" 2 3 4
-# 2 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
+# 3 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 # 1 "C:/SFML/include/SFML/Audio.hpp" 1 3 4
 # 25 "C:/SFML/include/SFML/Audio.hpp" 3 4
        
@@ -111627,7 +111629,7 @@ bool SoundFileFactory::isWriterRegistered()
 }
 # 172 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 2 3 4
 # 40 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
-# 3 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
+# 4 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 # 1 "C:/mingw64/include/c++/14.2.0/iostream" 1 3
 # 36 "C:/mingw64/include/c++/14.2.0/iostream" 3
        
@@ -111656,7 +111658,7 @@ namespace std
 # 85 "C:/mingw64/include/c++/14.2.0/iostream" 3
 
 }
-# 4 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
+# 5 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 
 # 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
 # 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
@@ -117720,7 +117722,7 @@ namespace __gnu_cxx
 
 
 }
-# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
+# 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 # 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h" 1
 
 
@@ -117804,9 +117806,9 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     float getY() const{return y;}
     float getSzerokosc() const{return szerokosc;}
     float getWysokosc() const{return wysokosc;}
-    float getZycie() const{return zycie;}
+    int getZycie() const{return zycie;}
 };
-# 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
+# 8 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 # 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/pilka.h" 1
        
 
@@ -117903,7 +117905,7 @@ void draw (sf::RenderTarget& target) {
     float getVy() const {return vy;}
     float getRadius() const {return radius;}
 };
-# 8 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
+# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 # 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/meteoryt.h" 1
        
 
@@ -117929,133 +117931,50 @@ public:
     void setSpeed(float newSpeed) { speed = newSpeed; }
     float getSpeed() const {return speed;}
 };
-# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
-using namespace std;
-using namespace sf;
+# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 
-std::vector<Meteoryt> meteoryty;
-bool checkCollision(const Meteoryt& ball, const Ship& ship) {
-    return ball.shape.getGlobalBounds().findIntersection(ship.shape.getGlobalBounds()).has_value();
-}
-sf::Clock spawnClock;
+class Game {
+public:
+    Game();
+    void run();
 
-int main() {
+private:
+    void processEvents();
+    void update(float dt);
+    void render();
+
+    bool checkCollision(const Meteoryt& ball, const Ship& ship);
+
+
+    sf::RenderWindow g_window;
+    sf::Texture backgroundTexture;
+    sf::RectangleShape backgroundRect;
+
+    sf::Font font;
+    sf::Text textpunktyzycia;
+    sf::Text punktytekst;
+
+    Ship ship;
+    Pilka pilka;
+    std::vector<Meteoryt> meteoryty;
+
+    sf::Clock clock;
+    sf::Clock spawnclock;
+    sf::Clock healcoldown;
+    sf::Clock clocksurvival;
+
+    float czasrespawnu= 0.2f;
+    int punkty=0;
+    bool gameOver= false;
+
     const float windowWidth = 800;
     const float windowHeight = 600;
-    float czasrespawnu = 0.2f;
-    sf::Clock clock;
-    Ship ship(520,500,60, 60, 200, 200, 3);
-    Pilka pilka(200, 200,100,100,40 );
-    sf::RenderWindow window(
-        sf::VideoMode(sf::Vector2u((unsigned)windowWidth, (unsigned)windowHeight)),"Arkanoid Demo (SFML 3.3)");
-    window.setFramerateLimit(60);
-    sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("../assets/tlo.jpg");
-    sf::Sprite background(backgroundTexture);
-    sf::Font font;
-    font.openFromFile("arial.ttf");
-    sf::Text text(font);
-    text.setCharacterSize(24);
-    text.setFillColor(sf::Color::White);
-    sf::Clock survivalClock;
-    sf::Text punktytekst(font);
-    punktytekst.setCharacterSize(24);
-    punktytekst.setFillColor(sf::Color::Magenta);
-    punktytekst.setPosition(sf::Vector2f(1, 30));
-    sf::Clock healthcoldown;
-
-    bool gameOver = false;
-    int punkty=0;
-    while (window.isOpen()) {
-        float dt = clock.restart().asSeconds();
-        while (const std::optional event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-        }
-        if (!gameOver) {
-            if (sf::Keyboard::isKeyPressed(Keyboard::Key::A) || sf::Keyboard::isKeyPressed(Keyboard::Key::Left)) {
-                ship.moveleft(dt);
-            }
-            if (sf::Keyboard::isKeyPressed(Keyboard::Key::D) || sf::Keyboard::isKeyPressed(Keyboard::Key::Right)) {
-                ship.moveright(dt);
-            }
-            if (sf::Keyboard::isKeyPressed(Keyboard::Key::W) || sf::Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-                ship.moveup(dt);
-            }
-            if (sf::Keyboard::isKeyPressed(Keyboard::Key::S) || sf::Keyboard::isKeyPressed(Keyboard::Key::Down)) {
-                ship.movedown(dt);
-            }
-            if (survivalClock.getElapsedTime().asSeconds()>= 1.0f) {
-                punkty+=10;
-                survivalClock.restart();
-            }
-            if (spawnClock.getElapsedTime().asSeconds() > czasrespawnu) {
-                float x = rand() % (int)(windowWidth - 40);
-                meteoryty.emplace_back(x, -50, 15.0f, 200.0f);
-                spawnClock.restart();
-            }
-            pilka.move(dt);
-            for (int i = 0; i < meteoryty.size(); i++) {
-                meteoryty[i].update(dt);
+};
+# 2 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp" 2
 
 
-                if (checkCollision(meteoryty[i], ship)) {
-                    ship.odejmijZycie(1);
-                    meteoryty.erase(meteoryty.begin() + i);
-                    i--;
-                    continue;
-                }
-
-
-                if (meteoryty[i].shape.getPosition().y > windowHeight + 50) {
-                    meteoryty.erase(meteoryty.begin() + i);
-                    i--;
-                }
-            }
-            if (punkty>=100) {
-                czasrespawnu=0.1f;
-                for (auto& m : meteoryty) {
-                    m.setSpeed(300.0f);
-                }
-            }
-            if (punkty>=300) {
-                czasrespawnu=0.05f;
-                for (auto& m : meteoryty) {
-                    m.setSpeed(400.0f);
-                }
-            }
-            if (ship.getZycie() < 3) {
-                if (healthcoldown.getElapsedTime().asSeconds() >= 10.0f) {
-                    ship.dodajZycie(1);
-                    healthcoldown.restart();
-                }
-            }
-            else {
-                healthcoldown.restart();
-            }
-            pilka.collideWalls(windowWidth, windowHeight );
-            pilka.collideShip(ship);
-            ship.clambToBounds(windowWidth, windowHeight);
-            text.setString("Zycia: " + std::to_string(ship.getZycie()));
-            punktytekst.setString("Punkty: " + std::to_string(punkty));
-            if (ship.getZycie()==0) {
-                gameOver=true;
-                window.close();
-            }
-        }
-    window.clear();
-    window.draw(background);
-    ship.draw(window);
-        for (auto& s : meteoryty) {
-            window.draw(s.shape);
-        }
-    window.draw(pilka.shape);
-    window.draw(text);
-        window.draw(punktytekst);
-    window.display();
-}
-
-
-
+int main() {
+    Game game;
+    game.run();
     return 0;
 }

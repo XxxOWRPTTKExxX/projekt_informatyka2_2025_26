@@ -78,5 +78,5 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     float getY() const{return y;}
     float getSzerokosc() const{return szerokosc;}
     float getWysokosc() const{return wysokosc;}
-    float getZycie() const{return zycie;}
+    int getZycie() const{return zycie;}
 };

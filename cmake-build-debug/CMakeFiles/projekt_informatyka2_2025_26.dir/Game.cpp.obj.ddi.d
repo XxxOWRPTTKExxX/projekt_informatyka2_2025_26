@@ -1,5 +1,5 @@
-CMakeFiles\projekt_informatyka2_2025_26.dir\Game.cpp.obj.ddi: \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/Game.cpp \
+CMakeFiles\projekt_informatyka2_2025_26.dir\game.cpp.obj.ddi: \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/game.cpp \
  C:/SFML/include/SFML/Graphics.hpp \
  C:/SFML/include/SFML/Graphics/BlendMode.hpp \
  C:/SFML/include/SFML/Graphics/Export.hpp C:/SFML/include/SFML/Config.hpp \
@@ -298,10 +298,46 @@ CMakeFiles\projekt_informatyka2_2025_26.dir\Game.cpp.obj.ddi: \
  C:/SFML/include/SFML/System/FileInputStream.hpp \
  C:/SFML/include/SFML/System/InputStream.hpp \
  C:/SFML/include/SFML/System/MemoryInputStream.hpp \
- C:/SFML/include/SFML/System/Sleep.hpp \
+ C:/SFML/include/SFML/System/Sleep.hpp C:/SFML/include/SFML/Audio.hpp \
+ C:/SFML/include/SFML/Audio/InputSoundFile.hpp \
+ C:/SFML/include/SFML/Audio/Export.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileReader.hpp \
+ C:/SFML/include/SFML/Audio/SoundChannel.hpp \
+ C:/SFML/include/SFML/Audio/Listener.hpp \
+ C:/SFML/include/SFML/Audio/Music.hpp \
+ C:/SFML/include/SFML/Audio/SoundStream.hpp \
+ C:/SFML/include/SFML/Audio/SoundSource.hpp \
+ C:/SFML/include/SFML/Audio/AudioResource.hpp \
+ C:/mingw64/include/c++/14.2.0/functional \
+ C:/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/SFML/include/SFML/Audio/OutputSoundFile.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileWriter.hpp \
+ C:/SFML/include/SFML/Audio/PlaybackDevice.hpp \
+ C:/SFML/include/SFML/Audio/Sound.hpp \
+ C:/SFML/include/SFML/Audio/SoundBuffer.hpp \
+ C:/mingw64/include/c++/14.2.0/unordered_set \
+ C:/mingw64/include/c++/14.2.0/bits/unordered_set.h \
+ C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp \
+ C:/SFML/include/SFML/Audio/SoundRecorder.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileFactory.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileFactory.inl \
  C:/mingw64/include/c++/14.2.0/iostream \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/Game.h \
+ C:/mingw64/include/c++/14.2.0/cmath \
+ C:/mingw64/x86_64-w64-mingw32/include/math.h \
+ C:/mingw64/include/c++/14.2.0/bits/specfun.h \
+ C:/mingw64/include/c++/14.2.0/tr1/gamma.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/special_function_util.h \
+ C:/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/beta_function.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc \
+ C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/ship.h \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/pilka.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/paletka.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/brick.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/gamestate.h
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/meteoryt.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/game.h
