@@ -7,16 +7,17 @@
 #include "pilka.h"
 #include "meteoryt.h"
 #include "game.h"
+#include "menu.h"
 
 Game::Game()
     :g_window(sf::VideoMode({800u, 600u}), "Gra demo na projekt (SFML 3)"),
     textpunktyzycia(font),
     punktytekst(font),
     ship(520,500,60, 60, 200, 200, 3),
-    pilka(200,200,100,100,40)
+    pilka(200,200,400,-100,40)
 {
     g_window.setFramerateLimit(60);
-    backgroundTexture.loadFromFile("assets/tlo.jpg");
+    backgroundTexture.loadFromFile("../assets/tlo.jpg");
     backgroundRect.setSize(sf::Vector2f(windowWidth, windowHeight));
     backgroundRect.setTexture(&backgroundTexture);
     font.openFromFile("arial.ttf");
@@ -34,13 +35,17 @@ Game::Game()
 }
 
 void Game::run() {
-    while (g_window.isOpen()) {
-        processEvents();
-        if (!gameOver) {
-            float dt = clock.restart().asSeconds();
-            update(dt);
+    Menu menu(windowWidth, windowHeight);
+    int menuResult = menu.run(g_window);
+    if (menuResult == 0) {
+        while (g_window.isOpen()) {
+            processEvents();
+            if (!gameOver) {
+                float dt = clock.restart().asSeconds();
+                update(dt);
+            }
+            render();
         }
-        render();
     }
 }
 void Game::processEvents() {
@@ -119,6 +124,15 @@ void Game::update(float dt) {
     punktytekst.setString("Punkty: " + std::to_string(punkty));
     if (ship.getZycie() <= 0) {
         gameOver = true;
+    }
+    if (ship.getZycie() == 2) {
+        textpunktyzycia.setFillColor(sf::Color::Green);
+    } else if (ship.getZycie() == 1) {
+        textpunktyzycia.setFillColor(sf::Color::Red);
+    } else if (ship.getZycie() == 3) {
+        textpunktyzycia.setFillColor(sf::Color::Blue);
+    }else {
+        textpunktyzycia.setFillColor(sf::Color::Transparent); // domyślny kolor
     }
 
 }

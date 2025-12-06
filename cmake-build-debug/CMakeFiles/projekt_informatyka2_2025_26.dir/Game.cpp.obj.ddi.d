@@ -340,4 +340,5 @@ CMakeFiles\projekt_informatyka2_2025_26.dir\game.cpp.obj.ddi: \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/ship.h \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/pilka.h \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/meteoryt.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/game.h
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/game.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/menu.h

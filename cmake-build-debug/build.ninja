@@ -85,7 +85,25 @@ build CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.obj: CXX_COMPILER__pr
   OBJECT_FILE_DIR = CMakeFiles\projekt_informatyka2_2025_26.dir
   dyndep = CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd
 
-build CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd | C$:/Users/oliwi/Documents/PROJEKTY$ INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.obj.modmap: CXX_DYNDEP__projekt_informatyka2_2025_26_Debug CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.obj.ddi | C$:/Users/oliwi/Documents/PROJEKTY$ INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXDependInfo.json
+build CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj.ddi: CXX_SCAN__projekt_informatyka2_2025_26_Debug C$:/Users/oliwi/Documents/PROJEKTY$ INF/projekt_informatyka2_2025_26/menu.cpp || cmake_object_order_depends_target_projekt_informatyka2_2025_26
+  DEP_FILE = CMakeFiles\projekt_informatyka2_2025_26.dir\menu.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\projekt_informatyka2_2025_26.dir\menu.cpp.obj.ddi
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/SFML/include
+  OBJ_FILE = CMakeFiles\projekt_informatyka2_2025_26.dir\menu.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\projekt_informatyka2_2025_26.dir\menu.cpp.obj.ddi.i
+
+build CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj: CXX_COMPILER__projekt_informatyka2_2025_26_scanned_Debug C$:/Users/oliwi/Documents/PROJEKTY$ INF/projekt_informatyka2_2025_26/menu.cpp | CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj.modmap || cmake_object_order_depends_target_projekt_informatyka2_2025_26 CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles\projekt_informatyka2_2025_26.dir\menu.cpp.obj.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\projekt_informatyka2_2025_26.dir\menu.cpp.obj.modmap
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/SFML/include
+  OBJECT_DIR = CMakeFiles\projekt_informatyka2_2025_26.dir
+  OBJECT_FILE_DIR = CMakeFiles\projekt_informatyka2_2025_26.dir
+  dyndep = CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd
+
+build CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd | C$:/Users/oliwi/Documents/PROJEKTY$ INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXModules.json CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.modmap CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.obj.modmap CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj.modmap: CXX_DYNDEP__projekt_informatyka2_2025_26_Debug CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj.ddi CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.obj.ddi CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj.ddi | C$:/Users/oliwi/Documents/PROJEKTY$ INF/projekt_informatyka2_2025_26/cmake-build-debug/CMakeFiles/projekt_informatyka2_2025_26.dir/CXXDependInfo.json
 
 
 # =============================================================================
@@ -95,7 +113,7 @@ build CMakeFiles/projekt_informatyka2_2025_26.dir/CXX.dd | C$:/Users/oliwi/Docum
 #############################################
 # Link the executable projekt_informatyka2_2025_26.exe
 
-build projekt_informatyka2_2025_26.exe: CXX_EXECUTABLE_LINKER__projekt_informatyka2_2025_26_Debug CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.obj | C$:/SFML/lib/libsfml-graphics-d.a C$:/SFML/lib/libsfml-audio-d.a C$:/SFML/lib/libsfml-window-d.a C$:/SFML/lib/libsfml-system-d.a
+build projekt_informatyka2_2025_26.exe: CXX_EXECUTABLE_LINKER__projekt_informatyka2_2025_26_Debug CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj CMakeFiles/projekt_informatyka2_2025_26.dir/game.cpp.obj CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj | C$:/SFML/lib/libsfml-graphics-d.a C$:/SFML/lib/libsfml-audio-d.a C$:/SFML/lib/libsfml-window-d.a C$:/SFML/lib/libsfml-system-d.a
   CONFIG = Debug
   FLAGS = -g
   LINK_LIBRARIES = C:/SFML/lib/libsfml-graphics-d.a  C:/SFML/lib/libsfml-audio-d.a  C:/SFML/lib/libsfml-window-d.a  C:/SFML/lib/libsfml-system-d.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

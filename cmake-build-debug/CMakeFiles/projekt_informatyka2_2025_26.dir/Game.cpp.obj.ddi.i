@@ -117983,16 +117983,40 @@ private:
     const float windowHeight = 600;
 };
 # 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.h" 1
+       
+
+
+
+# 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
+# 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
+       
+# 40 "C:/mingw64/include/c++/14.2.0/cmath" 3
+# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.h" 2
+
+class Menu {
+public:
+    Menu(float width, float height);
+    int run(sf::RenderWindow& window);
+private:
+    int selected;
+    sf::Font font;
+    sf::Text textmenu;
+    std::vector<sf::Text> options;
+    sf::Texture backgroundmenu;
+    sf::RectangleShape backgroundRectmenu;
+};
+# 11 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
 
 Game::Game()
     :g_window(sf::VideoMode({800u, 600u}), "Gra demo na projekt (SFML 3)"),
     textpunktyzycia(font),
     punktytekst(font),
     ship(520,500,60, 60, 200, 200, 3),
-    pilka(200,200,100,100,40)
+    pilka(200,200,400,-100,40)
 {
     g_window.setFramerateLimit(60);
-    backgroundTexture.loadFromFile("assets/tlo.jpg");
+    backgroundTexture.loadFromFile("../assets/tlo.jpg");
     backgroundRect.setSize(sf::Vector2f(windowWidth, windowHeight));
     backgroundRect.setTexture(&backgroundTexture);
     font.openFromFile("arial.ttf");
@@ -118010,13 +118034,17 @@ Game::Game()
 }
 
 void Game::run() {
-    while (g_window.isOpen()) {
-        processEvents();
-        if (!gameOver) {
-            float dt = clock.restart().asSeconds();
-            update(dt);
+    Menu menu(windowWidth, windowHeight);
+    int menuResult = menu.run(g_window);
+    if (menuResult == 0) {
+        while (g_window.isOpen()) {
+            processEvents();
+            if (!gameOver) {
+                float dt = clock.restart().asSeconds();
+                update(dt);
+            }
+            render();
         }
-        render();
     }
 }
 void Game::processEvents() {
@@ -118095,6 +118123,15 @@ void Game::update(float dt) {
     punktytekst.setString("Punkty: " + std::to_string(punkty));
     if (ship.getZycie() <= 0) {
         gameOver = true;
+    }
+    if (ship.getZycie() == 2) {
+        textpunktyzycia.setFillColor(sf::Color::Green);
+    } else if (ship.getZycie() == 1) {
+        textpunktyzycia.setFillColor(sf::Color::Red);
+    } else if (ship.getZycie() == 3) {
+        textpunktyzycia.setFillColor(sf::Color::Blue);
+    }else {
+        textpunktyzycia.setFillColor(sf::Color::Transparent);
     }
 
 }

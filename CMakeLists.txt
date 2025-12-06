@@ -18,6 +18,8 @@ add_executable(${PROJECT_NAME} main.cpp
         meteoryt.h
         game.h
         game.cpp
+        menu.h
+        menu.cpp
 )
 
 # Linkujemy wszystkie potrzebne komponenty SFML

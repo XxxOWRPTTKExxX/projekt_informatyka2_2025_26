@@ -30,6 +30,11 @@
 		{
 			"language" : "CXX",
 			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/main.cpp"
+		},
+		"CMakeFiles/projekt_informatyka2_2025_26.dir/menu.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.cpp"
 		}
 	}
 }
