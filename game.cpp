@@ -9,6 +9,7 @@
 #include "game.h"
 #include "menu.h"
 #include <fstream>
+#include "zapis.h"
 
 
 
@@ -52,12 +53,23 @@ void Game::gameLoop(Score& score)
 
             if (auto* key = event->getIf<sf::Event::KeyPressed>()) {
                 if (key->code == sf::Keyboard::Key::Escape) {
-                    return; // WYJŚCIE DO MENU
+                    return; // WYJSCIE
+                }
+
+                                //Zapis
+                if (key->code == sf::Keyboard::Key::Z) {
+                    Zapis save;
+                    save.capture(ship, pilka, meteoryty);
+                    if (save.saveToFile("zapis.txt")) {
+                        std::cout << "Zapisano!\n";
+                    }
                 }
             }
         }
 
-        // jeśli gra się skończyła → zapisz wynik i wróć do menu
+
+
+
         if (gameOver) {
             score.addScore(punkty);
             return;
@@ -79,10 +91,29 @@ void Game::run() {
                 score.showScores(g_window, font);
 
             } else if (menuResult == 1) {
-                // dopisac wczytywanie
+                Zapis load;
+                if (load.loadFromFile("zapis.txt")) {
+                    load.apply(ship, pilka, meteoryty);
+                    std::cout << "Gra wczytana!\n";
+                    gameLoop(score);
+                } else {
+                    std::cerr << "Nie udało się wczytać zapisu!\n";
+                }
             }
             else if (menuResult == 0) {
-                gameLoop(score); 
+                gameOver = false;
+                punkty = 0;
+                meteoryty.clear();
+                ship.reset();
+                pilka.reset();
+                czasrespawnu= 0.5f;
+                if (!backgroundMusic.openFromFile("../assets/background.ogg")) {
+                  std::cerr << "Nie ma muzyki!" << std::endl;
+               } else {
+                    backgroundMusic.setLooping(true);
+                    backgroundMusic.play();
+                }
+                gameLoop(score);
             }
         }
 }
@@ -111,7 +142,7 @@ void Game::update(float dt) {
     }
     if (spawnclock.getElapsedTime().asSeconds() > czasrespawnu) {
         float x = rand() % (int)(windowWidth - 40);
-        meteoryty.emplace_back(x, -50, 15.0f, 200.0f);
+        meteoryty.emplace_back(x, -50, 15.0f, 50.0f);
         spawnclock.restart();
     }
     pilka.move(dt);
@@ -131,18 +162,18 @@ void Game::update(float dt) {
     }
 
     if (punkty >= 100) {
-        czasrespawnu = 0.1f;
-        for (auto& m : meteoryty) m.setSpeed(300.0f);
+        czasrespawnu = 0.3f;
+        for (auto& m : meteoryty) m.setSpeed(150.0f);
     }
 
     if (punkty >= 220) {
-        czasrespawnu = 0.07f;
-        for (auto& m : meteoryty) m.setSpeed(350.0f);
+        czasrespawnu = 0.2f;
+        for (auto& m : meteoryty) m.setSpeed(300.0f);
     }
 
     if (punkty >= 400) {
-        czasrespawnu = 0.05f;
-        for (auto& m : meteoryty) m.setSpeed(400.0f);
+        czasrespawnu = 0.02f;
+        for (auto& m : meteoryty) m.setSpeed(800.0f);
     }
 
     if (ship.getZycie() < 3) {

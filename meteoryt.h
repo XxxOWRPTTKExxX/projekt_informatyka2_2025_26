@@ -21,4 +21,6 @@ public:
     }
     void setSpeed(float newSpeed) { speed = newSpeed; }
     float getSpeed() const {return speed;}
+    float getX() const {return shape.getPosition().x;}
+    float getY() const {return shape.getPosition().y;}
 };

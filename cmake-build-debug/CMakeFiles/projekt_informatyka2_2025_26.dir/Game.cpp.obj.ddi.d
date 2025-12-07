@@ -346,4 +346,5 @@ CMakeFiles\projekt_informatyka2_2025_26.dir\game.cpp.obj.ddi: \
  C:/mingw64/include/c++/14.2.0/fstream \
  C:/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
- C:/mingw64/include/c++/14.2.0/bits/fstream.tcc
+ C:/mingw64/include/c++/14.2.0/bits/fstream.tcc \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/zapis.h

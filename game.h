@@ -23,6 +23,7 @@ private:
     bool checkCollision(const Meteoryt& ball, const Ship& ship);
 
     Score wynik;
+    sf::Music backgroundMusic;
 
     sf::RenderWindow g_window;
     sf::Texture backgroundTexture;
@@ -41,7 +42,7 @@ private:
     sf::Clock healcoldown;
     sf::Clock clocksurvival;
 
-    float czasrespawnu= 0.2f;
+    float czasrespawnu= 0.5f;
     int punkty=0;
     bool gameOver= false;
 

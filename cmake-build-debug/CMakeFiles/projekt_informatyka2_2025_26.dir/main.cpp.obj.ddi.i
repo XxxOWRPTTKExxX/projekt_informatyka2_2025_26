@@ -117746,10 +117746,13 @@ private:
     float vy;
     int zycie;
     sf::Texture texture;
+    float startX_;
+    float startY_;
+    int startZycie_;
     public:
     sf::RectangleShape shape;
 Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
-    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie) {
+    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
     if (!texture.loadFromFile("../assets/statek1.png")) {
         std::cerr << "Blad: nie mozna zaladowac statek.png\n";
     }
@@ -117802,6 +117805,21 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     zycie += ile1;
     if (zycie > 3) zycie=3;
 }
+    void reset() {
+    x = startX_;
+    y = startY_;
+    zycie = startZycie_;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void resetfromfile(const sf::Vector2f& newPos, int z) {
+    x = newPos.x;
+    y = newPos.y;
+    zycie = z;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void setZycie(int z) { zycie = z; }
+
+
     float getX() const{return x;}
     float getY() const{return y;}
     float getSzerokosc() const{return szerokosc;}
@@ -117825,12 +117843,16 @@ private:
     float vx;
     float vy;
     float radius;
+    float startX_;
+    float startY_;
+    float startvelX_;
+    float startvelY_;
 
 public:
     sf::Texture texture;
     sf::CircleShape shape;
     Pilka(float startX, float startY, float velX, float velY, float r)
-        :x(startX), y(startY), vx(velX), vy(velY), radius(r) {
+        :x(startX), y(startY), vx(velX), vy(velY), radius(r), startX_(startX), startY_(startY), startvelX_(velX), startvelY_(velY) {
         if (!texture.loadFromFile("../assets/kometa.png")) {
             std::cerr << "Blad: nie mozna zaladowac komety.png\n";
         }
@@ -117898,6 +117920,20 @@ void draw (sf::RenderTarget& target) {
         target.draw(shape);
     }
 
+    void reset() {
+        x = startX_;
+        y = startY_;
+        vx = startvelX_;
+        vy = startvelY_;
+        shape.setPosition(sf::Vector2f( x, y));
+    }
+    void resetfromfile(const sf::Vector2f& pos, const sf::Vector2f& vel) {
+        x = pos.x;
+        y = pos.y;
+        vx = vel.x;
+        vy = vel.y;
+        shape.setPosition(sf::Vector2f(x, y));
+    }
 
     float getX() const {return x;}
     float getY() const {return y;}
@@ -117930,6 +117966,8 @@ public:
     }
     void setSpeed(float newSpeed) { speed = newSpeed; }
     float getSpeed() const {return speed;}
+    float getX() const {return shape.getPosition().x;}
+    float getY() const {return shape.getPosition().y;}
 };
 # 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 # 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Score.h" 1
@@ -117965,6 +118003,7 @@ private:
     bool checkCollision(const Meteoryt& ball, const Ship& ship);
 
     Score wynik;
+    sf::Music backgroundMusic;
 
     sf::RenderWindow g_window;
     sf::Texture backgroundTexture;
@@ -117983,7 +118022,7 @@ private:
     sf::Clock healcoldown;
     sf::Clock clocksurvival;
 
-    float czasrespawnu= 0.2f;
+    float czasrespawnu= 0.5f;
     int punkty=0;
     bool gameOver= false;
 
@@ -117994,6 +118033,7 @@ private:
 
 
 int main() {
+
     Game game;
     game.run();
     return 0;

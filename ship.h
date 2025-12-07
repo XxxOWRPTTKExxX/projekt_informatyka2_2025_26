@@ -18,10 +18,13 @@ private:
     float vy;
     int zycie;
     sf::Texture texture;
+    float startX_;
+    float startY_;
+    int startZycie_;
     public:
     sf::RectangleShape shape;
 Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
-    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie) {
+    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
     if (!texture.loadFromFile("../assets/statek1.png")) {
         std::cerr << "Blad: nie mozna zaladowac statek.png\n";
     }
@@ -74,6 +77,21 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     zycie += ile1;
     if (zycie > 3) zycie=3;
 }
+    void reset() {
+    x = startX_;
+    y = startY_;
+    zycie = startZycie_;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void resetfromfile(const sf::Vector2f& newPos, int z) {
+    x = newPos.x;
+    y = newPos.y;
+    zycie = z;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void setZycie(int z) { zycie = z; }
+
+
     float getX() const{return x;}
     float getY() const{return y;}
     float getSzerokosc() const{return szerokosc;}

@@ -117744,10 +117744,13 @@ private:
     float vy;
     int zycie;
     sf::Texture texture;
+    float startX_;
+    float startY_;
+    int startZycie_;
     public:
     sf::RectangleShape shape;
 Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
-    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie) {
+    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
     if (!texture.loadFromFile("../assets/statek1.png")) {
         std::cerr << "Blad: nie mozna zaladowac statek.png\n";
     }
@@ -117800,6 +117803,21 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     zycie += ile1;
     if (zycie > 3) zycie=3;
 }
+    void reset() {
+    x = startX_;
+    y = startY_;
+    zycie = startZycie_;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void resetfromfile(const sf::Vector2f& newPos, int z) {
+    x = newPos.x;
+    y = newPos.y;
+    zycie = z;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void setZycie(int z) { zycie = z; }
+
+
     float getX() const{return x;}
     float getY() const{return y;}
     float getSzerokosc() const{return szerokosc;}
@@ -117823,12 +117841,16 @@ private:
     float vx;
     float vy;
     float radius;
+    float startX_;
+    float startY_;
+    float startvelX_;
+    float startvelY_;
 
 public:
     sf::Texture texture;
     sf::CircleShape shape;
     Pilka(float startX, float startY, float velX, float velY, float r)
-        :x(startX), y(startY), vx(velX), vy(velY), radius(r) {
+        :x(startX), y(startY), vx(velX), vy(velY), radius(r), startX_(startX), startY_(startY), startvelX_(velX), startvelY_(velY) {
         if (!texture.loadFromFile("../assets/kometa.png")) {
             std::cerr << "Blad: nie mozna zaladowac komety.png\n";
         }
@@ -117896,6 +117918,20 @@ void draw (sf::RenderTarget& target) {
         target.draw(shape);
     }
 
+    void reset() {
+        x = startX_;
+        y = startY_;
+        vx = startvelX_;
+        vy = startvelY_;
+        shape.setPosition(sf::Vector2f( x, y));
+    }
+    void resetfromfile(const sf::Vector2f& pos, const sf::Vector2f& vel) {
+        x = pos.x;
+        y = pos.y;
+        vx = vel.x;
+        vy = vel.y;
+        shape.setPosition(sf::Vector2f(x, y));
+    }
 
     float getX() const {return x;}
     float getY() const {return y;}
@@ -117928,6 +117964,8 @@ public:
     }
     void setSpeed(float newSpeed) { speed = newSpeed; }
     float getSpeed() const {return speed;}
+    float getX() const {return shape.getPosition().x;}
+    float getY() const {return shape.getPosition().y;}
 };
 # 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
 # 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 1
@@ -117977,6 +118015,7 @@ private:
     bool checkCollision(const Meteoryt& ball, const Ship& ship);
 
     Score wynik;
+    sf::Music backgroundMusic;
 
     sf::RenderWindow g_window;
     sf::Texture backgroundTexture;
@@ -117995,7 +118034,7 @@ private:
     sf::Clock healcoldown;
     sf::Clock clocksurvival;
 
-    float czasrespawnu= 0.2f;
+    float czasrespawnu= 0.5f;
     int punkty=0;
     bool gameOver= false;
 
@@ -120060,11 +120099,94 @@ namespace std
 }
 # 1361 "C:/mingw64/include/c++/14.2.0/fstream" 2 3
 # 12 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/zapis.h" 1
+       
+# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/zapis.h"
+
+# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/zapis.h"
+struct MeteorytData {
+    float x, y;
+    float speed;
+};
+
+class Zapis {
+private:
+    int zycie;
+    sf::Vector2f shipPosition;
+    sf::Vector2f ballPosition;
+    sf::Vector2f ballVelocity;
+    std::vector<MeteorytData> meteoryty;
+
+public:
+    Zapis()=default;
+    void capture(const Ship& ship, const Pilka& ball, const std::vector<Meteoryt>& met);
+    int getZyciez() const {return zycie;}
+    const sf::Vector2f& getShipposition() const {return shipPosition;}
+    const sf::Vector2f& getBallPosition() const {return ballPosition;}
+    const sf::Vector2f& getBallVelocity() const {return ballVelocity;}
+    const std::vector<MeteorytData>& getMeteoryty() const {return meteoryty;}
+
+bool saveToFile(const std::string& zapisplik) const {
+    std::ofstream file(zapisplik);
+    if (!file.is_open()) {
+        std::cerr << "Nie mozna otworzyc pliku do zapisu: " << zapisplik << "\n";
+        return false;
+    }
 
 
 
+    file << "SHIP " << shipPosition.x << " " << shipPosition.y << " " << zycie << "\n";
 
-# 15 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp"
+
+    file << "BALL " << ballPosition.x << " " << ballPosition.y << " "
+         << ballVelocity.x << " " << ballVelocity.y << "\n";
+
+
+    file << "METEORYTS_COUNT " << meteoryty.size() << "\n";
+    for (const auto& m : meteoryty) {
+        file << m.x << " " << m.y << " " << m.speed << "\n";
+    }
+
+    file.close();
+    return true;
+}
+    bool loadFromFile(const std::string& zapisplik) {
+        std::ifstream file(zapisplik);
+        if (!file.is_open()) return false;
+
+        std::string label;
+        int meteCount;
+
+        if (file >> label >> shipPosition.x >> shipPosition.y >> zycie) {}
+        if (file >> label >> ballPosition.x >> ballPosition.y >> ballVelocity.x >> ballVelocity.y) {}
+        if (file >> label >> meteCount) {
+            meteoryty.clear();
+            for (int i = 0; i < meteCount; ++i) {
+                MeteorytData m;
+                file >> m.x >> m.y >> m.speed;
+                meteoryty.push_back(m);
+            }
+        }
+
+        file.close();
+        return true;
+    }
+
+    void apply(Ship& s, Pilka& b, std::vector<Meteoryt>& met) {
+        s.resetfromfile(shipPosition, zycie);
+        b.resetfromfile(ballPosition, ballVelocity);
+        s.setZycie(getZyciez());
+
+        met.clear();
+        for (const auto& m : meteoryty) {
+            met.emplace_back(m.x, m.y, 15.0f, m.speed);
+        }
+    }
+};
+# 13 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+
+
+
 Game::Game()
     :g_window(sf::VideoMode({800u, 600u}), "Gra demo na projekt (SFML 3)"),
     textpunktyzycia(font),
@@ -120107,8 +120229,19 @@ void Game::gameLoop(Score& score)
                 if (key->code == sf::Keyboard::Key::Escape) {
                     return;
                 }
+
+
+                if (key->code == sf::Keyboard::Key::Z) {
+                    Zapis save;
+                    save.capture(ship, pilka, meteoryty);
+                    if (save.saveToFile("zapis.txt")) {
+                        std::cout << "Zapisano!\n";
+                    }
+                }
             }
         }
+
+
 
 
         if (gameOver) {
@@ -120132,9 +120265,28 @@ void Game::run() {
                 score.showScores(g_window, font);
 
             } else if (menuResult == 1) {
-
+                Zapis load;
+                if (load.loadFromFile("zapis.txt")) {
+                    load.apply(ship, pilka, meteoryty);
+                    std::cout << "Gra wczytana!\n";
+                    gameLoop(score);
+                } else {
+                    std::cerr << "Nie udało się wczytać zapisu!\n";
+                }
             }
             else if (menuResult == 0) {
+                gameOver = false;
+                punkty = 0;
+                meteoryty.clear();
+                ship.reset();
+                pilka.reset();
+                czasrespawnu= 0.5f;
+                if (!backgroundMusic.openFromFile("../assets/background.ogg")) {
+                  std::cerr << "Nie ma muzyki!" << std::endl;
+               } else {
+                    backgroundMusic.setLooping(true);
+                    backgroundMusic.play();
+                }
                 gameLoop(score);
             }
         }
@@ -120164,7 +120316,7 @@ void Game::update(float dt) {
     }
     if (spawnclock.getElapsedTime().asSeconds() > czasrespawnu) {
         float x = rand() % (int)(windowWidth - 40);
-        meteoryty.emplace_back(x, -50, 15.0f, 200.0f);
+        meteoryty.emplace_back(x, -50, 15.0f, 50.0f);
         spawnclock.restart();
     }
     pilka.move(dt);
@@ -120184,18 +120336,18 @@ void Game::update(float dt) {
     }
 
     if (punkty >= 100) {
-        czasrespawnu = 0.1f;
-        for (auto& m : meteoryty) m.setSpeed(300.0f);
+        czasrespawnu = 0.3f;
+        for (auto& m : meteoryty) m.setSpeed(150.0f);
     }
 
     if (punkty >= 220) {
-        czasrespawnu = 0.07f;
-        for (auto& m : meteoryty) m.setSpeed(350.0f);
+        czasrespawnu = 0.2f;
+        for (auto& m : meteoryty) m.setSpeed(300.0f);
     }
 
     if (punkty >= 400) {
-        czasrespawnu = 0.05f;
-        for (auto& m : meteoryty) m.setSpeed(400.0f);
+        czasrespawnu = 0.02f;
+        for (auto& m : meteoryty) m.setSpeed(800.0f);
     }
 
     if (ship.getZycie() < 3) {

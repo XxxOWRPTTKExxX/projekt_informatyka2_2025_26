@@ -40,6 +40,11 @@
 		{
 			"language" : "CXX",
 			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/score.cpp"
+		},
+		"CMakeFiles/projekt_informatyka2_2025_26.dir/zapis.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/zapis.cpp"
 		}
 	}
 }
