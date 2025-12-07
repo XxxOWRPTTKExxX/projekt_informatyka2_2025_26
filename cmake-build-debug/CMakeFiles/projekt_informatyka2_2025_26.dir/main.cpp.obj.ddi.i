@@ -117932,6 +117932,25 @@ public:
     float getSpeed() const {return speed;}
 };
 # 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Score.h" 1
+       
+
+
+
+
+class Score {
+public:
+    Score(const std::string& filename = "Wyniki.txt");
+
+    void addScore(int score);
+    std::vector<int> getScores();
+    void showScores(sf::RenderWindow& window, const sf::Font& font);
+
+private:
+    std::string filename;
+};
+# 11 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+
 
 class Game {
 public:
@@ -117942,9 +117961,10 @@ private:
     void processEvents();
     void update(float dt);
     void render();
-
+    void gameLoop(Score& score);
     bool checkCollision(const Meteoryt& ball, const Ship& ship);
 
+    Score wynik;
 
     sf::RenderWindow g_window;
     sf::Texture backgroundTexture;

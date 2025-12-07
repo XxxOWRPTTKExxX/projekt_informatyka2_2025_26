@@ -340,4 +340,5 @@ CMakeFiles\projekt_informatyka2_2025_26.dir\main.cpp.obj.ddi: \
  C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/ship.h \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/pilka.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/meteoryt.h
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/meteoryt.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/Score.h

@@ -7,6 +7,8 @@
 #include "ship.h"
 #include "pilka.h"
 #include "meteoryt.h"
+#include "Score.h"
+
 
 class Game {
 public:
@@ -17,9 +19,10 @@ private:
     void processEvents();
     void update(float dt);
     void render();
-
+    void gameLoop(Score& score);
     bool checkCollision(const Meteoryt& ball, const Ship& ship);
 
+    Score wynik;
 
     sf::RenderWindow g_window;
     sf::Texture backgroundTexture;

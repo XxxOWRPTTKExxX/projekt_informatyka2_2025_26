@@ -8,11 +8,15 @@
 #include "meteoryt.h"
 #include "game.h"
 #include "menu.h"
+#include <fstream>
+
+
 
 Game::Game()
     :g_window(sf::VideoMode({800u, 600u}), "Gra demo na projekt (SFML 3)"),
     textpunktyzycia(font),
     punktytekst(font),
+    wynik("Wyniki.txt:"),
     ship(520,500,60, 60, 200, 200, 3),
     pilka(200,200,400,-100,40)
 {
@@ -34,19 +38,53 @@ Game::Game()
     clocksurvival.restart();
 }
 
+void Game::gameLoop(Score& score)
+{
+    sf::Clock clock;
+
+    while (g_window.isOpen()) {
+
+        // eventy
+        while (auto event = g_window.pollEvent()) {
+
+            if (event->is<sf::Event::Closed>())
+                g_window.close();
+
+            if (auto* key = event->getIf<sf::Event::KeyPressed>()) {
+                if (key->code == sf::Keyboard::Key::Escape) {
+                    return; // WYJŚCIE DO MENU
+                }
+            }
+        }
+
+        // jeśli gra się skończyła → zapisz wynik i wróć do menu
+        if (gameOver) {
+            score.addScore(punkty);
+            return;
+        }
+
+        float dt = clock.restart().asSeconds();
+        update(dt);
+        render();
+    }
+}
+
 void Game::run() {
     Menu menu(windowWidth, windowHeight);
-    int menuResult = menu.run(g_window);
-    if (menuResult == 0) {
+    Score score;
+
         while (g_window.isOpen()) {
-            processEvents();
-            if (!gameOver) {
-                float dt = clock.restart().asSeconds();
-                update(dt);
+            int menuResult = menu.run(g_window);
+            if (menuResult == 2) {
+                score.showScores(g_window, font);
+
+            } else if (menuResult == 1) {
+                // dopisac wczytywanie
             }
-            render();
+            else if (menuResult == 0) {
+                gameLoop(score); 
+            }
         }
-    }
 }
 void Game::processEvents() {
     while (const std::optional event = g_window.pollEvent()) {
@@ -124,6 +162,7 @@ void Game::update(float dt) {
     punktytekst.setString("Punkty: " + std::to_string(punkty));
     if (ship.getZycie() <= 0) {
         gameOver = true;
+        wynik.addScore(punkty);
     }
     if (ship.getZycie() == 2) {
         textpunktyzycia.setFillColor(sf::Color::Green);
