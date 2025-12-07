@@ -107330,9 +107330,4385 @@ public:
 
        
 
+# 1 "C:/SFML/include/SFML/Audio.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio.hpp" 3 4
+       
 
 
 
+
+
+# 1 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+       
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/Export.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Export.hpp" 3 4
+       
+# 31 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 2 3 4
+
+# 1 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+       
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundChannel.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundChannel.hpp" 3 4
+       
+
+
+# 27 "C:/SFML/include/SFML/Audio/SoundChannel.hpp" 3 4
+namespace sf
+{
+# 41 "C:/SFML/include/SFML/Audio/SoundChannel.hpp" 3 4
+enum class SoundChannel
+{
+    Unspecified,
+    Mono,
+    FrontLeft,
+    FrontRight,
+    FrontCenter,
+    FrontLeftOfCenter,
+    FrontRightOfCenter,
+    LowFrequencyEffects,
+    BackLeft,
+    BackRight,
+    BackCenter,
+    SideLeft,
+    SideRight,
+    TopCenter,
+    TopFrontLeft,
+    TopFrontRight,
+    TopFrontCenter,
+    TopBackLeft,
+    TopBackRight,
+    TopBackCenter
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 2 3 4
+
+
+
+
+
+
+
+namespace sf
+{
+class InputStream;
+
+
+
+
+
+class __attribute__((dllimport)) SoundFileReader
+{
+public:
+
+
+
+
+    struct Info
+    {
+        std::uint64_t sampleCount{};
+        unsigned int channelCount{};
+        unsigned int sampleRate{};
+        std::vector<SoundChannel> channelMap;
+    };
+
+
+
+
+
+    virtual ~SoundFileReader() = default;
+# 81 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+    [[nodiscard]] virtual std::optional<Info> open(InputStream& stream) = 0;
+# 96 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+    virtual void seek(std::uint64_t sampleOffset) = 0;
+# 107 "C:/SFML/include/SFML/Audio/SoundFileReader.hpp" 3 4
+    [[nodiscard]] virtual std::uint64_t read(std::int16_t* samples, std::uint64_t maxCount) = 0;
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 2 3 4
+# 42 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+namespace sf
+{
+class Time;
+class InputStream;
+
+
+
+
+
+class __attribute__((dllimport)) InputSoundFile
+{
+public:
+
+
+
+
+
+
+
+    InputSoundFile() = default;
+# 79 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    explicit InputSoundFile(const std::filesystem::path& filename);
+# 93 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    InputSoundFile(const void* data, std::size_t sizeInBytes);
+# 106 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    explicit InputSoundFile(InputStream& stream);
+# 124 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromFile(const std::filesystem::path& filename);
+# 138 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromMemory(const void* data, std::size_t sizeInBytes);
+# 151 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromStream(InputStream& stream);
+
+
+
+
+
+
+
+    [[nodiscard]] std::uint64_t getSampleCount() const;
+
+
+
+
+
+
+
+    [[nodiscard]] unsigned int getChannelCount() const;
+
+
+
+
+
+
+
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 188 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] const std::vector<SoundChannel>& getChannelMap() const;
+# 199 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] Time getDuration() const;
+
+
+
+
+
+
+
+    [[nodiscard]] Time getTimeOffset() const;
+
+
+
+
+
+
+
+    [[nodiscard]] std::uint64_t getSampleOffset() const;
+# 234 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    void seek(std::uint64_t sampleOffset);
+# 248 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    void seek(Time timeOffset);
+# 259 "C:/SFML/include/SFML/Audio/InputSoundFile.hpp" 3 4
+    [[nodiscard]] std::uint64_t read(std::int16_t* samples, std::uint64_t maxCount);
+
+
+
+
+
+    void close();
+
+private:
+
+
+
+
+    struct __attribute__((dllimport)) StreamDeleter
+    {
+        StreamDeleter(bool theOwned);
+
+
+        template <typename T>
+        StreamDeleter(const std::default_delete<T>&);
+
+        void operator()(InputStream* ptr) const;
+
+        bool owned{true};
+    };
+
+
+
+
+    std::unique_ptr<SoundFileReader> m_reader;
+    std::unique_ptr<InputStream, StreamDeleter> m_stream{nullptr, false};
+    std::uint64_t m_sampleOffset{};
+    std::uint64_t m_sampleCount{};
+    unsigned int m_sampleRate{};
+    std::vector<SoundChannel> m_channelMap;
+};
+
+}
+# 32 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/Listener.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+       
+# 41 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+namespace sf::Listener
+{
+# 54 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+struct Cone
+{
+    Angle innerAngle;
+    Angle outerAngle;
+    float outerGain{};
+};
+# 73 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setGlobalVolume(float volume);
+# 83 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) float getGlobalVolume();
+# 95 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setPosition(const Vector3f& position);
+# 105 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getPosition();
+# 122 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setDirection(const Vector3f& direction);
+# 132 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getDirection();
+# 144 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setVelocity(const Vector3f& velocity);
+# 154 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getVelocity();
+# 167 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setCone(const Listener::Cone& cone);
+# 177 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Listener::Cone getCone();
+# 194 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+__attribute__((dllimport)) void setUpVector(const Vector3f& upVector);
+# 204 "C:/SFML/include/SFML/Audio/Listener.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) Vector3f getUpVector();
+}
+# 33 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/Music.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+       
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+       
+
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+       
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/AudioResource.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/AudioResource.hpp" 3 4
+       
+# 35 "C:/SFML/include/SFML/Audio/AudioResource.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) AudioResource
+{
+public:
+
+
+
+
+    AudioResource(const AudioResource&) = default;
+
+
+
+
+
+    AudioResource& operator=(const AudioResource&) = default;
+
+
+
+
+
+    AudioResource(AudioResource&&) noexcept = default;
+
+
+
+
+
+    AudioResource& operator=(AudioResource&&) noexcept = default;
+
+protected:
+
+
+
+
+    AudioResource();
+
+private:
+
+
+
+    std::shared_ptr<void> m_device;
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 2 3 4
+
+
+
+
+# 1 "C:/mingw64/include/c++/14.2.0/functional" 1 3 4
+# 46 "C:/mingw64/include/c++/14.2.0/functional" 3 4
+       
+# 47 "C:/mingw64/include/c++/14.2.0/functional" 3
+# 59 "C:/mingw64/include/c++/14.2.0/functional" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 1 3
+# 33 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+       
+# 34 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+# 45 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+namespace std
+{
+
+
+
+
+
+
+
+  class bad_function_call : public std::exception
+  {
+  public:
+    virtual ~bad_function_call() noexcept;
+
+    const char* what() const noexcept;
+  };
+
+
+
+
+
+
+
+  template<typename _Tp>
+    struct __is_location_invariant
+    : is_trivially_copyable<_Tp>::type
+    { };
+
+  class _Undefined_class;
+
+  union _Nocopy_types
+  {
+    void* _M_object;
+    const void* _M_const_object;
+    void (*_M_function_pointer)();
+    void (_Undefined_class::*_M_member_pointer)();
+  };
+
+  union [[gnu::may_alias]] _Any_data
+  {
+    void* _M_access() noexcept { return &_M_pod_data[0]; }
+    const void* _M_access() const noexcept { return &_M_pod_data[0]; }
+
+    template<typename _Tp>
+      _Tp&
+      _M_access() noexcept
+      { return *static_cast<_Tp*>(_M_access()); }
+
+    template<typename _Tp>
+      const _Tp&
+      _M_access() const noexcept
+      { return *static_cast<const _Tp*>(_M_access()); }
+
+    _Nocopy_types _M_unused;
+    char _M_pod_data[sizeof(_Nocopy_types)];
+  };
+
+  enum _Manager_operation
+  {
+    __get_type_info,
+    __get_functor_ptr,
+    __clone_functor,
+    __destroy_functor
+  };
+
+  template<typename _Signature>
+    class function;
+
+
+  class _Function_base
+  {
+  public:
+    static const size_t _M_max_size = sizeof(_Nocopy_types);
+    static const size_t _M_max_align = __alignof__(_Nocopy_types);
+
+    template<typename _Functor>
+      class _Base_manager
+      {
+      protected:
+ static const bool __stored_locally =
+ (__is_location_invariant<_Functor>::value
+  && sizeof(_Functor) <= _M_max_size
+  && __alignof__(_Functor) <= _M_max_align
+  && (_M_max_align % __alignof__(_Functor) == 0));
+
+ using _Local_storage = integral_constant<bool, __stored_locally>;
+
+
+ static _Functor*
+ _M_get_pointer(const _Any_data& __source) noexcept
+ {
+   if constexpr (__stored_locally)
+     {
+       const _Functor& __f = __source._M_access<_Functor>();
+       return const_cast<_Functor*>(std::__addressof(__f));
+     }
+   else
+     return __source._M_access<_Functor*>();
+ }
+
+      private:
+
+
+ template<typename _Fn>
+   static void
+   _M_create(_Any_data& __dest, _Fn&& __f, true_type)
+   {
+     ::new (__dest._M_access()) _Functor(std::forward<_Fn>(__f));
+   }
+
+
+ template<typename _Fn>
+   static void
+   _M_create(_Any_data& __dest, _Fn&& __f, false_type)
+   {
+     __dest._M_access<_Functor*>()
+       = new _Functor(std::forward<_Fn>(__f));
+   }
+
+
+ static void
+ _M_destroy(_Any_data& __victim, true_type)
+ {
+   __victim._M_access<_Functor>().~_Functor();
+ }
+
+
+ static void
+ _M_destroy(_Any_data& __victim, false_type)
+ {
+   delete __victim._M_access<_Functor*>();
+ }
+
+      public:
+ static bool
+ _M_manager(_Any_data& __dest, const _Any_data& __source,
+     _Manager_operation __op)
+ {
+   switch (__op)
+     {
+     case __get_type_info:
+
+       __dest._M_access<const type_info*>() = &typeid(_Functor);
+
+
+
+       break;
+
+     case __get_functor_ptr:
+       __dest._M_access<_Functor*>() = _M_get_pointer(__source);
+       break;
+
+     case __clone_functor:
+       _M_init_functor(__dest,
+    *const_cast<const _Functor*>(_M_get_pointer(__source)));
+       break;
+
+     case __destroy_functor:
+       _M_destroy(__dest, _Local_storage());
+       break;
+     }
+   return false;
+ }
+
+ template<typename _Fn>
+   static void
+   _M_init_functor(_Any_data& __functor, _Fn&& __f)
+   noexcept(__and_<_Local_storage,
+     is_nothrow_constructible<_Functor, _Fn>>::value)
+   {
+     _M_create(__functor, std::forward<_Fn>(__f), _Local_storage());
+   }
+
+ template<typename _Signature>
+   static bool
+   _M_not_empty_function(const function<_Signature>& __f) noexcept
+   { return static_cast<bool>(__f); }
+
+ template<typename _Tp>
+   static bool
+   _M_not_empty_function(_Tp* __fp) noexcept
+   { return __fp != nullptr; }
+
+ template<typename _Class, typename _Tp>
+   static bool
+   _M_not_empty_function(_Tp _Class::* __mp) noexcept
+   { return __mp != nullptr; }
+
+ template<typename _Tp>
+   static bool
+   _M_not_empty_function(const _Tp&) noexcept
+   { return true; }
+      };
+
+    _Function_base() = default;
+
+    ~_Function_base()
+    {
+      if (_M_manager)
+ _M_manager(_M_functor, _M_functor, __destroy_functor);
+    }
+
+    bool _M_empty() const { return !_M_manager; }
+
+    using _Manager_type
+      = bool (*)(_Any_data&, const _Any_data&, _Manager_operation);
+
+    _Any_data _M_functor{};
+    _Manager_type _M_manager{};
+  };
+
+  template<typename _Signature, typename _Functor>
+    class _Function_handler;
+
+  template<typename _Res, typename _Functor, typename... _ArgTypes>
+    class _Function_handler<_Res(_ArgTypes...), _Functor>
+    : public _Function_base::_Base_manager<_Functor>
+    {
+      using _Base = _Function_base::_Base_manager<_Functor>;
+
+    public:
+      static bool
+      _M_manager(_Any_data& __dest, const _Any_data& __source,
+   _Manager_operation __op)
+      {
+ switch (__op)
+   {
+
+   case __get_type_info:
+     __dest._M_access<const type_info*>() = &typeid(_Functor);
+     break;
+
+   case __get_functor_ptr:
+     __dest._M_access<_Functor*>() = _Base::_M_get_pointer(__source);
+     break;
+
+   default:
+     _Base::_M_manager(__dest, __source, __op);
+   }
+ return false;
+      }
+
+      static _Res
+      _M_invoke(const _Any_data& __functor, _ArgTypes&&... __args)
+      {
+ return std::__invoke_r<_Res>(*_Base::_M_get_pointer(__functor),
+         std::forward<_ArgTypes>(__args)...);
+      }
+
+      template<typename _Fn>
+ static constexpr bool
+ _S_nothrow_init() noexcept
+ {
+   return __and_<typename _Base::_Local_storage,
+   is_nothrow_constructible<_Functor, _Fn>>::value;
+ }
+    };
+
+
+  template<>
+    class _Function_handler<void, void>
+    {
+    public:
+      static bool
+      _M_manager(_Any_data&, const _Any_data&, _Manager_operation)
+      { return false; }
+    };
+
+
+
+
+
+  template<typename _Signature, typename _Functor,
+    bool __valid = is_object<_Functor>::value>
+    struct _Target_handler
+    : _Function_handler<_Signature, typename remove_cv<_Functor>::type>
+    { };
+
+  template<typename _Signature, typename _Functor>
+    struct _Target_handler<_Signature, _Functor, false>
+    : _Function_handler<void, void>
+    { };
+
+
+
+
+
+
+  template<typename _Res, typename... _ArgTypes>
+    class function<_Res(_ArgTypes...)>
+    : public _Maybe_unary_or_binary_function<_Res, _ArgTypes...>,
+      private _Function_base
+    {
+
+
+      template<typename _Func,
+        bool _Self = is_same<__remove_cvref_t<_Func>, function>::value>
+ using _Decay_t
+   = typename __enable_if_t<!_Self, decay<_Func>>::type;
+
+      template<typename _Func,
+        typename _DFunc = _Decay_t<_Func>,
+        typename _Res2 = __invoke_result<_DFunc&, _ArgTypes...>>
+ struct _Callable
+ : __is_invocable_impl<_Res2, _Res>::type
+ { };
+
+      template<typename _Cond, typename _Tp = void>
+ using _Requires = __enable_if_t<_Cond::value, _Tp>;
+
+      template<typename _Functor>
+ using _Handler
+   = _Function_handler<_Res(_ArgTypes...), __decay_t<_Functor>>;
+
+    public:
+      typedef _Res result_type;
+
+
+
+
+
+
+
+      function() noexcept
+      : _Function_base() { }
+
+
+
+
+
+      function(nullptr_t) noexcept
+      : _Function_base() { }
+# 386 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function(const function& __x)
+      : _Function_base()
+      {
+ if (static_cast<bool>(__x))
+   {
+     __x._M_manager(_M_functor, __x._M_functor, __clone_functor);
+     _M_invoker = __x._M_invoker;
+     _M_manager = __x._M_manager;
+   }
+      }
+# 404 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function(function&& __x) noexcept
+      : _Function_base(), _M_invoker(__x._M_invoker)
+      {
+ if (static_cast<bool>(__x))
+   {
+     _M_functor = __x._M_functor;
+     _M_manager = __x._M_manager;
+     __x._M_manager = nullptr;
+     __x._M_invoker = nullptr;
+   }
+      }
+# 433 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      template<typename _Functor,
+        typename _Constraints = _Requires<_Callable<_Functor>>>
+ function(_Functor&& __f)
+ noexcept(_Handler<_Functor>::template _S_nothrow_init<_Functor>())
+ : _Function_base()
+ {
+   static_assert(is_copy_constructible<__decay_t<_Functor>>::value,
+       "std::function target must be copy-constructible");
+   static_assert(is_constructible<__decay_t<_Functor>, _Functor>::value,
+       "std::function target must be constructible from the "
+       "constructor argument");
+
+   using _My_handler = _Handler<_Functor>;
+
+   if (_My_handler::_M_not_empty_function(__f))
+     {
+       _My_handler::_M_init_functor(_M_functor,
+        std::forward<_Functor>(__f));
+       _M_invoker = &_My_handler::_M_invoke;
+       _M_manager = &_My_handler::_M_manager;
+     }
+ }
+# 468 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function&
+      operator=(const function& __x)
+      {
+ function(__x).swap(*this);
+ return *this;
+      }
+# 486 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function&
+      operator=(function&& __x) noexcept
+      {
+ function(std::move(__x)).swap(*this);
+ return *this;
+      }
+# 500 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      function&
+      operator=(nullptr_t) noexcept
+      {
+ if (_M_manager)
+   {
+     _M_manager(_M_functor, _M_functor, __destroy_functor);
+     _M_manager = nullptr;
+     _M_invoker = nullptr;
+   }
+ return *this;
+      }
+# 529 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      template<typename _Functor>
+ _Requires<_Callable<_Functor>, function&>
+ operator=(_Functor&& __f)
+ noexcept(_Handler<_Functor>::template _S_nothrow_init<_Functor>())
+ {
+   function(std::forward<_Functor>(__f)).swap(*this);
+   return *this;
+ }
+
+
+      template<typename _Functor>
+ function&
+ operator=(reference_wrapper<_Functor> __f) noexcept
+ {
+   function(__f).swap(*this);
+   return *this;
+ }
+# 556 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      void swap(function& __x) noexcept
+      {
+ std::swap(_M_functor, __x._M_functor);
+ std::swap(_M_manager, __x._M_manager);
+ std::swap(_M_invoker, __x._M_invoker);
+      }
+# 573 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      explicit operator bool() const noexcept
+      { return !_M_empty(); }
+# 586 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      _Res
+      operator()(_ArgTypes... __args) const
+      {
+ if (_M_empty())
+   __throw_bad_function_call();
+ return _M_invoker(_M_functor, std::forward<_ArgTypes>(__args)...);
+      }
+# 605 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      const type_info&
+      target_type() const noexcept
+      {
+ if (_M_manager)
+   {
+     _Any_data __typeinfo_result;
+     _M_manager(__typeinfo_result, _M_functor, __get_type_info);
+     if (auto __ti = __typeinfo_result._M_access<const type_info*>())
+       return *__ti;
+   }
+ return typeid(void);
+      }
+# 630 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+      template<typename _Functor>
+ _Functor*
+ target() noexcept
+ {
+   const function* __const_this = this;
+   const _Functor* __func = __const_this->template target<_Functor>();
+
+
+   return *const_cast<_Functor**>(&__func);
+ }
+
+      template<typename _Functor>
+ const _Functor*
+ target() const noexcept
+ {
+   if constexpr (is_object<_Functor>::value)
+     {
+
+
+       using _Handler = _Target_handler<_Res(_ArgTypes...), _Functor>;
+
+       if (_M_manager == &_Handler::_M_manager
+
+    || (_M_manager && typeid(_Functor) == target_type())
+
+   )
+  {
+    _Any_data __ptr;
+    _M_manager(__ptr, _M_functor, __get_functor_ptr);
+    return __ptr._M_access<const _Functor*>();
+  }
+     }
+   return nullptr;
+ }
+
+
+    private:
+      using _Invoker_type = _Res (*)(const _Any_data&, _ArgTypes&&...);
+      _Invoker_type _M_invoker = nullptr;
+    };
+
+
+  template<typename>
+    struct __function_guide_helper
+    { };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) & noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) const noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+
+  template<typename _Res, typename _Tp, bool _Nx, typename... _Args>
+    struct __function_guide_helper<
+      _Res (_Tp::*) (_Args...) const & noexcept(_Nx)
+    >
+    { using type = _Res(_Args...); };
+# 721 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+  template<typename _Fn, typename _Op>
+    using __function_guide_t = typename __function_guide_helper<_Op>::type;
+
+
+  template<typename _Res, typename... _ArgTypes>
+    function(_Res(*)(_ArgTypes...)) -> function<_Res(_ArgTypes...)>;
+
+  template<typename _Fn, typename _Signature
+      = __function_guide_t<_Fn, decltype(&_Fn::operator())>>
+    function(_Fn) -> function<_Signature>;
+# 741 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+  template<typename _Res, typename... _Args>
+    inline bool
+    operator==(const function<_Res(_Args...)>& __f, nullptr_t) noexcept
+    { return !static_cast<bool>(__f); }
+# 780 "C:/mingw64/include/c++/14.2.0/bits/std_function.h" 3
+  template<typename _Res, typename... _Args>
+    inline void
+    swap(function<_Res(_Args...)>& __x, function<_Res(_Args...)>& __y) noexcept
+    { __x.swap(__y); }
+
+
+  namespace __detail::__variant
+  {
+    template<typename> struct _Never_valueless_alt;
+
+
+
+    template<typename _Signature>
+      struct _Never_valueless_alt<std::function<_Signature>>
+      : std::true_type
+      { };
+  }
+
+
+
+}
+# 60 "C:/mingw64/include/c++/14.2.0/functional" 2 3
+# 88 "C:/mingw64/include/c++/14.2.0/functional" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/version.h" 1 3
+# 47 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+       
+# 48 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+# 89 "C:/mingw64/include/c++/14.2.0/functional" 2 3
+
+
+
+namespace std
+{
+
+
+
+
+
+
+  template<int _Num> struct _Placeholder { };
+# 115 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Callable, typename... _Args>
+    inline constexpr invoke_result_t<_Callable, _Args...>
+    invoke(_Callable&& __fn, _Args&&... __args)
+    noexcept(is_nothrow_invocable_v<_Callable, _Args...>)
+    {
+      return std::__invoke(std::forward<_Callable>(__fn),
+      std::forward<_Args>(__args)...);
+    }
+# 148 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _MemFunPtr,
+    bool __is_mem_fn = is_member_function_pointer<_MemFunPtr>::value>
+    class _Mem_fn_base
+    : public _Mem_fn_traits<_MemFunPtr>::__maybe_type
+    {
+      using _Traits = _Mem_fn_traits<_MemFunPtr>;
+
+      using _Arity = typename _Traits::__arity;
+      using _Varargs = typename _Traits::__vararg;
+
+      template<typename _Func, typename... _BoundArgs>
+ friend struct _Bind_check_arity;
+
+      _MemFunPtr _M_pmf;
+
+    public:
+
+      using result_type = typename _Traits::__result_type;
+
+      explicit constexpr
+      _Mem_fn_base(_MemFunPtr __pmf) noexcept : _M_pmf(__pmf) { }
+
+      template<typename... _Args>
+ constexpr
+ auto
+ operator()(_Args&&... __args) const
+ noexcept(noexcept(
+       std::__invoke(_M_pmf, std::forward<_Args>(__args)...)))
+ -> decltype(std::__invoke(_M_pmf, std::forward<_Args>(__args)...))
+ { return std::__invoke(_M_pmf, std::forward<_Args>(__args)...); }
+    };
+
+
+  template<typename _MemObjPtr>
+    class _Mem_fn_base<_MemObjPtr, false>
+    {
+      using _Arity = integral_constant<size_t, 0>;
+      using _Varargs = false_type;
+
+      template<typename _Func, typename... _BoundArgs>
+ friend struct _Bind_check_arity;
+
+      _MemObjPtr _M_pm;
+
+    public:
+      explicit constexpr
+      _Mem_fn_base(_MemObjPtr __pm) noexcept : _M_pm(__pm) { }
+
+      template<typename _Tp>
+ constexpr
+ auto
+ operator()(_Tp&& __obj) const
+ noexcept(noexcept(std::__invoke(_M_pm, std::forward<_Tp>(__obj))))
+ -> decltype(std::__invoke(_M_pm, std::forward<_Tp>(__obj)))
+ { return std::__invoke(_M_pm, std::forward<_Tp>(__obj)); }
+    };
+
+  template<typename _MemberPointer>
+    struct _Mem_fn;
+
+  template<typename _Res, typename _Class>
+    struct _Mem_fn<_Res _Class::*>
+    : _Mem_fn_base<_Res _Class::*>
+    {
+      using _Mem_fn_base<_Res _Class::*>::_Mem_fn_base;
+    };
+# 241 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Tp, typename _Class>
+    constexpr
+    inline _Mem_fn<_Tp _Class::*>
+    mem_fn(_Tp _Class::* __pm) noexcept
+    {
+      return _Mem_fn<_Tp _Class::*>(__pm);
+    }
+# 260 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Tp>
+    struct is_bind_expression
+    : public false_type { };
+# 272 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Tp>
+    struct is_placeholder
+    : public integral_constant<int, 0>
+    { };
+
+
+  template <typename _Tp> inline constexpr bool is_bind_expression_v
+    = is_bind_expression<_Tp>::value;
+  template <typename _Tp> inline constexpr int is_placeholder_v
+    = is_placeholder<_Tp>::value;
+
+
+
+
+
+
+
+  namespace placeholders
+  {
+# 301 "C:/mingw64/include/c++/14.2.0/functional" 3
+    inline const _Placeholder<1> _1;
+    inline const _Placeholder<2> _2;
+    inline const _Placeholder<3> _3;
+    inline const _Placeholder<4> _4;
+    inline const _Placeholder<5> _5;
+    inline const _Placeholder<6> _6;
+    inline const _Placeholder<7> _7;
+    inline const _Placeholder<8> _8;
+    inline const _Placeholder<9> _9;
+    inline const _Placeholder<10> _10;
+    inline const _Placeholder<11> _11;
+    inline const _Placeholder<12> _12;
+    inline const _Placeholder<13> _13;
+    inline const _Placeholder<14> _14;
+    inline const _Placeholder<15> _15;
+    inline const _Placeholder<16> _16;
+    inline const _Placeholder<17> _17;
+    inline const _Placeholder<18> _18;
+    inline const _Placeholder<19> _19;
+    inline const _Placeholder<20> _20;
+    inline const _Placeholder<21> _21;
+    inline const _Placeholder<22> _22;
+    inline const _Placeholder<23> _23;
+    inline const _Placeholder<24> _24;
+    inline const _Placeholder<25> _25;
+    inline const _Placeholder<26> _26;
+    inline const _Placeholder<27> _27;
+    inline const _Placeholder<28> _28;
+    inline const _Placeholder<29> _29;
+
+
+  }
+
+
+
+
+
+
+
+  template<int _Num>
+    struct is_placeholder<_Placeholder<_Num> >
+    : public integral_constant<int, _Num>
+    { };
+
+  template<int _Num>
+    struct is_placeholder<const _Placeholder<_Num> >
+    : public integral_constant<int, _Num>
+    { };
+
+
+
+
+  template<std::size_t __i, typename _Tuple>
+    using _Safe_tuple_element_t
+      = typename enable_if<(__i < tuple_size<_Tuple>::value),
+      tuple_element<__i, _Tuple>>::type::type;
+# 369 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Arg,
+    bool _IsBindExp = is_bind_expression<_Arg>::value,
+    bool _IsPlaceholder = (is_placeholder<_Arg>::value > 0)>
+    class _Mu;
+
+
+
+
+
+
+  template<typename _Tp>
+    class _Mu<reference_wrapper<_Tp>, false, false>
+    {
+    public:
+
+
+
+
+      template<typename _CVRef, typename _Tuple>
+ constexpr
+ _Tp&
+ operator()(_CVRef& __arg, _Tuple&) const volatile
+ { return __arg.get(); }
+    };
+
+
+
+
+
+
+
+  template<typename _Arg>
+    class _Mu<_Arg, true, false>
+    {
+    public:
+      template<typename _CVArg, typename... _Args>
+ constexpr
+ auto
+ operator()(_CVArg& __arg,
+     tuple<_Args...>& __tuple) const volatile
+ -> decltype(__arg(declval<_Args>()...))
+ {
+
+   typedef typename _Build_index_tuple<sizeof...(_Args)>::__type
+     _Indexes;
+   return this->__call(__arg, __tuple, _Indexes());
+ }
+
+    private:
+
+
+      template<typename _CVArg, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ auto
+ __call(_CVArg& __arg, tuple<_Args...>& __tuple,
+        const _Index_tuple<_Indexes...>&) const volatile
+ -> decltype(__arg(declval<_Args>()...))
+ {
+   return __arg(std::get<_Indexes>(std::move(__tuple))...);
+ }
+    };
+
+
+
+
+
+
+  template<typename _Arg>
+    class _Mu<_Arg, false, true>
+    {
+    public:
+      template<typename _Tuple>
+ constexpr
+ _Safe_tuple_element_t<(is_placeholder<_Arg>::value - 1), _Tuple>&&
+ operator()(const volatile _Arg&, _Tuple& __tuple) const volatile
+ {
+   return
+     ::std::get<(is_placeholder<_Arg>::value - 1)>(std::move(__tuple));
+ }
+    };
+
+
+
+
+
+
+  template<typename _Arg>
+    class _Mu<_Arg, false, false>
+    {
+    public:
+      template<typename _CVArg, typename _Tuple>
+ constexpr
+ _CVArg&&
+ operator()(_CVArg&& __arg, _Tuple&) const volatile
+ { return std::forward<_CVArg>(__arg); }
+    };
+
+
+  template<std::size_t _Ind, typename... _Tp>
+    inline auto
+    __volget(volatile tuple<_Tp...>& __tuple)
+    -> __tuple_element_t<_Ind, tuple<_Tp...>> volatile&
+    { return std::get<_Ind>(const_cast<tuple<_Tp...>&>(__tuple)); }
+
+
+  template<std::size_t _Ind, typename... _Tp>
+    inline auto
+    __volget(const volatile tuple<_Tp...>& __tuple)
+    -> __tuple_element_t<_Ind, tuple<_Tp...>> const volatile&
+    { return std::get<_Ind>(const_cast<const tuple<_Tp...>&>(__tuple)); }
+# 494 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Signature>
+    class _Bind;
+
+   template<typename _Functor, typename... _Bound_args>
+    class _Bind<_Functor(_Bound_args...)>
+    : public _Weak_result_type<_Functor>
+    {
+      typedef typename _Build_index_tuple<sizeof...(_Bound_args)>::__type
+ _Bound_indexes;
+
+      _Functor _M_f;
+      tuple<_Bound_args...> _M_bound_args;
+
+
+      template<typename _Result, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Result
+ __call(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>)
+ {
+   return std::__invoke(_M_f,
+       _Mu<_Bound_args>()(std::get<_Indexes>(_M_bound_args), __args)...
+       );
+ }
+
+
+      template<typename _Result, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Result
+ __call_c(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>) const
+ {
+   return std::__invoke(_M_f,
+       _Mu<_Bound_args>()(std::get<_Indexes>(_M_bound_args), __args)...
+       );
+ }
+# 553 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename _BoundArg, typename _CallArgs>
+ using _Mu_type = decltype(
+     _Mu<typename remove_cv<_BoundArg>::type>()(
+       std::declval<_BoundArg&>(), std::declval<_CallArgs&>()) );
+
+      template<typename _Fn, typename _CallArgs, typename... _BArgs>
+ using _Res_type_impl
+   = __invoke_result_t<_Fn&, _Mu_type<_BArgs, _CallArgs>&&...>;
+
+      template<typename _CallArgs>
+ using _Res_type = _Res_type_impl<_Functor, _CallArgs, _Bound_args...>;
+
+      template<typename _CallArgs>
+ using __dependent = typename
+   enable_if<bool(tuple_size<_CallArgs>::value+1), _Functor>::type;
+
+      template<typename _CallArgs, template<class> class __cv_quals>
+ using _Res_type_cv = _Res_type_impl<
+   typename __cv_quals<__dependent<_CallArgs>>::type,
+   _CallArgs,
+   typename __cv_quals<_Bound_args>::type...>;
+
+     public:
+      template<typename... _Args>
+ explicit constexpr
+ _Bind(const _Functor& __f, _Args&&... __args)
+ : _M_f(__f), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      template<typename... _Args>
+ explicit constexpr
+ _Bind(_Functor&& __f, _Args&&... __args)
+ : _M_f(std::move(__f)), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      _Bind(const _Bind&) = default;
+      _Bind(_Bind&&) = default;
+
+
+      template<typename... _Args,
+        typename _Result = _Res_type<tuple<_Args...>>>
+ constexpr
+ _Result
+ operator()(_Args&&... __args)
+ {
+   return this->__call<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+
+
+      template<typename... _Args,
+        typename _Result = _Res_type_cv<tuple<_Args...>, add_const>>
+ constexpr
+ _Result
+ operator()(_Args&&... __args) const
+ {
+   return this->__call_c<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+# 640 "C:/mingw64/include/c++/14.2.0/functional" 3
+    };
+
+
+  template<typename _Result, typename _Signature>
+    class _Bind_result;
+
+  template<typename _Result, typename _Functor, typename... _Bound_args>
+    class _Bind_result<_Result, _Functor(_Bound_args...)>
+    {
+      typedef typename _Build_index_tuple<sizeof...(_Bound_args)>::__type
+ _Bound_indexes;
+
+      _Functor _M_f;
+      tuple<_Bound_args...> _M_bound_args;
+
+
+      template<typename _Res, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Res
+ __call(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>)
+ {
+   return std::__invoke_r<_Res>(_M_f, _Mu<_Bound_args>()
+        (std::get<_Indexes>(_M_bound_args), __args)...);
+ }
+
+
+      template<typename _Res, typename... _Args, std::size_t... _Indexes>
+ constexpr
+ _Res
+ __call(tuple<_Args...>&& __args, _Index_tuple<_Indexes...>) const
+ {
+   return std::__invoke_r<_Res>(_M_f, _Mu<_Bound_args>()
+        (std::get<_Indexes>(_M_bound_args), __args)...);
+ }
+# 696 "C:/mingw64/include/c++/14.2.0/functional" 3
+    public:
+      typedef _Result result_type;
+
+      template<typename... _Args>
+ explicit constexpr
+ _Bind_result(const _Functor& __f, _Args&&... __args)
+ : _M_f(__f), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      template<typename... _Args>
+ explicit constexpr
+ _Bind_result(_Functor&& __f, _Args&&... __args)
+ : _M_f(std::move(__f)), _M_bound_args(std::forward<_Args>(__args)...)
+ { }
+
+      _Bind_result(const _Bind_result&) = default;
+      _Bind_result(_Bind_result&&) = default;
+
+
+      template<typename... _Args>
+ constexpr
+ result_type
+ operator()(_Args&&... __args)
+ {
+   return this->__call<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+
+
+      template<typename... _Args>
+ constexpr
+ result_type
+ operator()(_Args&&... __args) const
+ {
+   return this->__call<_Result>(
+       std::forward_as_tuple(std::forward<_Args>(__args)...),
+       _Bound_indexes());
+ }
+# 759 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename... _Args>
+ void operator()(_Args&&...) const volatile = delete;
+
+    };
+# 771 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Signature>
+    struct is_bind_expression<_Bind<_Signature> >
+    : public true_type { };
+
+
+
+
+
+  template<typename _Signature>
+    struct is_bind_expression<const _Bind<_Signature> >
+    : public true_type { };
+
+
+
+
+
+  template<typename _Signature>
+    struct is_bind_expression<volatile _Bind<_Signature> >
+    : public true_type { };
+
+
+
+
+
+  template<typename _Signature>
+    struct is_bind_expression<const volatile _Bind<_Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<_Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<const _Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<volatile _Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+
+
+
+
+  template<typename _Result, typename _Signature>
+    struct is_bind_expression<const volatile _Bind_result<_Result, _Signature>>
+    : public true_type { };
+
+  template<typename _Func, typename... _BoundArgs>
+    struct _Bind_check_arity { };
+
+  template<typename _Ret, typename... _Args, typename... _BoundArgs>
+    struct _Bind_check_arity<_Ret (*)(_Args...), _BoundArgs...>
+    {
+      static_assert(sizeof...(_BoundArgs) == sizeof...(_Args),
+                   "Wrong number of arguments for function");
+    };
+
+  template<typename _Ret, typename... _Args, typename... _BoundArgs>
+    struct _Bind_check_arity<_Ret (*)(_Args......), _BoundArgs...>
+    {
+      static_assert(sizeof...(_BoundArgs) >= sizeof...(_Args),
+                   "Wrong number of arguments for function");
+    };
+
+  template<typename _Tp, typename _Class, typename... _BoundArgs>
+    struct _Bind_check_arity<_Tp _Class::*, _BoundArgs...>
+    {
+      using _Arity = typename _Mem_fn<_Tp _Class::*>::_Arity;
+      using _Varargs = typename _Mem_fn<_Tp _Class::*>::_Varargs;
+      static_assert(_Varargs::value
+      ? sizeof...(_BoundArgs) >= _Arity::value + 1
+      : sizeof...(_BoundArgs) == _Arity::value + 1,
+      "Wrong number of arguments for pointer-to-member");
+    };
+
+
+
+
+  template<typename _Tp, typename _Tp2 = typename decay<_Tp>::type>
+    using __is_socketlike = __or_<is_integral<_Tp2>, is_enum<_Tp2>>;
+
+  template<bool _SocketLike, typename _Func, typename... _BoundArgs>
+    struct _Bind_helper
+    : _Bind_check_arity<typename decay<_Func>::type, _BoundArgs...>
+    {
+      typedef typename decay<_Func>::type __func_type;
+      typedef _Bind<__func_type(typename decay<_BoundArgs>::type...)> type;
+    };
+
+
+
+
+  template<typename _Func, typename... _BoundArgs>
+    struct _Bind_helper<true, _Func, _BoundArgs...>
+    { };
+
+
+
+
+
+
+  template<typename _Func, typename... _BoundArgs>
+    inline constexpr typename
+    _Bind_helper<__is_socketlike<_Func>::value, _Func, _BoundArgs...>::type
+    bind(_Func&& __f, _BoundArgs&&... __args)
+    {
+      typedef _Bind_helper<false, _Func, _BoundArgs...> __helper_type;
+      return typename __helper_type::type(std::forward<_Func>(__f),
+       std::forward<_BoundArgs>(__args)...);
+    }
+
+  template<typename _Result, typename _Func, typename... _BoundArgs>
+    struct _Bindres_helper
+    : _Bind_check_arity<typename decay<_Func>::type, _BoundArgs...>
+    {
+      typedef typename decay<_Func>::type __functor_type;
+      typedef _Bind_result<_Result,
+      __functor_type(typename decay<_BoundArgs>::type...)>
+ type;
+    };
+
+
+
+
+
+
+  template<typename _Result, typename _Func, typename... _BoundArgs>
+    inline constexpr
+    typename _Bindres_helper<_Result, _Func, _BoundArgs...>::type
+    bind(_Func&& __f, _BoundArgs&&... __args)
+    {
+      typedef _Bindres_helper<_Result, _Func, _BoundArgs...> __helper_type;
+      return typename __helper_type::type(std::forward<_Func>(__f),
+       std::forward<_BoundArgs>(__args)...);
+    }
+
+
+
+  template<typename _Fd, typename... _BoundArgs>
+    struct _Bind_front
+    {
+      static_assert(is_move_constructible_v<_Fd>);
+      static_assert((is_move_constructible_v<_BoundArgs> && ...));
+
+
+
+      template<typename _Fn, typename... _Args>
+ explicit constexpr
+ _Bind_front(int, _Fn&& __fn, _Args&&... __args)
+ noexcept(__and_<is_nothrow_constructible<_Fd, _Fn>,
+   is_nothrow_constructible<_BoundArgs, _Args>...>::value)
+ : _M_fd(std::forward<_Fn>(__fn)),
+   _M_bound_args(std::forward<_Args>(__args)...)
+ { static_assert(sizeof...(_Args) == sizeof...(_BoundArgs)); }
+# 951 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<_Fd&, _BoundArgs&..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) &
+ noexcept(is_nothrow_invocable_v<_Fd&, _BoundArgs&..., _CallArgs...>)
+ {
+   return _S_call(*this, _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<const _Fd&, const _BoundArgs&..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) const &
+ noexcept(is_nothrow_invocable_v<const _Fd&, const _BoundArgs&...,
+     _CallArgs...>)
+ {
+   return _S_call(*this, _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<_Fd, _BoundArgs..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) &&
+ noexcept(is_nothrow_invocable_v<_Fd, _BoundArgs..., _CallArgs...>)
+ {
+   return _S_call(std::move(*this), _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ requires true
+ constexpr
+ invoke_result_t<const _Fd, const _BoundArgs..., _CallArgs...>
+ operator()(_CallArgs&&... __call_args) const &&
+ noexcept(is_nothrow_invocable_v<const _Fd, const _BoundArgs...,
+     _CallArgs...>)
+ {
+   return _S_call(std::move(*this), _BoundIndices(),
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) & = delete;
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) const & = delete;
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) && = delete;
+
+      template<typename... _CallArgs>
+ void operator()(_CallArgs&&...) const && = delete;
+
+
+    private:
+      using _BoundIndices = index_sequence_for<_BoundArgs...>;
+
+      template<typename _Tp, size_t... _Ind, typename... _CallArgs>
+ static constexpr
+ decltype(auto)
+ _S_call(_Tp&& __g, index_sequence<_Ind...>, _CallArgs&&... __call_args)
+ {
+   return std::invoke(std::forward<_Tp>(__g)._M_fd,
+       std::get<_Ind>(std::forward<_Tp>(__g)._M_bound_args)...,
+       std::forward<_CallArgs>(__call_args)...);
+ }
+
+      [[no_unique_address]] _Fd _M_fd;
+      [[no_unique_address]] std::tuple<_BoundArgs...> _M_bound_args;
+    };
+
+  template<typename _Fn, typename... _Args>
+    using _Bind_front_t = _Bind_front<decay_t<_Fn>, decay_t<_Args>...>;
+# 1039 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Fn, typename... _Args>
+    constexpr _Bind_front_t<_Fn, _Args...>
+    bind_front(_Fn&& __fn, _Args&&... __args)
+    noexcept(is_nothrow_constructible_v<_Bind_front_t<_Fn, _Args...>,
+     int, _Fn, _Args...>)
+    {
+      return _Bind_front_t<_Fn, _Args...>(0, std::forward<_Fn>(__fn),
+       std::forward<_Args>(__args)...);
+    }
+# 1121 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Fn>
+    class _Not_fn
+    {
+      template<typename _Fn2, typename... _Args>
+ using __inv_res_t = typename __invoke_result<_Fn2, _Args...>::type;
+
+      template<typename _Tp>
+ static decltype(!std::declval<_Tp>())
+ _S_not() noexcept(noexcept(!std::declval<_Tp>()));
+
+    public:
+      template<typename _Fn2>
+ constexpr
+ _Not_fn(_Fn2&& __fn, int)
+ : _M_fn(std::forward<_Fn2>(__fn)) { }
+
+      _Not_fn(const _Not_fn& __fn) = default;
+      _Not_fn(_Not_fn&& __fn) = default;
+      ~_Not_fn() = default;
+# 1161 "C:/mingw64/include/c++/14.2.0/functional" 3
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn &, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn &, _Args...>>()) operator()(_Args&&... __args) & noexcept(__is_nothrow_invocable<_Fn &, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn &, _Args...>>())) { return !std::__invoke(std::forward< _Fn & >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn &, _Args...>::value>> void operator()(_Args&&... __args) & = delete;
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn const &, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn const &, _Args...>>()) operator()(_Args&&... __args) const & noexcept(__is_nothrow_invocable<_Fn const &, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn const &, _Args...>>())) { return !std::__invoke(std::forward< _Fn const & >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn const &, _Args...>::value>> void operator()(_Args&&... __args) const & = delete;
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn &&, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn &&, _Args...>>()) operator()(_Args&&... __args) && noexcept(__is_nothrow_invocable<_Fn &&, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn &&, _Args...>>())) { return !std::__invoke(std::forward< _Fn && >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn &&, _Args...>::value>> void operator()(_Args&&... __args) && = delete;
+      template<typename... _Args, typename = enable_if_t<__is_invocable<_Fn const &&, _Args...>::value>> constexpr decltype(_S_not<__inv_res_t<_Fn const &&, _Args...>>()) operator()(_Args&&... __args) const && noexcept(__is_nothrow_invocable<_Fn const &&, _Args...>::value && noexcept(_S_not<__inv_res_t<_Fn const &&, _Args...>>())) { return !std::__invoke(std::forward< _Fn const && >(_M_fn), std::forward<_Args>(__args)...); } template<typename... _Args, typename = enable_if_t<!__is_invocable<_Fn const &&, _Args...>::value>> void operator()(_Args&&... __args) const && = delete;
+
+
+    private:
+      _Fn _M_fn;
+    };
+
+  template<typename _Tp, typename _Pred>
+    struct __is_byte_like : false_type { };
+
+  template<typename _Tp>
+    struct __is_byte_like<_Tp, equal_to<_Tp>>
+    : __bool_constant<sizeof(_Tp) == 1 && is_integral<_Tp>::value> { };
+
+  template<typename _Tp>
+    struct __is_byte_like<_Tp, equal_to<void>>
+    : __bool_constant<sizeof(_Tp) == 1 && is_integral<_Tp>::value> { };
+
+
+
+  enum class byte : unsigned char;
+
+  template<>
+    struct __is_byte_like<byte, equal_to<byte>>
+    : true_type { };
+
+  template<>
+    struct __is_byte_like<byte, equal_to<void>>
+    : true_type { };
+# 1209 "C:/mingw64/include/c++/14.2.0/functional" 3
+  template<typename _Fn>
+    constexpr
+    inline auto
+    not_fn(_Fn&& __fn)
+    noexcept(std::is_nothrow_constructible<std::decay_t<_Fn>, _Fn&&>::value)
+    {
+      return _Not_fn<std::decay_t<_Fn>>{std::forward<_Fn>(__fn), 0};
+    }
+
+
+
+
+
+  template<typename _ForwardIterator1, typename _BinaryPredicate = equal_to<>>
+    class default_searcher
+    {
+    public:
+      constexpr
+      default_searcher(_ForwardIterator1 __pat_first,
+         _ForwardIterator1 __pat_last,
+         _BinaryPredicate __pred = _BinaryPredicate())
+      : _M_m(__pat_first, __pat_last, std::move(__pred))
+      { }
+
+      template<typename _ForwardIterator2>
+ constexpr
+ pair<_ForwardIterator2, _ForwardIterator2>
+ operator()(_ForwardIterator2 __first, _ForwardIterator2 __last) const
+ {
+   _ForwardIterator2 __first_ret =
+     std::search(__first, __last, std::get<0>(_M_m), std::get<1>(_M_m),
+   std::get<2>(_M_m));
+   auto __ret = std::make_pair(__first_ret, __first_ret);
+   if (__ret.first != __last)
+     std::advance(__ret.second, std::distance(std::get<0>(_M_m),
+           std::get<1>(_M_m)));
+   return __ret;
+ }
+
+    private:
+      tuple<_ForwardIterator1, _ForwardIterator1, _BinaryPredicate> _M_m;
+    };
+
+
+
+  template<typename _Key, typename _Tp, typename _Hash, typename _Pred>
+    struct __boyer_moore_map_base
+    {
+      template<typename _RAIter>
+ __boyer_moore_map_base(_RAIter __pat, size_t __patlen,
+          _Hash&& __hf, _Pred&& __pred)
+ : _M_bad_char{ __patlen, std::move(__hf), std::move(__pred) }
+ {
+   if (__patlen > 0)
+     for (__diff_type __i = 0; __i < __patlen - 1; ++__i)
+       _M_bad_char[__pat[__i]] = __patlen - 1 - __i;
+ }
+
+      using __diff_type = _Tp;
+
+      __diff_type
+      _M_lookup(_Key __key, __diff_type __not_found) const
+      {
+ auto __iter = _M_bad_char.find(__key);
+ if (__iter == _M_bad_char.end())
+   return __not_found;
+ return __iter->second;
+      }
+
+      _Pred
+      _M_pred() const { return _M_bad_char.key_eq(); }
+
+      std::unordered_map<_Key, _Tp, _Hash, _Pred> _M_bad_char;
+    };
+
+  template<typename _Tp, size_t _Len, typename _Pred>
+    struct __boyer_moore_array_base
+    {
+      template<typename _RAIter, typename _Unused>
+ __boyer_moore_array_base(_RAIter __pat, size_t __patlen,
+     _Unused&&, _Pred&& __pred)
+ : _M_bad_char{ array<_Tp, _Len>{}, std::move(__pred) }
+ {
+   std::get<0>(_M_bad_char).fill(__patlen);
+   if (__patlen > 0)
+     for (__diff_type __i = 0; __i < __patlen - 1; ++__i)
+       {
+  auto __ch = __pat[__i];
+  using _UCh = make_unsigned_t<decltype(__ch)>;
+  auto __uch = static_cast<_UCh>(__ch);
+  std::get<0>(_M_bad_char)[__uch] = __patlen - 1 - __i;
+       }
+ }
+
+      using __diff_type = _Tp;
+
+      template<typename _Key>
+ __diff_type
+ _M_lookup(_Key __key, __diff_type __not_found) const
+ {
+   auto __ukey = static_cast<make_unsigned_t<_Key>>(__key);
+   if (__ukey >= _Len)
+     return __not_found;
+   return std::get<0>(_M_bad_char)[__ukey];
+ }
+
+      const _Pred&
+      _M_pred() const { return std::get<1>(_M_bad_char); }
+
+      tuple<array<_Tp, _Len>, _Pred> _M_bad_char;
+    };
+
+
+
+  template<typename _RAIter, typename _Hash, typename _Pred,
+           typename _Val = typename iterator_traits<_RAIter>::value_type,
+    typename _Diff = typename iterator_traits<_RAIter>::difference_type>
+    using __boyer_moore_base_t
+      = __conditional_t<__is_byte_like<_Val, _Pred>::value,
+   __boyer_moore_array_base<_Diff, 256, _Pred>,
+   __boyer_moore_map_base<_Val, _Diff, _Hash, _Pred>>;
+
+  template<typename _RAIter, typename _Hash
+      = hash<typename iterator_traits<_RAIter>::value_type>,
+    typename _BinaryPredicate = equal_to<>>
+    class boyer_moore_searcher
+    : __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>
+    {
+      using _Base = __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>;
+      using typename _Base::__diff_type;
+
+    public:
+      boyer_moore_searcher(_RAIter __pat_first, _RAIter __pat_last,
+      _Hash __hf = _Hash(),
+      _BinaryPredicate __pred = _BinaryPredicate());
+
+      template<typename _RandomAccessIterator2>
+        pair<_RandomAccessIterator2, _RandomAccessIterator2>
+ operator()(_RandomAccessIterator2 __first,
+     _RandomAccessIterator2 __last) const;
+
+    private:
+      bool
+      _M_is_prefix(_RAIter __word, __diff_type __len,
+     __diff_type __pos)
+      {
+ const auto& __pred = this->_M_pred();
+ __diff_type __suffixlen = __len - __pos;
+ for (__diff_type __i = 0; __i < __suffixlen; ++__i)
+   if (!__pred(__word[__i], __word[__pos + __i]))
+     return false;
+ return true;
+      }
+
+      __diff_type
+      _M_suffix_length(_RAIter __word, __diff_type __len,
+         __diff_type __pos)
+      {
+ const auto& __pred = this->_M_pred();
+ __diff_type __i = 0;
+ while (__pred(__word[__pos - __i], __word[__len - 1 - __i])
+        && __i < __pos)
+   {
+     ++__i;
+   }
+ return __i;
+      }
+
+      template<typename _Tp>
+ __diff_type
+ _M_bad_char_shift(_Tp __c) const
+ { return this->_M_lookup(__c, _M_pat_end - _M_pat); }
+
+      _RAIter _M_pat;
+      _RAIter _M_pat_end;
+      std::vector<__diff_type> _M_good_suffix;
+    };
+
+  template<typename _RAIter, typename _Hash
+      = hash<typename iterator_traits<_RAIter>::value_type>,
+    typename _BinaryPredicate = equal_to<>>
+    class boyer_moore_horspool_searcher
+    : __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>
+    {
+      using _Base = __boyer_moore_base_t<_RAIter, _Hash, _BinaryPredicate>;
+      using typename _Base::__diff_type;
+
+    public:
+      boyer_moore_horspool_searcher(_RAIter __pat,
+        _RAIter __pat_end,
+        _Hash __hf = _Hash(),
+        _BinaryPredicate __pred
+        = _BinaryPredicate())
+      : _Base(__pat, __pat_end - __pat, std::move(__hf), std::move(__pred)),
+ _M_pat(__pat), _M_pat_end(__pat_end)
+      { }
+
+      template<typename _RandomAccessIterator2>
+        pair<_RandomAccessIterator2, _RandomAccessIterator2>
+ operator()(_RandomAccessIterator2 __first,
+     _RandomAccessIterator2 __last) const
+ {
+   const auto& __pred = this->_M_pred();
+   auto __patlen = _M_pat_end - _M_pat;
+   if (__patlen == 0)
+     return std::make_pair(__first, __first);
+   auto __len = __last - __first;
+   while (__len >= __patlen)
+     {
+       for (auto __scan = __patlen - 1;
+     __pred(__first[__scan], _M_pat[__scan]); --__scan)
+  if (__scan == 0)
+    return std::make_pair(__first, __first + __patlen);
+       auto __shift = _M_bad_char_shift(__first[__patlen - 1]);
+       __len -= __shift;
+       __first += __shift;
+     }
+   return std::make_pair(__last, __last);
+ }
+
+    private:
+      template<typename _Tp>
+ __diff_type
+ _M_bad_char_shift(_Tp __c) const
+ { return this->_M_lookup(__c, _M_pat_end - _M_pat); }
+
+      _RAIter _M_pat;
+      _RAIter _M_pat_end;
+    };
+
+  template<typename _RAIter, typename _Hash, typename _BinaryPredicate>
+    boyer_moore_searcher<_RAIter, _Hash, _BinaryPredicate>::
+    boyer_moore_searcher(_RAIter __pat, _RAIter __pat_end,
+    _Hash __hf, _BinaryPredicate __pred)
+    : _Base(__pat, __pat_end - __pat, std::move(__hf), std::move(__pred)),
+      _M_pat(__pat), _M_pat_end(__pat_end), _M_good_suffix(__pat_end - __pat)
+    {
+      auto __patlen = __pat_end - __pat;
+      if (__patlen == 0)
+ return;
+      __diff_type __last_prefix = __patlen - 1;
+      for (__diff_type __p = __patlen - 1; __p >= 0; --__p)
+ {
+   if (_M_is_prefix(__pat, __patlen, __p + 1))
+     __last_prefix = __p + 1;
+   _M_good_suffix[__p] = __last_prefix + (__patlen - 1 - __p);
+ }
+      for (__diff_type __p = 0; __p < __patlen - 1; ++__p)
+ {
+   auto __slen = _M_suffix_length(__pat, __patlen, __p);
+   auto __pos = __patlen - 1 - __slen;
+   if (!__pred(__pat[__p - __slen], __pat[__pos]))
+     _M_good_suffix[__pos] = __patlen - 1 - __p + __slen;
+ }
+    }
+
+  template<typename _RAIter, typename _Hash, typename _BinaryPredicate>
+  template<typename _RandomAccessIterator2>
+    pair<_RandomAccessIterator2, _RandomAccessIterator2>
+    boyer_moore_searcher<_RAIter, _Hash, _BinaryPredicate>::
+    operator()(_RandomAccessIterator2 __first,
+        _RandomAccessIterator2 __last) const
+    {
+      auto __patlen = _M_pat_end - _M_pat;
+      if (__patlen == 0)
+ return std::make_pair(__first, __first);
+      const auto& __pred = this->_M_pred();
+      __diff_type __i = __patlen - 1;
+      auto __stringlen = __last - __first;
+      while (__i < __stringlen)
+ {
+   __diff_type __j = __patlen - 1;
+   while (__j >= 0 && __pred(__first[__i], _M_pat[__j]))
+     {
+       --__i;
+       --__j;
+     }
+   if (__j < 0)
+     {
+       const auto __match = __first + __i + 1;
+       return std::make_pair(__match, __match + __patlen);
+     }
+   __i += std::max(_M_bad_char_shift(__first[__i]),
+     _M_good_suffix[__j]);
+ }
+      return std::make_pair(__last, __last);
+    }
+
+
+
+
+
+
+
+}
+# 38 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 2 3 4
+
+
+namespace sf
+{
+
+
+
+
+
+class __attribute__((dllimport)) SoundSource : protected AudioResource
+{
+public:
+
+
+
+
+    enum class Status
+    {
+        Stopped,
+        Paused,
+        Playing
+    };
+# 72 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    struct Cone
+    {
+        Angle innerAngle;
+        Angle outerAngle;
+        float outerGain{};
+    };
+# 154 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    using EffectProcessor = std::function<
+        void(const float* inputFrames, unsigned int& inputFrameCount, float* outputFrames, unsigned int& outputFrameCount, unsigned int frameChannelCount)>;
+
+
+
+
+
+    SoundSource(const SoundSource&) = default;
+
+
+
+
+
+    SoundSource(SoundSource&&) noexcept = default;
+
+
+
+
+
+    SoundSource& operator=(SoundSource&&) noexcept = default;
+
+
+
+
+
+    virtual ~SoundSource() = default;
+# 195 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setPitch(float pitch);
+# 210 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setPan(float pan);
+# 223 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setVolume(float volume);
+# 238 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setSpatializationEnabled(bool enabled);
+# 252 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setPosition(const Vector3f& position);
+# 267 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setDirection(const Vector3f& direction);
+# 280 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setCone(const Cone& cone);
+# 295 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setVelocity(const Vector3f& velocity);
+# 308 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setDopplerFactor(float factor);
+# 325 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setDirectionalAttenuationFactor(float factor);
+# 341 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setRelativeToListener(bool relative);
+# 358 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMinDistance(float distance);
+# 375 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMaxDistance(float distance);
+# 389 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMinGain(float gain);
+# 403 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setMaxGain(float gain);
+# 422 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    void setAttenuation(float attenuation);
+# 433 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void setEffectProcessor(EffectProcessor effectProcessor);
+# 443 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getPitch() const;
+# 453 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getPan() const;
+# 463 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getVolume() const;
+# 473 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] bool isSpatializationEnabled() const;
+# 483 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Vector3f getPosition() const;
+# 493 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Vector3f getDirection() const;
+# 503 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Cone getCone() const;
+# 513 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] Vector3f getVelocity() const;
+# 523 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getDopplerFactor() const;
+# 533 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getDirectionalAttenuationFactor() const;
+# 544 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] bool isRelativeToListener() const;
+# 554 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMinDistance() const;
+# 564 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMaxDistance() const;
+# 574 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMinGain() const;
+# 584 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getMaxGain() const;
+# 594 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    [[nodiscard]] float getAttenuation() const;
+# 604 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    SoundSource& operator=(const SoundSource& right);
+# 616 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void play() = 0;
+# 627 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void pause() = 0;
+# 639 "C:/SFML/include/SFML/Audio/SoundSource.hpp" 3 4
+    virtual void stop() = 0;
+
+
+
+
+
+
+
+    [[nodiscard]] virtual Status getStatus() const = 0;
+
+protected:
+
+
+
+
+
+
+    SoundSource() = default;
+
+private:
+
+
+
+
+
+
+    [[nodiscard]] virtual void* getSound() const = 0;
+};
+
+
+}
+# 34 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 2 3 4
+# 45 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) SoundStream : public SoundSource
+{
+public:
+
+
+
+
+    struct Chunk
+    {
+        const std::int16_t* samples{};
+        std::size_t sampleCount{};
+    };
+
+
+
+
+
+    ~SoundStream() override;
+
+
+
+
+
+    SoundStream(SoundStream&&) noexcept;
+
+
+
+
+
+    SoundStream& operator=(SoundStream&&) noexcept;
+# 94 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void play() override;
+# 105 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void pause() override;
+# 117 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void stop() override;
+# 127 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] unsigned int getChannelCount() const;
+# 138 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 149 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] std::vector<SoundChannel> getChannelMap() const;
+
+
+
+
+
+
+
+    [[nodiscard]] Status getStatus() const override;
+# 172 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void setPlayingOffset(Time timeOffset);
+# 182 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] Time getPlayingOffset() const;
+# 197 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void setLooping(bool loop);
+# 207 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] bool isLooping() const;
+# 218 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void setEffectProcessor(EffectProcessor effectProcessor) override;
+
+protected:
+
+
+
+
+
+
+    SoundStream();
+# 244 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    void initialize(unsigned int channelCount, unsigned int sampleRate, const std::vector<SoundChannel>& channelMap);
+# 263 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    [[nodiscard]] virtual bool onGetData(Chunk& data) = 0;
+# 274 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    virtual void onSeek(Time timeOffset) = 0;
+# 286 "C:/SFML/include/SFML/Audio/SoundStream.hpp" 3 4
+    virtual std::optional<std::uint64_t> onLoop();
+
+private:
+
+
+
+
+
+
+    [[nodiscard]] void* getSound() const override;
+
+
+
+
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 33 "C:/SFML/include/SFML/Audio/Music.hpp" 2 3 4
+# 42 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+namespace sf
+{
+class Time;
+class InputStream;
+class InputSoundFile;
+
+
+
+
+
+class __attribute__((dllimport)) Music : public SoundStream
+{
+public:
+
+
+
+
+    template <typename T>
+    struct Span
+    {
+        T offset{};
+        T length{};
+    };
+
+
+    using TimeSpan = Span<Time>;
+
+
+
+
+
+
+
+    Music();
+# 96 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    explicit Music(const std::filesystem::path& filename);
+# 119 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    Music(const void* data, std::size_t sizeInBytes);
+# 140 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    explicit Music(InputStream& stream);
+
+
+
+
+
+    ~Music() override;
+
+
+
+
+
+    Music(Music&&) noexcept;
+
+
+
+
+
+    Music& operator=(Music&&) noexcept;
+# 179 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool openFromFile(const std::filesystem::path& filename);
+# 202 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool openFromMemory(const void* data, std::size_t sizeInBytes);
+# 223 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool openFromStream(InputStream& stream);
+
+
+
+
+
+
+
+    [[nodiscard]] Time getDuration() const;
+# 248 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] TimeSpan getLoopPoints() const;
+# 270 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    void setLoopPoints(TimeSpan timePoints);
+
+protected:
+# 284 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] bool onGetData(Chunk& data) override;
+
+
+
+
+
+
+
+    void onSeek(Time timeOffset) override;
+# 304 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    std::optional<std::uint64_t> onLoop() override;
+
+private:
+# 315 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] std::uint64_t timeToSamples(Time position) const;
+# 325 "C:/SFML/include/SFML/Audio/Music.hpp" 3 4
+    [[nodiscard]] Time samplesToTime(std::uint64_t samples) const;
+
+
+
+
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 34 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+       
+
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+       
+# 40 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) SoundFileWriter
+{
+public:
+
+
+
+
+    virtual ~SoundFileWriter() = default;
+# 66 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+    [[nodiscard]] virtual bool open(const std::filesystem::path& filename,
+                                    unsigned int sampleRate,
+                                    unsigned int channelCount,
+                                    const std::vector<SoundChannel>& channelMap) = 0;
+# 78 "C:/SFML/include/SFML/Audio/SoundFileWriter.hpp" 3 4
+    virtual void write(const std::int16_t* samples, std::uint64_t count) = 0;
+};
+
+}
+# 34 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 2 3 4
+# 42 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) OutputSoundFile
+{
+public:
+
+
+
+
+
+
+
+    OutputSoundFile() = default;
+# 73 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+    OutputSoundFile(const std::filesystem::path& filename,
+                    unsigned int sampleRate,
+                    unsigned int channelCount,
+                    const std::vector<SoundChannel>& channelMap);
+# 91 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+    [[nodiscard]] bool openFromFile(const std::filesystem::path& filename,
+                                    unsigned int sampleRate,
+                                    unsigned int channelCount,
+                                    const std::vector<SoundChannel>& channelMap);
+# 103 "C:/SFML/include/SFML/Audio/OutputSoundFile.hpp" 3 4
+    void write(const std::int16_t* samples, std::uint64_t count);
+
+
+
+
+
+    void close();
+
+private:
+
+
+
+    std::unique_ptr<SoundFileWriter> m_writer;
+};
+
+}
+# 35 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+       
+# 37 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+namespace sf::PlaybackDevice
+{
+# 68 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) std::vector<std::string> getAvailableDevices();
+# 80 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) std::optional<std::string> getDefaultDevice();
+# 100 "C:/SFML/include/SFML/Audio/PlaybackDevice.hpp" 3 4
+[[nodiscard]] __attribute__((dllimport)) bool setDevice(const std::string& name);
+
+
+
+
+
+
+
+[[nodiscard]] __attribute__((dllimport)) std::optional<std::string> getDevice();
+
+}
+# 36 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/Sound.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+       
+# 36 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+# 1 "C:/mingw64/include/c++/14.2.0/cstdlib" 1 3 4
+# 39 "C:/mingw64/include/c++/14.2.0/cstdlib" 3 4
+       
+# 40 "C:/mingw64/include/c++/14.2.0/cstdlib" 3
+# 37 "C:/SFML/include/SFML/Audio/Sound.hpp" 2 3 4
+
+namespace sf
+{
+class Time;
+class SoundBuffer;
+
+
+
+
+
+class __attribute__((dllimport)) Sound : public SoundSource
+{
+public:
+
+
+
+
+
+
+    explicit Sound(const SoundBuffer& buffer);
+
+
+
+
+
+    Sound(const SoundBuffer&& buffer) = delete;
+
+
+
+
+
+
+
+    Sound(const Sound& copy);
+
+
+
+
+
+    ~Sound() override;
+# 90 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void play() override;
+# 101 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void pause() override;
+# 113 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void stop() override;
+# 127 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setBuffer(const SoundBuffer& buffer);
+
+
+
+
+
+    void setBuffer(const SoundBuffer&& buffer) = delete;
+# 148 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setLooping(bool loop);
+# 163 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setPlayingOffset(Time timeOffset);
+# 174 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void setEffectProcessor(EffectProcessor effectProcessor) override;
+
+
+
+
+
+
+
+    [[nodiscard]] const SoundBuffer& getBuffer() const;
+# 192 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    [[nodiscard]] bool isLooping() const;
+# 202 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    [[nodiscard]] Time getPlayingOffset() const;
+
+
+
+
+
+
+
+    [[nodiscard]] Status getStatus() const override;
+# 220 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    Sound& operator=(const Sound& right);
+
+private:
+    friend class SoundBuffer;
+# 232 "C:/SFML/include/SFML/Audio/Sound.hpp" 3 4
+    void detachBuffer();
+
+
+
+
+
+
+
+    [[nodiscard]] void* getSound() const override;
+
+
+
+
+    struct Impl;
+    const std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 37 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+       
+# 37 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+# 1 "C:/mingw64/include/c++/14.2.0/unordered_set" 1 3 4
+# 32 "C:/mingw64/include/c++/14.2.0/unordered_set" 3 4
+       
+# 33 "C:/mingw64/include/c++/14.2.0/unordered_set" 3
+# 41 "C:/mingw64/include/c++/14.2.0/unordered_set" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 1 3
+# 38 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+namespace std
+{
+
+
+
+
+  template<bool _Cache>
+    using __uset_traits = __detail::_Hashtable_traits<_Cache, true, true>;
+
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = std::equal_to<_Value>,
+      typename _Alloc = std::allocator<_Value>,
+    typename _Tr = __uset_traits<__cache_default<_Value, _Hash>::value>>
+    using __uset_hashtable = _Hashtable<_Value, _Value, _Alloc,
+     __detail::_Identity, _Pred, _Hash,
+     __detail::_Mod_range_hashing,
+     __detail::_Default_ranged_hash,
+     __detail::_Prime_rehash_policy, _Tr>;
+
+
+  template<bool _Cache>
+    using __umset_traits = __detail::_Hashtable_traits<_Cache, true, false>;
+
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = std::equal_to<_Value>,
+    typename _Alloc = std::allocator<_Value>,
+    typename _Tr = __umset_traits<__cache_default<_Value, _Hash>::value>>
+    using __umset_hashtable = _Hashtable<_Value, _Value, _Alloc,
+      __detail::_Identity,
+      _Pred, _Hash,
+      __detail::_Mod_range_hashing,
+      __detail::_Default_ranged_hash,
+      __detail::_Prime_rehash_policy, _Tr>;
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    class unordered_multiset;
+# 100 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = equal_to<_Value>,
+    typename _Alloc = allocator<_Value>>
+    class unordered_set
+    {
+      typedef __uset_hashtable<_Value, _Hash, _Pred, _Alloc> _Hashtable;
+      _Hashtable _M_h;
+
+    public:
+
+
+
+      typedef typename _Hashtable::key_type key_type;
+      typedef typename _Hashtable::value_type value_type;
+      typedef typename _Hashtable::hasher hasher;
+      typedef typename _Hashtable::key_equal key_equal;
+      typedef typename _Hashtable::allocator_type allocator_type;
+
+
+
+
+      typedef typename _Hashtable::pointer pointer;
+      typedef typename _Hashtable::const_pointer const_pointer;
+      typedef typename _Hashtable::reference reference;
+      typedef typename _Hashtable::const_reference const_reference;
+      typedef typename _Hashtable::iterator iterator;
+      typedef typename _Hashtable::const_iterator const_iterator;
+      typedef typename _Hashtable::local_iterator local_iterator;
+      typedef typename _Hashtable::const_local_iterator const_local_iterator;
+      typedef typename _Hashtable::size_type size_type;
+      typedef typename _Hashtable::difference_type difference_type;
+
+
+
+      using node_type = typename _Hashtable::node_type;
+      using insert_return_type = typename _Hashtable::insert_return_type;
+
+
+
+
+
+      unordered_set() = default;
+# 151 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      explicit
+      unordered_set(size_type __n,
+      const hasher& __hf = hasher(),
+      const key_equal& __eql = key_equal(),
+      const allocator_type& __a = allocator_type())
+      : _M_h(__n, __hf, __eql, __a)
+      { }
+# 172 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ unordered_set(_InputIterator __first, _InputIterator __last,
+        size_type __n = 0,
+        const hasher& __hf = hasher(),
+        const key_equal& __eql = key_equal(),
+        const allocator_type& __a = allocator_type())
+ : _M_h(__first, __last, __n, __hf, __eql, __a)
+ { }
+
+
+      unordered_set(const unordered_set&) = default;
+
+
+      unordered_set(unordered_set&&) = default;
+
+
+
+
+
+      explicit
+      unordered_set(const allocator_type& __a)
+      : _M_h(__a)
+      { }
+
+
+
+
+
+
+      unordered_set(const unordered_set& __uset,
+      const allocator_type& __a)
+      : _M_h(__uset._M_h, __a)
+      { }
+
+
+
+
+
+
+      unordered_set(unordered_set&& __uset,
+      const allocator_type& __a)
+ noexcept( noexcept(_Hashtable(std::move(__uset._M_h), __a)) )
+      : _M_h(std::move(__uset._M_h), __a)
+      { }
+# 228 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_set(initializer_list<value_type> __l,
+      size_type __n = 0,
+      const hasher& __hf = hasher(),
+      const key_equal& __eql = key_equal(),
+      const allocator_type& __a = allocator_type())
+      : _M_h(__l, __n, __hf, __eql, __a)
+      { }
+
+      unordered_set(size_type __n, const allocator_type& __a)
+      : unordered_set(__n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_set(size_type __n, const hasher& __hf,
+      const allocator_type& __a)
+      : unordered_set(__n, __hf, key_equal(), __a)
+      { }
+
+      template<typename _InputIterator>
+ unordered_set(_InputIterator __first, _InputIterator __last,
+        size_type __n,
+        const allocator_type& __a)
+ : unordered_set(__first, __last, __n, hasher(), key_equal(), __a)
+ { }
+
+      template<typename _InputIterator>
+ unordered_set(_InputIterator __first, _InputIterator __last,
+        size_type __n, const hasher& __hf,
+        const allocator_type& __a)
+ : unordered_set(__first, __last, __n, __hf, key_equal(), __a)
+ { }
+
+      unordered_set(initializer_list<value_type> __l,
+      size_type __n,
+      const allocator_type& __a)
+      : unordered_set(__l, __n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_set(initializer_list<value_type> __l,
+      size_type __n, const hasher& __hf,
+      const allocator_type& __a)
+      : unordered_set(__l, __n, __hf, key_equal(), __a)
+      { }
+
+
+      unordered_set&
+      operator=(const unordered_set&) = default;
+
+
+      unordered_set&
+      operator=(unordered_set&&) = default;
+# 290 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_set&
+      operator=(initializer_list<value_type> __l)
+      {
+ _M_h = __l;
+ return *this;
+      }
+
+
+      allocator_type
+      get_allocator() const noexcept
+      { return _M_h.get_allocator(); }
+
+
+
+
+      [[__nodiscard__]] bool
+      empty() const noexcept
+      { return _M_h.empty(); }
+
+
+      size_type
+      size() const noexcept
+      { return _M_h.size(); }
+
+
+      size_type
+      max_size() const noexcept
+      { return _M_h.max_size(); }
+# 326 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      begin() noexcept
+      { return _M_h.begin(); }
+
+      const_iterator
+      begin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+
+
+      iterator
+      end() noexcept
+      { return _M_h.end(); }
+
+      const_iterator
+      end() const noexcept
+      { return _M_h.end(); }
+
+
+
+
+
+
+      const_iterator
+      cbegin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+      const_iterator
+      cend() const noexcept
+      { return _M_h.end(); }
+# 382 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ std::pair<iterator, bool>
+ emplace(_Args&&... __args)
+ { return _M_h.emplace(std::forward<_Args>(__args)...); }
+# 408 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ iterator
+ emplace_hint(const_iterator __pos, _Args&&... __args)
+ { return _M_h.emplace_hint(__pos, std::forward<_Args>(__args)...); }
+# 427 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      std::pair<iterator, bool>
+      insert(const value_type& __x)
+      { return _M_h.insert(__x); }
+
+      std::pair<iterator, bool>
+      insert(value_type&& __x)
+      { return _M_h.insert(std::move(__x)); }
+# 456 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      insert(const_iterator __hint, const value_type& __x)
+      { return _M_h.insert(__hint, __x); }
+
+      iterator
+      insert(const_iterator __hint, value_type&& __x)
+      { return _M_h.insert(__hint, std::move(__x)); }
+# 474 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ void
+ insert(_InputIterator __first, _InputIterator __last)
+ { _M_h.insert(__first, __last); }
+# 486 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      insert(initializer_list<value_type> __l)
+      { _M_h.insert(__l); }
+
+
+
+      node_type
+      extract(const_iterator __pos)
+      {
+ do { if (std::__is_constant_evaluated()) if (__builtin_expect(!bool(__pos != end()), false)) std::__glibcxx_assert_fail(); } while (false);
+ return _M_h.extract(__pos);
+      }
+
+
+      node_type
+      extract(const key_type& __key)
+      { return _M_h.extract(__key); }
+
+
+      insert_return_type
+      insert(node_type&& __nh)
+      { return _M_h._M_reinsert_node(std::move(__nh)); }
+
+
+      iterator
+      insert(const_iterator, node_type&& __nh)
+      { return _M_h._M_reinsert_node(std::move(__nh)).position; }
+# 529 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __position)
+      { return _M_h.erase(__position); }
+
+
+      iterator
+      erase(iterator __position)
+      { return _M_h.erase(__position); }
+# 551 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      erase(const key_type& __x)
+      { return _M_h.erase(__x); }
+# 569 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __first, const_iterator __last)
+      { return _M_h.erase(__first, __last); }
+
+
+
+
+
+
+
+      void
+      clear() noexcept
+      { _M_h.clear(); }
+# 592 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      swap(unordered_set& __x)
+      noexcept( noexcept(_M_h.swap(__x._M_h)) )
+      { _M_h.swap(__x._M_h); }
+
+
+      template<typename, typename, typename>
+ friend class std::_Hash_merge_helper;
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper = _Hash_merge_helper<unordered_set, _H2, _P2>;
+   _M_h._M_merge_unique(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper = _Hash_merge_helper<unordered_set, _H2, _P2>;
+   _M_h._M_merge_unique(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+
+
+
+
+
+      hasher
+      hash_function() const
+      { return _M_h.hash_function(); }
+
+
+
+      key_equal
+      key_eq() const
+      { return _M_h.key_eq(); }
+# 656 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      find(const key_type& __x)
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __k)
+ -> decltype(_M_h._M_find_tr(__k))
+ { return _M_h._M_find_tr(__k); }
+
+
+      const_iterator
+      find(const key_type& __x) const
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __k) const
+ -> decltype(_M_h._M_find_tr(__k))
+ { return _M_h._M_find_tr(__k); }
+# 691 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      count(const key_type& __x) const
+      { return _M_h.count(__x); }
+
+
+      template<typename _Kt>
+ auto
+ count(const _Kt& __k) const
+ -> decltype(_M_h._M_count_tr(__k))
+ { return _M_h._M_count_tr(__k); }
+# 711 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      bool
+      contains(const key_type& __x) const
+      { return _M_h.find(__x) != _M_h.end(); }
+
+      template<typename _Kt>
+ auto
+ contains(const _Kt& __k) const
+ -> decltype(_M_h._M_find_tr(__k), void(), true)
+ { return _M_h._M_find_tr(__k) != _M_h.end(); }
+# 732 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      std::pair<iterator, iterator>
+      equal_range(const key_type& __x)
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __k)
+ -> decltype(_M_h._M_equal_range_tr(__k))
+ { return _M_h._M_equal_range_tr(__k); }
+
+
+      std::pair<const_iterator, const_iterator>
+      equal_range(const key_type& __x) const
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __k) const
+ -> decltype(_M_h._M_equal_range_tr(__k))
+ { return _M_h._M_equal_range_tr(__k); }
+
+
+
+
+
+
+      size_type
+      bucket_count() const noexcept
+      { return _M_h.bucket_count(); }
+
+
+      size_type
+      max_bucket_count() const noexcept
+      { return _M_h.max_bucket_count(); }
+
+
+
+
+
+
+      size_type
+      bucket_size(size_type __n) const
+      { return _M_h.bucket_size(__n); }
+
+
+
+
+
+
+      size_type
+      bucket(const key_type& __key) const
+      { return _M_h.bucket(__key); }
+# 794 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      begin(size_type __n)
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      begin(size_type __n) const
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      cbegin(size_type __n) const
+      { return _M_h.cbegin(__n); }
+# 814 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      end(size_type __n)
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      end(size_type __n) const
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      cend(size_type __n) const
+      { return _M_h.cend(__n); }
+
+
+
+
+
+      float
+      load_factor() const noexcept
+      { return _M_h.load_factor(); }
+
+
+
+      float
+      max_load_factor() const noexcept
+      { return _M_h.max_load_factor(); }
+
+
+
+
+
+      void
+      max_load_factor(float __z)
+      { _M_h.max_load_factor(__z); }
+# 855 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      rehash(size_type __n)
+      { _M_h.rehash(__n); }
+# 866 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      reserve(size_type __n)
+      { _M_h.reserve(__n); }
+
+      template<typename _Value1, typename _Hash1, typename _Pred1,
+        typename _Alloc1>
+        friend bool
+        operator==(const unordered_set<_Value1, _Hash1, _Pred1, _Alloc1>&,
+     const unordered_set<_Value1, _Hash1, _Pred1, _Alloc1>&);
+    };
+
+
+
+  template<typename _InputIterator,
+    typename _Hash =
+      hash<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Pred =
+      equal_to<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Allocator =
+      allocator<typename iterator_traits<_InputIterator>::value_type>,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+    unordered_set<int>::size_type = {},
+    _Hash = _Hash(), _Pred = _Pred(), _Allocator = _Allocator())
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+       _Hash, _Pred, _Allocator>;
+
+  template<typename _Tp, typename _Hash = hash<_Tp>,
+    typename _Pred = equal_to<_Tp>,
+    typename _Allocator = allocator<_Tp>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+    unordered_set<int>::size_type = {},
+    _Hash = _Hash(), _Pred = _Pred(), _Allocator = _Allocator())
+    -> unordered_set<_Tp, _Hash, _Pred, _Allocator>;
+
+  template<typename _InputIterator, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+    unordered_set<int>::size_type, _Allocator)
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+       hash<
+         typename iterator_traits<_InputIterator>::value_type>,
+       equal_to<
+         typename iterator_traits<_InputIterator>::value_type>,
+       _Allocator>;
+
+  template<typename _InputIterator, typename _Hash, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(_InputIterator, _InputIterator,
+    unordered_set<int>::size_type,
+    _Hash, _Allocator)
+    -> unordered_set<typename iterator_traits<_InputIterator>::value_type,
+       _Hash,
+       equal_to<
+         typename iterator_traits<_InputIterator>::value_type>,
+       _Allocator>;
+
+  template<typename _Tp, typename _Allocator,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+    unordered_set<int>::size_type, _Allocator)
+    -> unordered_set<_Tp, hash<_Tp>, equal_to<_Tp>, _Allocator>;
+
+  template<typename _Tp, typename _Hash, typename _Allocator,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_set(initializer_list<_Tp>,
+    unordered_set<int>::size_type, _Hash, _Allocator)
+    -> unordered_set<_Tp, _Hash, equal_to<_Tp>, _Allocator>;
+# 968 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+  template<typename _Value,
+    typename _Hash = hash<_Value>,
+    typename _Pred = equal_to<_Value>,
+    typename _Alloc = allocator<_Value>>
+    class unordered_multiset
+    {
+      typedef __umset_hashtable<_Value, _Hash, _Pred, _Alloc> _Hashtable;
+      _Hashtable _M_h;
+
+    public:
+
+
+
+      typedef typename _Hashtable::key_type key_type;
+      typedef typename _Hashtable::value_type value_type;
+      typedef typename _Hashtable::hasher hasher;
+      typedef typename _Hashtable::key_equal key_equal;
+      typedef typename _Hashtable::allocator_type allocator_type;
+
+
+
+
+      typedef typename _Hashtable::pointer pointer;
+      typedef typename _Hashtable::const_pointer const_pointer;
+      typedef typename _Hashtable::reference reference;
+      typedef typename _Hashtable::const_reference const_reference;
+      typedef typename _Hashtable::iterator iterator;
+      typedef typename _Hashtable::const_iterator const_iterator;
+      typedef typename _Hashtable::local_iterator local_iterator;
+      typedef typename _Hashtable::const_local_iterator const_local_iterator;
+      typedef typename _Hashtable::size_type size_type;
+      typedef typename _Hashtable::difference_type difference_type;
+
+
+
+      using node_type = typename _Hashtable::node_type;
+
+
+
+
+
+      unordered_multiset() = default;
+# 1018 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      explicit
+      unordered_multiset(size_type __n,
+    const hasher& __hf = hasher(),
+    const key_equal& __eql = key_equal(),
+    const allocator_type& __a = allocator_type())
+      : _M_h(__n, __hf, __eql, __a)
+      { }
+# 1039 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ unordered_multiset(_InputIterator __first, _InputIterator __last,
+      size_type __n = 0,
+      const hasher& __hf = hasher(),
+      const key_equal& __eql = key_equal(),
+      const allocator_type& __a = allocator_type())
+ : _M_h(__first, __last, __n, __hf, __eql, __a)
+ { }
+
+
+      unordered_multiset(const unordered_multiset&) = default;
+
+
+      unordered_multiset(unordered_multiset&&) = default;
+# 1065 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_multiset(initializer_list<value_type> __l,
+    size_type __n = 0,
+    const hasher& __hf = hasher(),
+    const key_equal& __eql = key_equal(),
+    const allocator_type& __a = allocator_type())
+      : _M_h(__l, __n, __hf, __eql, __a)
+      { }
+
+
+      unordered_multiset&
+      operator=(const unordered_multiset&) = default;
+
+
+      unordered_multiset&
+      operator=(unordered_multiset&&) = default;
+
+
+
+
+
+      explicit
+      unordered_multiset(const allocator_type& __a)
+      : _M_h(__a)
+      { }
+
+
+
+
+
+
+      unordered_multiset(const unordered_multiset& __umset,
+    const allocator_type& __a)
+      : _M_h(__umset._M_h, __a)
+      { }
+
+
+
+
+
+
+      unordered_multiset(unordered_multiset&& __umset,
+    const allocator_type& __a)
+ noexcept( noexcept(_Hashtable(std::move(__umset._M_h), __a)) )
+      : _M_h(std::move(__umset._M_h), __a)
+      { }
+
+      unordered_multiset(size_type __n, const allocator_type& __a)
+      : unordered_multiset(__n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_multiset(size_type __n, const hasher& __hf,
+    const allocator_type& __a)
+      : unordered_multiset(__n, __hf, key_equal(), __a)
+      { }
+
+      template<typename _InputIterator>
+ unordered_multiset(_InputIterator __first, _InputIterator __last,
+      size_type __n,
+      const allocator_type& __a)
+ : unordered_multiset(__first, __last, __n, hasher(), key_equal(), __a)
+ { }
+
+      template<typename _InputIterator>
+ unordered_multiset(_InputIterator __first, _InputIterator __last,
+      size_type __n, const hasher& __hf,
+      const allocator_type& __a)
+ : unordered_multiset(__first, __last, __n, __hf, key_equal(), __a)
+ { }
+
+      unordered_multiset(initializer_list<value_type> __l,
+    size_type __n,
+    const allocator_type& __a)
+      : unordered_multiset(__l, __n, hasher(), key_equal(), __a)
+      { }
+
+      unordered_multiset(initializer_list<value_type> __l,
+    size_type __n, const hasher& __hf,
+    const allocator_type& __a)
+      : unordered_multiset(__l, __n, __hf, key_equal(), __a)
+      { }
+# 1157 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      unordered_multiset&
+      operator=(initializer_list<value_type> __l)
+      {
+ _M_h = __l;
+ return *this;
+      }
+
+
+      allocator_type
+      get_allocator() const noexcept
+      { return _M_h.get_allocator(); }
+
+
+
+
+      [[__nodiscard__]] bool
+      empty() const noexcept
+      { return _M_h.empty(); }
+
+
+      size_type
+      size() const noexcept
+      { return _M_h.size(); }
+
+
+      size_type
+      max_size() const noexcept
+      { return _M_h.max_size(); }
+# 1193 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      begin() noexcept
+      { return _M_h.begin(); }
+
+      const_iterator
+      begin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+
+
+      iterator
+      end() noexcept
+      { return _M_h.end(); }
+
+      const_iterator
+      end() const noexcept
+      { return _M_h.end(); }
+
+
+
+
+
+
+      const_iterator
+      cbegin() const noexcept
+      { return _M_h.begin(); }
+
+
+
+
+
+      const_iterator
+      cend() const noexcept
+      { return _M_h.end(); }
+# 1241 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ iterator
+ emplace(_Args&&... __args)
+ { return _M_h.emplace(std::forward<_Args>(__args)...); }
+# 1263 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename... _Args>
+ iterator
+ emplace_hint(const_iterator __pos, _Args&&... __args)
+ { return _M_h.emplace_hint(__pos, std::forward<_Args>(__args)...); }
+# 1276 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      insert(const value_type& __x)
+      { return _M_h.insert(__x); }
+
+      iterator
+      insert(value_type&& __x)
+      { return _M_h.insert(std::move(__x)); }
+# 1302 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      insert(const_iterator __hint, const value_type& __x)
+      { return _M_h.insert(__hint, __x); }
+
+      iterator
+      insert(const_iterator __hint, value_type&& __x)
+      { return _M_h.insert(__hint, std::move(__x)); }
+# 1319 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      template<typename _InputIterator>
+ void
+ insert(_InputIterator __first, _InputIterator __last)
+ { _M_h.insert(__first, __last); }
+# 1331 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      insert(initializer_list<value_type> __l)
+      { _M_h.insert(__l); }
+
+
+
+      node_type
+      extract(const_iterator __pos)
+      {
+ do { if (std::__is_constant_evaluated()) if (__builtin_expect(!bool(__pos != end()), false)) std::__glibcxx_assert_fail(); } while (false);
+ return _M_h.extract(__pos);
+      }
+
+
+      node_type
+      extract(const key_type& __key)
+      { return _M_h.extract(__key); }
+
+
+      iterator
+      insert(node_type&& __nh)
+      { return _M_h._M_reinsert_node_multi(cend(), std::move(__nh)); }
+
+
+      iterator
+      insert(const_iterator __hint, node_type&& __nh)
+      { return _M_h._M_reinsert_node_multi(__hint, std::move(__nh)); }
+# 1375 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __position)
+      { return _M_h.erase(__position); }
+
+
+      iterator
+      erase(iterator __position)
+      { return _M_h.erase(__position); }
+# 1398 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      erase(const key_type& __x)
+      { return _M_h.erase(__x); }
+# 1418 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      erase(const_iterator __first, const_iterator __last)
+      { return _M_h.erase(__first, __last); }
+# 1429 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      clear() noexcept
+      { _M_h.clear(); }
+# 1442 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      swap(unordered_multiset& __x)
+      noexcept( noexcept(_M_h.swap(__x._M_h)) )
+      { _M_h.swap(__x._M_h); }
+
+
+      template<typename, typename, typename>
+ friend class std::_Hash_merge_helper;
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper
+     = _Hash_merge_helper<unordered_multiset, _H2, _P2>;
+   _M_h._M_merge_multi(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_multiset<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>& __source)
+ {
+   using _Merge_helper
+     = _Hash_merge_helper<unordered_multiset, _H2, _P2>;
+   _M_h._M_merge_multi(_Merge_helper::_S_get_table(__source));
+ }
+
+      template<typename _H2, typename _P2>
+ void
+ merge(unordered_set<_Value, _H2, _P2, _Alloc>&& __source)
+ { merge(__source); }
+
+
+
+
+
+
+      hasher
+      hash_function() const
+      { return _M_h.hash_function(); }
+
+
+
+      key_equal
+      key_eq() const
+      { return _M_h.key_eq(); }
+# 1508 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      iterator
+      find(const key_type& __x)
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __x)
+ -> decltype(_M_h._M_find_tr(__x))
+ { return _M_h._M_find_tr(__x); }
+
+
+      const_iterator
+      find(const key_type& __x) const
+      { return _M_h.find(__x); }
+
+
+      template<typename _Kt>
+ auto
+ find(const _Kt& __x) const
+ -> decltype(_M_h._M_find_tr(__x))
+ { return _M_h._M_find_tr(__x); }
+# 1539 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      size_type
+      count(const key_type& __x) const
+      { return _M_h.count(__x); }
+
+
+      template<typename _Kt>
+ auto
+ count(const _Kt& __x) const -> decltype(_M_h._M_count_tr(__x))
+ { return _M_h._M_count_tr(__x); }
+# 1558 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      bool
+      contains(const key_type& __x) const
+      { return _M_h.find(__x) != _M_h.end(); }
+
+      template<typename _Kt>
+ auto
+ contains(const _Kt& __x) const
+ -> decltype(_M_h._M_find_tr(__x), void(), true)
+ { return _M_h._M_find_tr(__x) != _M_h.end(); }
+# 1577 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      std::pair<iterator, iterator>
+      equal_range(const key_type& __x)
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __x)
+ -> decltype(_M_h._M_equal_range_tr(__x))
+ { return _M_h._M_equal_range_tr(__x); }
+
+
+      std::pair<const_iterator, const_iterator>
+      equal_range(const key_type& __x) const
+      { return _M_h.equal_range(__x); }
+
+
+      template<typename _Kt>
+ auto
+ equal_range(const _Kt& __x) const
+ -> decltype(_M_h._M_equal_range_tr(__x))
+ { return _M_h._M_equal_range_tr(__x); }
+
+
+
+
+
+
+      size_type
+      bucket_count() const noexcept
+      { return _M_h.bucket_count(); }
+
+
+      size_type
+      max_bucket_count() const noexcept
+      { return _M_h.max_bucket_count(); }
+
+
+
+
+
+
+      size_type
+      bucket_size(size_type __n) const
+      { return _M_h.bucket_size(__n); }
+
+
+
+
+
+
+      size_type
+      bucket(const key_type& __key) const
+      { return _M_h.bucket(__key); }
+# 1639 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      begin(size_type __n)
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      begin(size_type __n) const
+      { return _M_h.begin(__n); }
+
+      const_local_iterator
+      cbegin(size_type __n) const
+      { return _M_h.cbegin(__n); }
+# 1659 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      local_iterator
+      end(size_type __n)
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      end(size_type __n) const
+      { return _M_h.end(__n); }
+
+      const_local_iterator
+      cend(size_type __n) const
+      { return _M_h.cend(__n); }
+
+
+
+
+
+      float
+      load_factor() const noexcept
+      { return _M_h.load_factor(); }
+
+
+
+      float
+      max_load_factor() const noexcept
+      { return _M_h.max_load_factor(); }
+
+
+
+
+
+      void
+      max_load_factor(float __z)
+      { _M_h.max_load_factor(__z); }
+# 1700 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      rehash(size_type __n)
+      { _M_h.rehash(__n); }
+# 1711 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+      void
+      reserve(size_type __n)
+      { _M_h.reserve(__n); }
+
+      template<typename _Value1, typename _Hash1, typename _Pred1,
+        typename _Alloc1>
+        friend bool
+      operator==(const unordered_multiset<_Value1, _Hash1, _Pred1, _Alloc1>&,
+   const unordered_multiset<_Value1, _Hash1, _Pred1, _Alloc1>&);
+    };
+
+
+
+
+  template<typename _InputIterator,
+    typename _Hash =
+      hash<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Pred =
+      equal_to<typename iterator_traits<_InputIterator>::value_type>,
+    typename _Allocator =
+      allocator<typename iterator_traits<_InputIterator>::value_type>,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+         unordered_multiset<int>::size_type = {},
+         _Hash = _Hash(), _Pred = _Pred(),
+         _Allocator = _Allocator())
+    -> unordered_multiset<typename iterator_traits<_InputIterator>::value_type,
+                          _Hash, _Pred, _Allocator>;
+
+  template<typename _Tp, typename _Hash = hash<_Tp>,
+    typename _Pred = equal_to<_Tp>,
+    typename _Allocator = allocator<_Tp>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireNotAllocator<_Pred>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+         unordered_multiset<int>::size_type = {},
+         _Hash = _Hash(), _Pred = _Pred(),
+         _Allocator = _Allocator())
+    -> unordered_multiset<_Tp, _Hash, _Pred, _Allocator>;
+
+  template<typename _InputIterator, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+         unordered_multiset<int>::size_type, _Allocator)
+    -> unordered_multiset<typename iterator_traits<_InputIterator>::value_type,
+     hash<typename
+          iterator_traits<_InputIterator>::value_type>,
+     equal_to<typename
+       iterator_traits<_InputIterator>::value_type>,
+     _Allocator>;
+
+  template<typename _InputIterator, typename _Hash, typename _Allocator,
+    typename = _RequireInputIter<_InputIterator>,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(_InputIterator, _InputIterator,
+         unordered_multiset<int>::size_type,
+         _Hash, _Allocator)
+    -> unordered_multiset<typename
+     iterator_traits<_InputIterator>::value_type,
+     _Hash,
+     equal_to<
+       typename
+       iterator_traits<_InputIterator>::value_type>,
+     _Allocator>;
+
+  template<typename _Tp, typename _Allocator,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+         unordered_multiset<int>::size_type, _Allocator)
+    -> unordered_multiset<_Tp, hash<_Tp>, equal_to<_Tp>, _Allocator>;
+
+  template<typename _Tp, typename _Hash, typename _Allocator,
+    typename = _RequireNotAllocatorOrIntegral<_Hash>,
+    typename = _RequireAllocator<_Allocator>>
+    unordered_multiset(initializer_list<_Tp>,
+         unordered_multiset<int>::size_type, _Hash, _Allocator)
+    -> unordered_multiset<_Tp, _Hash, equal_to<_Tp>, _Allocator>;
+
+
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline void
+    swap(unordered_set<_Value, _Hash, _Pred, _Alloc>& __x,
+  unordered_set<_Value, _Hash, _Pred, _Alloc>& __y)
+    noexcept(noexcept(__x.swap(__y)))
+    { __x.swap(__y); }
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline void
+    swap(unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __x,
+  unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __y)
+    noexcept(noexcept(__x.swap(__y)))
+    { __x.swap(__y); }
+
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline bool
+    operator==(const unordered_set<_Value, _Hash, _Pred, _Alloc>& __x,
+        const unordered_set<_Value, _Hash, _Pred, _Alloc>& __y)
+    { return __x._M_h._M_equal(__y._M_h); }
+# 1825 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+  template<class _Value, class _Hash, class _Pred, class _Alloc>
+    inline bool
+    operator==(const unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __x,
+        const unordered_multiset<_Value, _Hash, _Pred, _Alloc>& __y)
+    { return __x._M_h._M_equal(__y._M_h); }
+# 1839 "C:/mingw64/include/c++/14.2.0/bits/unordered_set.h" 3
+
+
+
+
+  template<typename _Val, typename _Hash1, typename _Eq1, typename _Alloc,
+    typename _Hash2, typename _Eq2>
+    struct _Hash_merge_helper<
+      std::unordered_set<_Val, _Hash1, _Eq1, _Alloc>, _Hash2, _Eq2>
+    {
+    private:
+      template<typename... _Tp>
+ using unordered_set = std::unordered_set<_Tp...>;
+      template<typename... _Tp>
+ using unordered_multiset = std::unordered_multiset<_Tp...>;
+
+      friend unordered_set<_Val, _Hash1, _Eq1, _Alloc>;
+
+      static auto&
+      _S_get_table(unordered_set<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+
+      static auto&
+      _S_get_table(unordered_multiset<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+    };
+
+
+  template<typename _Val, typename _Hash1, typename _Eq1, typename _Alloc,
+    typename _Hash2, typename _Eq2>
+    struct _Hash_merge_helper<
+      std::unordered_multiset<_Val, _Hash1, _Eq1, _Alloc>,
+      _Hash2, _Eq2>
+    {
+    private:
+      template<typename... _Tp>
+ using unordered_set = std::unordered_set<_Tp...>;
+      template<typename... _Tp>
+ using unordered_multiset = std::unordered_multiset<_Tp...>;
+
+      friend unordered_multiset<_Val, _Hash1, _Eq1, _Alloc>;
+
+      static auto&
+      _S_get_table(unordered_set<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+
+      static auto&
+      _S_get_table(unordered_multiset<_Val, _Hash2, _Eq2, _Alloc>& __set)
+      { return __set._M_h; }
+    };
+
+
+
+}
+# 42 "C:/mingw64/include/c++/14.2.0/unordered_set" 2 3
+# 53 "C:/mingw64/include/c++/14.2.0/unordered_set" 3
+# 1 "C:/mingw64/include/c++/14.2.0/bits/version.h" 1 3
+# 47 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+       
+# 48 "C:/mingw64/include/c++/14.2.0/bits/version.h" 3
+# 54 "C:/mingw64/include/c++/14.2.0/unordered_set" 2 3
+
+
+
+namespace std
+{
+
+  namespace pmr
+  {
+    template<typename _Key, typename _Hash = std::hash<_Key>,
+      typename _Pred = std::equal_to<_Key>>
+      using unordered_set
+ = std::unordered_set<_Key, _Hash, _Pred,
+        polymorphic_allocator<_Key>>;
+    template<typename _Key, typename _Hash = std::hash<_Key>,
+      typename _Pred = std::equal_to<_Key>>
+      using unordered_multiset
+ = std::unordered_multiset<_Key, _Hash, _Pred,
+      polymorphic_allocator<_Key>>;
+  }
+
+}
+
+
+
+namespace std
+{
+
+  template<typename _Key, typename _Hash, typename _CPred, typename _Alloc,
+    typename _Predicate>
+    inline typename unordered_set<_Key, _Hash, _CPred, _Alloc>::size_type
+    erase_if(unordered_set<_Key, _Hash, _CPred, _Alloc>& __cont,
+      _Predicate __pred)
+    {
+      std::unordered_set<_Key, _Hash, _CPred, _Alloc>&
+ __ucont = __cont;
+      return __detail::__erase_nodes_if(__cont, __ucont, __pred);
+    }
+
+  template<typename _Key, typename _Hash, typename _CPred, typename _Alloc,
+    typename _Predicate>
+    inline typename unordered_multiset<_Key, _Hash, _CPred, _Alloc>::size_type
+    erase_if(unordered_multiset<_Key, _Hash, _CPred, _Alloc>& __cont,
+      _Predicate __pred)
+    {
+      std::unordered_multiset<_Key, _Hash, _CPred, _Alloc>&
+ __ucont = __cont;
+      return __detail::__erase_nodes_if(__cont, __ucont, __pred);
+    }
+
+}
+# 38 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 2 3 4
+
+
+
+
+
+
+namespace sf
+{
+class Sound;
+class InputSoundFile;
+class InputStream;
+
+
+
+
+
+class __attribute__((dllimport)) SoundBuffer
+{
+public:
+
+
+
+
+
+
+
+    SoundBuffer() = default;
+
+
+
+
+
+
+
+    SoundBuffer(const SoundBuffer& copy);
+# 87 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    explicit SoundBuffer(const std::filesystem::path& filename);
+# 103 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    SoundBuffer(const void* data, std::size_t sizeInBytes);
+# 118 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    explicit SoundBuffer(InputStream& stream);
+# 136 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    SoundBuffer(const std::int16_t* samples,
+                std::uint64_t sampleCount,
+                unsigned int channelCount,
+                unsigned int sampleRate,
+                const std::vector<SoundChannel>& channelMap);
+
+
+
+
+
+    ~SoundBuffer();
+# 161 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromFile(const std::filesystem::path& filename);
+# 177 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromMemory(const void* data, std::size_t sizeInBytes);
+# 192 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromStream(InputStream& stream);
+# 210 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool loadFromSamples(const std::int16_t* samples,
+                                       std::uint64_t sampleCount,
+                                       unsigned int channelCount,
+                                       unsigned int sampleRate,
+                                       const std::vector<SoundChannel>& channelMap);
+# 227 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool saveToFile(const std::filesystem::path& filename) const;
+# 241 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] const std::int16_t* getSamples() const;
+# 254 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] std::uint64_t getSampleCount() const;
+# 268 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 281 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] unsigned int getChannelCount() const;
+# 294 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] std::vector<SoundChannel> getChannelMap() const;
+# 304 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] Time getDuration() const;
+# 314 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    SoundBuffer& operator=(const SoundBuffer& right);
+
+private:
+    friend class Sound;
+# 327 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool initialize(InputSoundFile& file);
+# 339 "C:/SFML/include/SFML/Audio/SoundBuffer.hpp" 3 4
+    [[nodiscard]] bool update(unsigned int channelCount, unsigned int sampleRate, const std::vector<SoundChannel>& channelMap);
+
+
+
+
+
+
+
+    void attachSound(Sound* sound) const;
+
+
+
+
+
+
+
+    void detachSound(Sound* sound) const;
+
+
+
+
+    using SoundList = std::unordered_set<Sound*>;
+
+
+
+
+    std::vector<std::int16_t> m_samples;
+    unsigned int m_sampleRate{44100};
+    std::vector<SoundChannel> m_channelMap{SoundChannel::Mono};
+    Time m_duration;
+    mutable SoundList m_sounds;
+};
+
+}
+# 38 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 3 4
+       
+
+
+
+
+
+
+
+# 1 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+       
+# 42 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+namespace sf
+{
+
+
+
+
+class __attribute__((dllimport)) SoundRecorder
+{
+public:
+
+
+
+
+    virtual ~SoundRecorder();
+# 79 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] bool start(unsigned int sampleRate = 44100);
+
+
+
+
+
+
+
+    void stop();
+# 99 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] unsigned int getSampleRate() const;
+# 110 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] static std::vector<std::string> getAvailableDevices();
+# 122 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] static std::string getDefaultDevice();
+# 139 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] bool setDevice(const std::string& name);
+
+
+
+
+
+
+
+    [[nodiscard]] const std::string& getDevice() const;
+# 162 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    void setChannelCount(unsigned int channelCount);
+# 175 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] unsigned int getChannelCount() const;
+# 186 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] const std::vector<SoundChannel>& getChannelMap() const;
+# 199 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] static bool isAvailable();
+
+protected:
+
+
+
+
+
+
+    SoundRecorder();
+# 221 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    virtual bool onStart();
+# 237 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    [[nodiscard]] virtual bool onProcessSamples(const std::int16_t* samples, std::size_t sampleCount) = 0;
+# 248 "C:/SFML/include/SFML/Audio/SoundRecorder.hpp" 3 4
+    virtual void onStop();
+
+private:
+
+
+
+    struct Impl;
+    const std::unique_ptr<Impl> m_impl;
+};
+
+}
+# 34 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 2 3 4
+
+
+
+
+
+
+
+namespace sf
+{
+
+
+
+
+
+class __attribute__((dllimport)) SoundBufferRecorder : public SoundRecorder
+{
+public:
+
+
+
+
+    ~SoundBufferRecorder() override;
+# 68 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 3 4
+    [[nodiscard]] const SoundBuffer& getBuffer() const;
+
+protected:
+
+
+
+
+
+
+    [[nodiscard]] bool onStart() override;
+# 88 "C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp" 3 4
+    [[nodiscard]] bool onProcessSamples(const std::int16_t* samples, std::size_t sampleCount) override;
+
+
+
+
+
+    void onStop() override;
+
+private:
+
+
+
+    std::vector<std::int16_t> m_samples;
+    SoundBuffer m_buffer;
+};
+
+}
+# 39 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 1 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 1 3 4
+# 25 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+       
+# 39 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+namespace sf
+{
+class InputStream;
+class SoundFileReader;
+class SoundFileWriter;
+
+
+
+
+
+class __attribute__((dllimport)) SoundFileFactory
+{
+public:
+
+
+
+
+
+
+    template <typename T>
+    static void registerReader();
+
+
+
+
+
+
+
+    template <typename T>
+    static void unregisterReader();
+
+
+
+
+
+    template <typename T>
+    [[nodiscard]] static bool isReaderRegistered();
+
+
+
+
+
+
+
+    template <typename T>
+    static void registerWriter();
+
+
+
+
+
+
+
+    template <typename T>
+    static void unregisterWriter();
+
+
+
+
+
+    template <typename T>
+    [[nodiscard]] static bool isWriterRegistered();
+# 112 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileReader> createReaderFromFilename(const std::filesystem::path& filename);
+# 125 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileReader> createReaderFromMemory(const void* data, std::size_t sizeInBytes);
+# 137 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileReader> createReaderFromStream(InputStream& stream);
+# 147 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 3 4
+    [[nodiscard]] static std::unique_ptr<SoundFileWriter> createWriterFromFilename(const std::filesystem::path& filename);
+
+private:
+
+
+
+    template <typename T>
+    using CreateFnPtr = std::unique_ptr<T> (*)();
+
+    using ReaderCheckFnPtr = bool (*)(InputStream&);
+    using WriterCheckFnPtr = bool (*)(const std::filesystem::path&);
+
+    using ReaderFactoryMap = std::unordered_map<CreateFnPtr<SoundFileReader>, ReaderCheckFnPtr>;
+    using WriterFactoryMap = std::unordered_map<CreateFnPtr<SoundFileWriter>, WriterCheckFnPtr>;
+
+
+
+
+    [[nodiscard]] static ReaderFactoryMap& getReaderFactoryMap();
+    [[nodiscard]] static WriterFactoryMap& getWriterFactoryMap();
+};
+
+}
+
+# 1 "C:/SFML/include/SFML/Audio/SoundFileFactory.inl" 1 3 4
+# 32 "C:/SFML/include/SFML/Audio/SoundFileFactory.inl" 3 4
+namespace sf
+{
+namespace priv
+{
+template <typename T>
+std::unique_ptr<SoundFileReader> createReader()
+{
+    return std::make_unique<T>();
+}
+template <typename T>
+std::unique_ptr<SoundFileWriter> createWriter()
+{
+    return std::make_unique<T>();
+}
+}
+
+
+
+template <typename T>
+void SoundFileFactory::registerReader()
+{
+    getReaderFactoryMap()[&priv::createReader<T>] = &T::check;
+}
+
+
+
+template <typename T>
+void SoundFileFactory::unregisterReader()
+{
+    getReaderFactoryMap().erase(&priv::createReader<T>);
+}
+
+
+
+template <typename T>
+bool SoundFileFactory::isReaderRegistered()
+{
+    return getReaderFactoryMap().count(&priv::createReader<T>) == 1;
+}
+
+
+
+template <typename T>
+void SoundFileFactory::registerWriter()
+{
+    getWriterFactoryMap()[&priv::createWriter<T>] = &T::check;
+}
+
+
+
+template <typename T>
+void SoundFileFactory::unregisterWriter()
+{
+    getWriterFactoryMap().erase(&priv::createWriter<T>);
+}
+
+
+
+template <typename T>
+bool SoundFileFactory::isWriterRegistered()
+{
+    return getWriterFactoryMap().count(&priv::createWriter<T>) == 1;
+}
+
+}
+# 172 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 2 3 4
+# 40 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
+# 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h" 2
+
+
+
+
+# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h"
 using namespace std;
 
 class Ship {
@@ -107348,18 +111724,26 @@ private:
     float startX_;
     float startY_;
     int startZycie_;
+    sf::Music damage;
+
+
     public:
     sf::RectangleShape shape;
 Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
     :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
+    if (!damage.openFromFile("../assets/damage.ogg")) {
+        std::cerr << "Blad: nie damage.wav\n";
+    }
+    damage.setVolume(50);
     if (!texture.loadFromFile("../assets/statek1.png")) {
-        std::cerr << "Blad: nie mozna zaladowac statek.png\n";
+        std::cerr << "Blad: nie ma statek.png\n";
     }
     shape.setSize(sf::Vector2f(szerokosc, wysokosc));
     shape.setOrigin(sf::Vector2f(szerokosc / 2, wysokosc / 2));
     shape.setPosition(sf::Vector2f(x, y));
     shape.setTexture(&texture);
 }
+
     void moveleft(float dt)
     {
         x-=vx *dt;
@@ -107398,7 +111782,10 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
 }
     void odejmijZycie(int ile) {
     zycie -= ile;
-    if (zycie < 0) zycie =0;
+    damage.play();
+    if (zycie < 0) {
+        zycie =0;
+    }
 }
     void dodajZycie(int ile1) {
     zycie += ile1;

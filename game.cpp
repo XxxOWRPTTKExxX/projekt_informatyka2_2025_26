@@ -42,7 +42,7 @@ Game::Game()
 void Game::gameLoop(Score& score)
 {
     sf::Clock clock;
-
+    backgroundMusic.setVolume(100);
     while (g_window.isOpen()) {
 
         // eventy
@@ -192,6 +192,12 @@ void Game::update(float dt) {
     textpunktyzycia.setString("Zycia: " + std::to_string(ship.getZycie()));
     punktytekst.setString("Punkty: " + std::to_string(punkty));
     if (ship.getZycie() <= 0) {
+        if (!gameover.openFromFile("../assets/gameover.ogg")) {
+            std::cerr << "Nie ma muzyki!" << std::endl;
+        }
+        backgroundMusic.setVolume(10);
+        gameover.play();
+        gameover.setVolume(200);
         gameOver = true;
         wynik.addScore(punkty);
     }

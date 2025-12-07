@@ -3,9 +3,10 @@
 //
 #pragma once
 #include <stdio.h>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/Color.hpp>
+
 using namespace std;
 
 class Ship {
@@ -21,18 +22,26 @@ private:
     float startX_;
     float startY_;
     int startZycie_;
+    sf::Music damage;
+
+
     public:
     sf::RectangleShape shape;
 Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
     :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
+    if (!damage.openFromFile("../assets/damage.ogg")) {
+        std::cerr << "Blad: nie damage.wav\n";
+    }
+    damage.setVolume(50);
     if (!texture.loadFromFile("../assets/statek1.png")) {
-        std::cerr << "Blad: nie mozna zaladowac statek.png\n";
+        std::cerr << "Blad: nie ma statek.png\n";
     }
     shape.setSize(sf::Vector2f(szerokosc, wysokosc));
     shape.setOrigin(sf::Vector2f(szerokosc / 2, wysokosc / 2));
     shape.setPosition(sf::Vector2f(x, y));
     shape.setTexture(&texture);
 }
+
     void moveleft(float dt)
     {
         x-=vx *dt;
@@ -71,7 +80,10 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
 }
     void odejmijZycie(int ile) {
     zycie -= ile;
-    if (zycie < 0) zycie =0;
+    damage.play();
+    if (zycie < 0) {
+        zycie =0;
+    }
 }
     void dodajZycie(int ile1) {
     zycie += ile1;

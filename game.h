@@ -24,6 +24,7 @@ private:
 
     Score wynik;
     sf::Music backgroundMusic;
+    sf::Music gameover;
 
     sf::RenderWindow g_window;
     sf::Texture backgroundTexture;

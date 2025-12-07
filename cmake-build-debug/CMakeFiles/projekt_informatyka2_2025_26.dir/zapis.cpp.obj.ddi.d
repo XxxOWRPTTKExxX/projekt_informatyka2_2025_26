@@ -303,6 +303,29 @@ CMakeFiles\projekt_informatyka2_2025_26.dir\zapis.cpp.obj.ddi: \
  C:/SFML/include/SFML/System/MemoryInputStream.hpp \
  C:/SFML/include/SFML/System/Sleep.hpp \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/ship.h \
+ C:/SFML/include/SFML/Audio.hpp \
+ C:/SFML/include/SFML/Audio/InputSoundFile.hpp \
+ C:/SFML/include/SFML/Audio/Export.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileReader.hpp \
+ C:/SFML/include/SFML/Audio/SoundChannel.hpp \
+ C:/SFML/include/SFML/Audio/Listener.hpp \
+ C:/SFML/include/SFML/Audio/Music.hpp \
+ C:/SFML/include/SFML/Audio/SoundStream.hpp \
+ C:/SFML/include/SFML/Audio/SoundSource.hpp \
+ C:/SFML/include/SFML/Audio/AudioResource.hpp \
+ C:/mingw64/include/c++/14.2.0/functional \
+ C:/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/SFML/include/SFML/Audio/OutputSoundFile.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileWriter.hpp \
+ C:/SFML/include/SFML/Audio/PlaybackDevice.hpp \
+ C:/SFML/include/SFML/Audio/Sound.hpp \
+ C:/SFML/include/SFML/Audio/SoundBuffer.hpp \
+ C:/mingw64/include/c++/14.2.0/unordered_set \
+ C:/mingw64/include/c++/14.2.0/bits/unordered_set.h \
+ C:/SFML/include/SFML/Audio/SoundBufferRecorder.hpp \
+ C:/SFML/include/SFML/Audio/SoundRecorder.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileFactory.hpp \
+ C:/SFML/include/SFML/Audio/SoundFileFactory.inl \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/pilka.h \
  C:/mingw64/include/c++/14.2.0/fstream \
  C:/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \

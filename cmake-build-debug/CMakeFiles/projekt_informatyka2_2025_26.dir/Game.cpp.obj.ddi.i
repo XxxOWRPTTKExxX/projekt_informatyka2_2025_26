@@ -117731,7 +117731,8 @@ namespace __gnu_cxx
 
 
 
-# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h"
+
+# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h"
 using namespace std;
 
 class Ship {
@@ -117747,18 +117748,26 @@ private:
     float startX_;
     float startY_;
     int startZycie_;
+    sf::Music damage;
+
+
     public:
     sf::RectangleShape shape;
 Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
     :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
+    if (!damage.openFromFile("../assets/damage.ogg")) {
+        std::cerr << "Blad: nie damage.wav\n";
+    }
+    damage.setVolume(50);
     if (!texture.loadFromFile("../assets/statek1.png")) {
-        std::cerr << "Blad: nie mozna zaladowac statek.png\n";
+        std::cerr << "Blad: nie ma statek.png\n";
     }
     shape.setSize(sf::Vector2f(szerokosc, wysokosc));
     shape.setOrigin(sf::Vector2f(szerokosc / 2, wysokosc / 2));
     shape.setPosition(sf::Vector2f(x, y));
     shape.setTexture(&texture);
 }
+
     void moveleft(float dt)
     {
         x-=vx *dt;
@@ -117797,7 +117806,10 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
 }
     void odejmijZycie(int ile) {
     zycie -= ile;
-    if (zycie < 0) zycie =0;
+    damage.play();
+    if (zycie < 0) {
+        zycie =0;
+    }
 }
     void dodajZycie(int ile1) {
     zycie += ile1;
@@ -118016,6 +118028,7 @@ private:
 
     Score wynik;
     sf::Music backgroundMusic;
+    sf::Music gameover;
 
     sf::RenderWindow g_window;
     sf::Texture backgroundTexture;
@@ -120216,7 +120229,7 @@ Game::Game()
 void Game::gameLoop(Score& score)
 {
     sf::Clock clock;
-
+    backgroundMusic.setVolume(100);
     while (g_window.isOpen()) {
 
 
@@ -120366,6 +120379,12 @@ void Game::update(float dt) {
     textpunktyzycia.setString("Zycia: " + std::to_string(ship.getZycie()));
     punktytekst.setString("Punkty: " + std::to_string(punkty));
     if (ship.getZycie() <= 0) {
+        if (!gameover.openFromFile("../assets/gameover.ogg")) {
+            std::cerr << "Nie ma muzyki!" << std::endl;
+        }
+        backgroundMusic.setVolume(10);
+        gameover.play();
+        gameover.setVolume(200);
         gameOver = true;
         wynik.addScore(punkty);
     }
