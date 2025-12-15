@@ -111628,6 +111628,10 @@ bool SoundFileFactory::isWriterRegistered()
 # 172 "C:/SFML/include/SFML/Audio/SoundFileFactory.hpp" 2 3 4
 # 40 "C:/SFML/include/SFML/Audio.hpp" 2 3 4
 # 3 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 1
+       
+
+
 # 1 "C:/mingw64/include/c++/14.2.0/iostream" 1 3
 # 36 "C:/mingw64/include/c++/14.2.0/iostream" 3
        
@@ -111656,7 +111660,7 @@ namespace std
 # 85 "C:/mingw64/include/c++/14.2.0/iostream" 3
 
 }
-# 4 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 5 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 
 # 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
 # 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
@@ -117720,365 +117724,7 @@ namespace __gnu_cxx
 
 
 }
-# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h" 1
-
-
-
-       
-
-
-
-
-
-
-# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h"
-using namespace std;
-
-class Ship {
-private:
-    float x;
-    float y;
-    float szerokosc;
-    float wysokosc;
-    float vx;
-    float vy;
-    int zycie;
-    sf::Texture texture;
-    float startX_;
-    float startY_;
-    int startZycie_;
-    sf::Music damage;
-
-
-    public:
-    sf::RectangleShape shape;
-Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
-    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
-    if (!damage.openFromFile("../assets/damage.ogg")) {
-        std::cerr << "Blad: nie damage.wav\n";
-    }
-    damage.setVolume(50);
-    if (!texture.loadFromFile("../assets/statek1.png")) {
-        std::cerr << "Blad: nie ma statek.png\n";
-    }
-    shape.setSize(sf::Vector2f(szerokosc, wysokosc));
-    shape.setOrigin(sf::Vector2f(szerokosc / 2, wysokosc / 2));
-    shape.setPosition(sf::Vector2f(x, y));
-    shape.setTexture(&texture);
-}
-
-    void moveleft(float dt)
-    {
-        x-=vx *dt;
-        shape.setPosition(sf::Vector2f(x, y));
-    }
-
-    void moveright(float dt) {
-    x+=vx *dt;
-    shape.setPosition(sf::Vector2f(x, y));
-}
-    void moveup(float dt) {
-    y-=vy *dt;
-    shape.setPosition(sf::Vector2f(x, y));
-}
-    void movedown(float dt) {
-    y+=vy *dt;
-    shape.setPosition(sf::Vector2f(x, y));
-}
-    void clambToBounds(float width, float height) {
-    if (x < szerokosc / 2)
-        x = szerokosc / 2;
-
-    if (x > width - szerokosc / 2)
-        x = width - szerokosc / 2;
-
-    if (y < wysokosc / 2)
-        y = wysokosc / 2;
-
-    if (y > height - wysokosc / 2)
-        y = height - wysokosc / 2;
-
-    shape.setPosition(sf::Vector2f(x, y));
-}
-    void draw(sf::RenderTarget& target) {
-    target.draw(shape);
-}
-    void odejmijZycie(int ile) {
-    zycie -= ile;
-    damage.play();
-    if (zycie < 0) {
-        zycie =0;
-    }
-}
-    void dodajZycie(int ile1) {
-    zycie += ile1;
-    if (zycie > 3) zycie=3;
-}
-    void reset() {
-    x = startX_;
-    y = startY_;
-    zycie = startZycie_;
-    shape.setPosition(sf::Vector2f(x, y));
-}
-    void resetfromfile(const sf::Vector2f& newPos, int z) {
-    x = newPos.x;
-    y = newPos.y;
-    zycie = z;
-    shape.setPosition(sf::Vector2f(x, y));
-}
-    void setZycie(int z) { zycie = z; }
-
-
-    float getX() const{return x;}
-    float getY() const{return y;}
-    float getSzerokosc() const{return szerokosc;}
-    float getWysokosc() const{return wysokosc;}
-    int getZycie() const{return zycie;}
-};
-# 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/pilka.h" 1
-       
-
-
-
-
-
-
-
-class Pilka {
-private:
-    float x;
-    float y;
-    float vx;
-    float vy;
-    float radius;
-    float startX_;
-    float startY_;
-    float startvelX_;
-    float startvelY_;
-
-public:
-    sf::Texture texture;
-    sf::CircleShape shape;
-    Pilka(float startX, float startY, float velX, float velY, float r)
-        :x(startX), y(startY), vx(velX), vy(velY), radius(r), startX_(startX), startY_(startY), startvelX_(velX), startvelY_(velY) {
-        if (!texture.loadFromFile("../assets/kometa.png")) {
-            std::cerr << "Blad: nie mozna zaladowac komety.png\n";
-        }
-        shape.setRadius(radius);
-        shape.setOrigin(sf::Vector2f(radius, radius));
-        shape.setPosition(sf::Vector2f(x,y));
-        shape.setFillColor(sf::Color::White);
-        shape.setTexture(&texture);
-    }
-
-    void move(float dt) {
-        x+= vx*dt;
-        y+= vy*dt;
-        shape.setPosition(sf::Vector2f(x,y));
-    }
-
-    void bounceX() {
-        vx=-vx;
-    }
-    void bounceY() {
-        vy=-vy;
-    }
-void collideWalls(float width, float height) {
-        if (x-radius<= 0) {
-            x= radius;
-            bounceX();
-        }
-        else if (x+ radius >= width) {
-            x= width - radius;
-            bounceX();
-        }
-
-        if (y-radius <=0) {
-            y=radius;
-            bounceY();
-        }
-        else if (y+ radius >= height) {
-            y= height - radius;
-            bounceY();
-        }
-        shape.setPosition(sf::Vector2f(x,y));
-    }
-    bool collideShip( Ship& s) {
-        float palX=s.getX();
-        float palY=s.getY();
-        float palW=s.getSzerokosc();
-        float palH=s.getWysokosc();
-        bool overlappedX = (x >= palX - palW / 2) && (x <= palX + palW / 2);
-        bool touchedY = (y + radius >= palY - palH / 2) && (y - radius <= palY + palH / 2);
-
-        if (overlappedX && touchedY) {
-            s.odejmijZycie(1);
-            if (vy > 0) {
-                y = palY + palH / 2 + radius;
-            } else {
-                y = palY - palH / 2 - radius;
-            }
-            return true;
-
-        }
-        return false;
-    }
-
-void draw (sf::RenderTarget& target) {
-        target.draw(shape);
-    }
-
-    void reset() {
-        x = startX_;
-        y = startY_;
-        vx = startvelX_;
-        vy = startvelY_;
-        shape.setPosition(sf::Vector2f( x, y));
-    }
-    void resetfromfile(const sf::Vector2f& pos, const sf::Vector2f& vel) {
-        x = pos.x;
-        y = pos.y;
-        vx = vel.x;
-        vy = vel.y;
-        shape.setPosition(sf::Vector2f(x, y));
-    }
-
-    float getX() const {return x;}
-    float getY() const {return y;}
-    float getVx() const {return vx;}
-    float getVy() const {return vy;}
-    float getRadius() const {return radius;}
-};
-# 8 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/meteoryt.h" 1
-       
-
-
-class Meteoryt {
-private:
-   inline static sf::Texture texture;
-public:
-    sf::CircleShape shape;
-    float speed;
-    Meteoryt(float startX, float startY, float radius, float speed)
-        : speed(speed)
-    {
-        texture.loadFromFile("../assets/meteor.png");
-        shape.setRadius(radius);
-        shape.setPosition(sf::Vector2f(startX, startY));
-        shape.setTexture(&texture);
-    }
-
-    void update(float dt) {
-        shape.move(sf::Vector2f(0, speed * dt));
-    }
-    void setSpeed(float newSpeed) { speed = newSpeed; }
-    float getSpeed() const {return speed;}
-    float getX() const {return shape.getPosition().x;}
-    float getY() const {return shape.getPosition().y;}
-};
-# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 1
-       
-
-
-
-
-# 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
-# 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
-       
-# 40 "C:/mingw64/include/c++/14.2.0/cmath" 3
 # 7 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
-
-
-
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Score.h" 1
-       
-
-
-
-
-class Score {
-public:
-    Score(const std::string& filename = "Wyniki.txt");
-
-    void addScore(int score);
-    std::vector<int> getScores();
-    void showScores(sf::RenderWindow& window, const sf::Font& font);
-
-private:
-    std::string filename;
-};
-# 11 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
-
-
-class Game {
-public:
-    Game();
-    void run();
-
-private:
-    void processEvents();
-    void update(float dt);
-    void render();
-    void gameLoop(Score& score);
-    bool checkCollision(const Meteoryt& ball, const Ship& ship);
-
-    Score wynik;
-    sf::Music backgroundMusic;
-    sf::Music gameover;
-
-    sf::RenderWindow g_window;
-    sf::Texture backgroundTexture;
-    sf::RectangleShape backgroundRect;
-
-    sf::Font font;
-    sf::Text textpunktyzycia;
-    sf::Text punktytekst;
-
-    Ship ship;
-    Pilka pilka;
-    std::vector<Meteoryt> meteoryty;
-
-    sf::Clock clock;
-    sf::Clock spawnclock;
-    sf::Clock healcoldown;
-    sf::Clock clocksurvival;
-
-    float czasrespawnu= 0.5f;
-    int punkty=0;
-    bool gameOver= false;
-
-    const float windowWidth = 800;
-    const float windowHeight = 600;
-};
-# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
-# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.h" 1
-       
-
-
-
-# 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
-# 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
-       
-# 40 "C:/mingw64/include/c++/14.2.0/cmath" 3
-# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.h" 2
-
-class Menu {
-public:
-    Menu(float width, float height);
-    int run(sf::RenderWindow& window);
-private:
-    int selected;
-    sf::Font font;
-    sf::Text textmenu;
-    std::vector<sf::Text> options;
-    sf::Texture backgroundmenu;
-    sf::RectangleShape backgroundRectmenu;
-};
-# 11 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
 # 1 "C:/mingw64/include/c++/14.2.0/fstream" 1 3
 # 36 "C:/mingw64/include/c++/14.2.0/fstream" 3
        
@@ -118109,8 +117755,6 @@ private:
 # 36 "C:/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h" 2 3
 
 
-
-# 38 "C:/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h" 3
 namespace std
 {
 
@@ -120111,11 +119755,356 @@ namespace std
 
 }
 # 1361 "C:/mingw64/include/c++/14.2.0/fstream" 2 3
-# 12 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
+# 8 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h" 1
+
+
+
+       
+# 13 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h"
+
+# 13 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.h"
+class Ship {
+private:
+    float x;
+    float y;
+    float szerokosc;
+    float wysokosc;
+    float vx;
+    float vy;
+    int zycie;
+    sf::Texture texture;
+    float startX_;
+    float startY_;
+    int startZycie_;
+    sf::Music damage;
+    sf::Clock healCooldown;
+
+
+    public:
+    sf::RectangleShape shape;
+Ship(float startX, float startY, float startSzerokosc, float startWysokosc, float startVx, float startVy, float startzycie)
+    :x(startX), y(startY), szerokosc(startSzerokosc), wysokosc(startWysokosc), vx(startVx), vy(startVy), zycie(startzycie), startX_(startX), startY_(startY), startZycie_(startzycie) {
+    if (!damage.openFromFile("../assets/damage.ogg")) {
+        std::cerr << "Blad: nie damage.wav\n";
+    }
+    damage.setVolume(90);
+    if (!texture.loadFromFile("../assets/statek1.png")) {
+        std::cerr << "Blad: nie ma statek.png\n";
+    }
+    shape.setSize(sf::Vector2f(szerokosc, wysokosc));
+    shape.setOrigin(sf::Vector2f(szerokosc / 2, wysokosc / 2));
+    shape.setPosition(sf::Vector2f(x, y));
+    shape.setTexture(&texture);
+}
+
+    void updateHeal();
+
+
+    sf::Color getColorByHealth() const;
+
+    void moveleft(float dt)
+    {
+        x-=vx *dt;
+        shape.setPosition(sf::Vector2f(x, y));
+    }
+
+    void moveright(float dt) {
+    x+=vx *dt;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void moveup(float dt) {
+    y-=vy *dt;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void movedown(float dt) {
+    y+=vy *dt;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+
+    inline void moveInput(float dt) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+        moveleft(dt);
+        }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+        moveright(dt);
+        }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+        moveup(dt);
+        }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+        movedown(dt);
+        }
+
+}
+    void clambToBounds(float width, float height) {
+    if (x < szerokosc / 2)
+        x = szerokosc / 2;
+
+    if (x > width - szerokosc / 2)
+        x = width - szerokosc / 2;
+
+    if (y < wysokosc / 2)
+        y = wysokosc / 2;
+
+    if (y > height - wysokosc / 2)
+        y = height - wysokosc / 2;
+
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void draw(sf::RenderTarget& target) {
+    target.draw(shape);
+}
+    void odejmijZycie(int ile) {
+    zycie -= ile;
+    damage.play();
+    if (zycie < 0) {
+        zycie =0;
+    }
+}
+    void dodajZycie(int ile1) {
+    zycie += ile1;
+    if (zycie > startZycie_) zycie=startZycie_;
+}
+
+    void reset() {
+    x = startX_;
+    y = startY_;
+    zycie = startZycie_;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void resetfromfile(const sf::Vector2f& newPos, int z) {
+    x = newPos.x;
+    y = newPos.y;
+    zycie = z;
+    shape.setPosition(sf::Vector2f(x, y));
+}
+    void setZycie(int z) { zycie = z; }
+
+
+    float getX() const{return x;}
+    float getY() const{return y;}
+    float getSzerokosc() const{return szerokosc;}
+    float getWysokosc() const{return wysokosc;}
+    int getZyciestart() const {return startZycie_;}
+    int getZycie() const{return zycie;}
+};
+# 9 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/pilka.h" 1
+       
+
+
+
+
+
+
+
+class Pilka {
+private:
+    float x;
+    float y;
+    float vx;
+    float vy;
+    float radius;
+    float startX_;
+    float startY_;
+    float startvelX_;
+    float startvelY_;
+
+public:
+    sf::Texture texture;
+    sf::CircleShape shape;
+    Pilka(float startX, float startY, float velX, float velY, float r)
+        :x(startX), y(startY), vx(velX), vy(velY), radius(r), startX_(startX), startY_(startY), startvelX_(velX), startvelY_(velY) {
+        if (!texture.loadFromFile("../assets/kometa.png")) {
+            std::cerr << "Blad: nie mozna zaladowac komety.png\n";
+        }
+        shape.setRadius(radius);
+        shape.setOrigin(sf::Vector2f(radius, radius));
+        shape.setPosition(sf::Vector2f(x,y));
+        shape.setFillColor(sf::Color::White);
+        shape.setTexture(&texture);
+    }
+
+    void move(float dt) {
+        x+= vx*dt;
+        y+= vy*dt;
+        shape.setPosition(sf::Vector2f(x,y));
+    }
+
+    void bounceX() {
+        vx=-vx;
+    }
+    void bounceY() {
+        vy=-vy;
+    }
+void collideWalls(float width, float height) {
+        if (x-radius<= 0) {
+            x= radius;
+            bounceX();
+        }
+        else if (x+ radius >= width) {
+            x= width - radius;
+            bounceX();
+        }
+
+        if (y-radius <=0) {
+            y=radius;
+            bounceY();
+        }
+        else if (y+ radius >= height) {
+            y= height - radius;
+            bounceY();
+        }
+        shape.setPosition(sf::Vector2f(x,y));
+    }
+    bool collideShip( Ship& s) {
+        float palX=s.getX();
+        float palY=s.getY();
+        float palW=s.getSzerokosc();
+        float palH=s.getWysokosc();
+        bool overlappedX = (x >= palX - palW / 2) && (x <= palX + palW / 2);
+        bool touchedY = (y + radius >= palY - palH / 2) && (y - radius <= palY + palH / 2);
+
+        if (overlappedX && touchedY) {
+            s.odejmijZycie(1);
+            if (vy > 0) {
+                y = palY + palH / 2 + radius;
+            } else {
+                y = palY - palH / 2 - radius;
+            }
+            return true;
+
+        }
+        return false;
+    }
+
+void draw (sf::RenderTarget& target) {
+        target.draw(shape);
+    }
+
+    void reset() {
+        x = startX_;
+        y = startY_;
+        vx = startvelX_;
+        vy = startvelY_;
+        shape.setPosition(sf::Vector2f( x, y));
+    }
+    void resetfromfile(const sf::Vector2f& pos, const sf::Vector2f& vel) {
+        x = pos.x;
+        y = pos.y;
+        vx = vel.x;
+        vy = vel.y;
+        shape.setPosition(sf::Vector2f(x, y));
+    }
+
+    float getX() const {return x;}
+    float getY() const {return y;}
+    float getVx() const {return vx;}
+    float getVy() const {return vy;}
+    float getRadius() const {return radius;}
+};
+# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/meteoryt.h" 1
+       
+
+
+class Meteoryt {
+private:
+   inline static sf::Texture texture;
+public:
+    sf::CircleShape shape;
+    float speed;
+    Meteoryt(float startX, float startY, float radius, float speed)
+        : speed(speed)
+    {
+        texture.loadFromFile("../assets/meteor.png");
+        shape.setRadius(radius);
+        shape.setPosition(sf::Vector2f(startX, startY));
+        shape.setTexture(&texture);
+    }
+
+    void update(float dt) {
+        shape.move(sf::Vector2f(0, speed * dt));
+    }
+    void setSpeed(float newSpeed) { speed = newSpeed; }
+    float getSpeed() const {return speed;}
+    float getX() const {return shape.getPosition().x;}
+    float getY() const {return shape.getPosition().y;}
+};
+# 11 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/Score.h" 1
+       
+
+
+
+
+class Score {
+public:
+    Score(const std::string& filename = "Wyniki.txt");
+
+    void addScore(int score);
+    std::vector<int> getScores();
+    void showScores(sf::RenderWindow& window, const sf::Font& font);
+
+private:
+    std::string filename;
+};
+# 12 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.h" 1
+       
+
+
+
+# 1 "C:/mingw64/include/c++/14.2.0/cmath" 1 3
+# 39 "C:/mingw64/include/c++/14.2.0/cmath" 3
+       
+# 40 "C:/mingw64/include/c++/14.2.0/cmath" 3
+# 6 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.h" 2
+
+class Menu {
+public:
+    Menu(float width, float height);
+    int run(sf::RenderWindow& window);
+private:
+    int selected;
+    sf::Font font;
+    sf::Text textmenu;
+    std::vector<sf::Text> options;
+    sf::Texture backgroundmenu;
+    sf::RectangleShape backgroundRectmenu;
+};
+# 13 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+# 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/meteoryt_system.h" 1
+       
+
+
+
+
+
+class MeteorytSystem {
+public:
+    MeteorytSystem(float windowWidth, float windowHeight);
+
+    void update(std::vector<Meteoryt>& meteoryty, Ship& ship, float dt, float czasrespawnu);
+
+private:
+    void spawn(std::vector<Meteoryt>& meteoryty, float czasrespawnu);
+    bool checkCollision(const Meteoryt& ball, const Ship& ship);
+    sf::Clock spawnClock;
+    float windowWidth;
+    float windowHeight;
+};
+# 14 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
 # 1 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/zapis.h" 1
        
-# 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/zapis.h"
-
 # 10 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/zapis.h"
 struct MeteorytData {
     float x, y;
@@ -120129,15 +120118,17 @@ private:
     sf::Vector2f ballPosition;
     sf::Vector2f ballVelocity;
     std::vector<MeteorytData> meteoryty;
+    int punkty;
 
 public:
     Zapis()=default;
-    void capture(const Ship& ship, const Pilka& ball, const std::vector<Meteoryt>& met);
+    void capture(const Ship& ship, const Pilka& ball, const std::vector<Meteoryt>& met, int currentPunkty);
     int getZyciez() const {return zycie;}
     const sf::Vector2f& getShipposition() const {return shipPosition;}
     const sf::Vector2f& getBallPosition() const {return ballPosition;}
     const sf::Vector2f& getBallVelocity() const {return ballVelocity;}
     const std::vector<MeteorytData>& getMeteoryty() const {return meteoryty;}
+    int getPunkty() const { return punkty; }
 
 bool saveToFile(const std::string& zapisplik) const {
     std::ofstream file(zapisplik);
@@ -120154,8 +120145,10 @@ bool saveToFile(const std::string& zapisplik) const {
     file << "BALL " << ballPosition.x << " " << ballPosition.y << " "
          << ballVelocity.x << " " << ballVelocity.y << "\n";
 
+        file << "POINTS " << punkty << "\n";
 
     file << "METEORYTS_COUNT " << meteoryty.size() << "\n";
+
     for (const auto& m : meteoryty) {
         file << m.x << " " << m.y << " " << m.speed << "\n";
     }
@@ -120172,6 +120165,7 @@ bool saveToFile(const std::string& zapisplik) const {
 
         if (file >> label >> shipPosition.x >> shipPosition.y >> zycie) {}
         if (file >> label >> ballPosition.x >> ballPosition.y >> ballVelocity.x >> ballVelocity.y) {}
+        if (file >> label >> punkty) {}
         if (file >> label >> meteCount) {
             meteoryty.clear();
             for (int i = 0; i < meteCount; ++i) {
@@ -120185,7 +120179,7 @@ bool saveToFile(const std::string& zapisplik) const {
         return true;
     }
 
-    void apply(Ship& s, Pilka& b, std::vector<Meteoryt>& met) {
+    void apply(Ship& s, Pilka& b, std::vector<Meteoryt>& met, int& gamePunkty) {
         s.resetfromfile(shipPosition, zycie);
         b.resetfromfile(ballPosition, ballVelocity);
         s.setZycie(getZyciez());
@@ -120194,19 +120188,81 @@ bool saveToFile(const std::string& zapisplik) const {
         for (const auto& m : meteoryty) {
             met.emplace_back(m.x, m.y, 15.0f, m.speed);
         }
+        gamePunkty = punkty;
     }
-};
-# 13 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
 
+    static bool saveGame(const Ship& ship, const Pilka& pilka, const std::vector<Meteoryt>& meteoryty, int punkty, const std::string& filename = "zapis.txt");
+    static bool loadGame(Ship& ship, Pilka& pilka, std::vector<Meteoryt>& meteoryty, int& punkty, const std::string& filename = "zapis.txt");
+
+};
+# 15 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.h" 2
+
+
+class Game {
+public:
+    Game();
+    void run();
+
+private:
+    void update(float dt);
+    void render();
+    void handleMenu(Menu& menu, Score& score);
+    void updateDifficulty();
+    void updatepunkty();
+    void przegrana();
+    bool handleEvents();
+    void resetGame();
+    void checkGameOver();
+    void audiogameover();
+    void gameLoop(Score& score);
+    bool checkCollision(const Meteoryt& ball, const Ship& ship);
+
+    Score wynik;
+    sf::Music backgroundMusic;
+    sf::Music gameover;
+
+    sf::RenderWindow g_window;
+    sf::Texture backgroundTexture;
+    sf::RectangleShape backgroundRect;
+
+    sf::Font font;
+    sf::Text textpunktyzycia;
+    sf::Text punktytekst;
+
+    Ship ship;
+    Pilka pilka;
+    std::vector<Meteoryt> meteoryty;
+
+    sf::Clock clock;
+    sf::Clock spawnclock;
+    sf::Clock healcoldown;
+    sf::Clock clocksurvival;
+
+
+    float czasrespawnu= 0.5f;
+    int punkty=0;
+    bool gameOver= false;
+
+    const float windowWidth = 800;
+    const float windowHeight = 600;
+    MeteorytSystem meteorytSystem;
+    Menu menu;
+    Score score;
+
+};
+# 4 "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp" 2
 
 
 Game::Game()
-    :g_window(sf::VideoMode({800u, 600u}), "Gra demo na projekt (SFML 3)"),
+    :g_window(sf::VideoMode({800u, 600u}), "Gra na projekt (SFML 3)"),
     textpunktyzycia(font),
     punktytekst(font),
     wynik("Wyniki.txt:"),
-    ship(520,500,60, 60, 200, 200, 3),
-    pilka(200,200,400,-100,40)
+    ship(520,500,60, 60, 200, 200, 8),
+    pilka(200,200,400,-100,40),
+    meteorytSystem(windowWidth, windowHeight),
+    menu(windowWidth, windowHeight),
+    score()
 {
     g_window.setFramerateLimit(60);
     backgroundTexture.loadFromFile("../assets/tlo.jpg");
@@ -120215,7 +120271,6 @@ Game::Game()
     font.openFromFile("arial.ttf");
     textpunktyzycia.setFont(font);
     textpunktyzycia.setCharacterSize(24);
-    textpunktyzycia.setFillColor(sf::Color::White);
     punktytekst.setFont(font);
     punktytekst.setCharacterSize(24);
     punktytekst.setFillColor(sf::Color::Magenta);
@@ -120228,33 +120283,13 @@ Game::Game()
 
 void Game::gameLoop(Score& score)
 {
-    sf::Clock clock;
     backgroundMusic.setVolume(100);
     while (g_window.isOpen()) {
 
 
-        while (auto event = g_window.pollEvent()) {
-
-            if (event->is<sf::Event::Closed>())
-                g_window.close();
-
-            if (auto* key = event->getIf<sf::Event::KeyPressed>()) {
-                if (key->code == sf::Keyboard::Key::Escape) {
-                    return;
-                }
-
-
-                if (key->code == sf::Keyboard::Key::Z) {
-                    Zapis save;
-                    save.capture(ship, pilka, meteoryty);
-                    if (save.saveToFile("zapis.txt")) {
-                        std::cout << "Zapisano!\n";
-                    }
-                }
-            }
-        }
-
-
+       if ( handleEvents()) {
+           return;
+       }
 
 
         if (gameOver) {
@@ -120262,157 +120297,59 @@ void Game::gameLoop(Score& score)
             return;
         }
 
+
         float dt = clock.restart().asSeconds();
         update(dt);
         render();
+
     }
 }
 
 void Game::run() {
-    Menu menu(windowWidth, windowHeight);
-    Score score;
 
         while (g_window.isOpen()) {
-            int menuResult = menu.run(g_window);
-            if (menuResult == 2) {
-                score.showScores(g_window, font);
 
-            } else if (menuResult == 1) {
-                Zapis load;
-                if (load.loadFromFile("zapis.txt")) {
-                    load.apply(ship, pilka, meteoryty);
-                    std::cout << "Gra wczytana!\n";
-                    gameLoop(score);
-                } else {
-                    std::cerr << "Nie udało się wczytać zapisu!\n";
-                }
-            }
-            else if (menuResult == 0) {
-                gameOver = false;
-                punkty = 0;
-                meteoryty.clear();
-                ship.reset();
-                pilka.reset();
-                czasrespawnu= 0.5f;
-                if (!backgroundMusic.openFromFile("../assets/background.ogg")) {
-                  std::cerr << "Nie ma muzyki!" << std::endl;
-               } else {
-                    backgroundMusic.setLooping(true);
-                    backgroundMusic.play();
-                }
-                gameLoop(score);
-            }
+            handleMenu(menu, score);
         }
-}
-void Game::processEvents() {
-    while (const std::optional event = g_window.pollEvent()) {
-        if (event->is<sf::Event::Closed>())
-            g_window.close();
-    }
+
 }
 void Game::update(float dt) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-        ship.moveleft(dt);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-        ship.moveright(dt);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-        ship.moveup(dt);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-        ship.movedown(dt);
-    }
-    if (clocksurvival.getElapsedTime().asSeconds() >= 1.0f) {
-        punkty+=10;
-        clocksurvival.restart();
-    }
-    if (spawnclock.getElapsedTime().asSeconds() > czasrespawnu) {
-        float x = rand() % (int)(windowWidth - 40);
-        meteoryty.emplace_back(x, -50, 15.0f, 50.0f);
-        spawnclock.restart();
-    }
+
+
+    ship.moveInput(dt);
+
+
+
+    updatepunkty();
+
+
+
+    meteorytSystem.update(meteoryty, ship, dt, czasrespawnu);
+
+
+
     pilka.move(dt);
-    for (int i = 0; i < meteoryty.size(); i++) {
-        meteoryty[i].update(dt);
-        if (checkCollision(meteoryty[i], ship)) {
-            ship.odejmijZycie(1);
-            meteoryty.erase(meteoryty.begin() + i);
-            i--;
-            continue;
-        }
-        if (meteoryty[i].shape.getPosition().y > windowHeight + 50) {
-            meteoryty.erase(meteoryty.begin() + i);
-            i--;
-            continue;
-        }
-    }
 
-    if (punkty >= 100) {
-        czasrespawnu = 0.3f;
-        for (auto& m : meteoryty) m.setSpeed(150.0f);
-    }
 
-    if (punkty >= 220) {
-        czasrespawnu = 0.2f;
-        for (auto& m : meteoryty) m.setSpeed(300.0f);
-    }
 
-    if (punkty >= 400) {
-        czasrespawnu = 0.02f;
-        for (auto& m : meteoryty) m.setSpeed(800.0f);
-    }
+    updateDifficulty();
 
-    if (ship.getZycie() < 3) {
-        if (healcoldown.getElapsedTime().asSeconds() >= 10.0f) {
-            ship.dodajZycie(1);
-            healcoldown.restart();
-        }
-    } else {
-        healcoldown.restart();
-    }
+
+
+   ship.updateHeal();
+
+
     pilka.collideWalls(windowWidth, windowHeight);
     pilka.collideShip(ship);
-
     ship.clambToBounds(windowWidth, windowHeight);
-
     textpunktyzycia.setString("Zycia: " + std::to_string(ship.getZycie()));
     punktytekst.setString("Punkty: " + std::to_string(punkty));
-    if (ship.getZycie() <= 0) {
-        if (!gameover.openFromFile("../assets/gameover.ogg")) {
-            std::cerr << "Nie ma muzyki!" << std::endl;
-        }
-        backgroundMusic.setVolume(10);
-        gameover.play();
-        gameover.setVolume(200);
-        gameOver = true;
-        wynik.addScore(punkty);
-    }
-    if (ship.getZycie() == 2) {
-        textpunktyzycia.setFillColor(sf::Color::Green);
-    } else if (ship.getZycie() == 1) {
-        textpunktyzycia.setFillColor(sf::Color::Red);
-    } else if (ship.getZycie() == 3) {
-        textpunktyzycia.setFillColor(sf::Color::Blue);
-    }else {
-        textpunktyzycia.setFillColor(sf::Color::Transparent);
-    }
 
-}
 
-bool Game::checkCollision(const Meteoryt& ball, const Ship& ship) {
-    return ball.shape.getGlobalBounds().findIntersection(ship.shape.getGlobalBounds()).has_value();
-}
 
-void Game::render() {
-    g_window.clear();
-    g_window.draw(backgroundRect);
-    ship.draw(g_window);
-    for (auto& s : meteoryty) {
-        g_window.draw(s.shape);
-    }
-    g_window.draw(pilka.shape);
-    g_window.draw(textpunktyzycia);
-    g_window.draw(punktytekst);
-    g_window.display();
+    checkGameOver();
+
+
+    textpunktyzycia.setFillColor(ship.getColorByHealth());
+
 }

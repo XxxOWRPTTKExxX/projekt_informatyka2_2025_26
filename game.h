@@ -4,10 +4,14 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <fstream>
 #include "ship.h"
 #include "pilka.h"
 #include "meteoryt.h"
 #include "Score.h"
+#include "menu.h"
+#include "meteoryt_system.h"
+#include "zapis.h"
 
 
 class Game {
@@ -16,9 +20,16 @@ public:
     void run();
 
 private:
-    void processEvents();
     void update(float dt);
     void render();
+    void handleMenu(Menu& menu, Score& score);
+    void updateDifficulty();
+    void updatepunkty();
+    void przegrana();
+    bool handleEvents();
+    void resetGame();
+    void checkGameOver();
+    void audiogameover();
     void gameLoop(Score& score);
     bool checkCollision(const Meteoryt& ball, const Ship& ship);
 
@@ -40,8 +51,9 @@ private:
 
     sf::Clock clock;
     sf::Clock spawnclock;
-    sf::Clock healcoldown;
+    sf::Clock healcoldown; //przeniesione
     sf::Clock clocksurvival;
+
 
     float czasrespawnu= 0.5f;
     int punkty=0;
@@ -49,4 +61,8 @@ private:
 
     const float windowWidth = 800;
     const float windowHeight = 600;
+    MeteorytSystem meteorytSystem;
+    Menu menu;
+    Score score;
+
 };

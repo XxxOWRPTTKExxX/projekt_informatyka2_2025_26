@@ -2,12 +2,13 @@
 // Created by oliwi on 02.12.2025.
 //
 #pragma once
-#include <stdio.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
-using namespace std;
 
 class Ship {
 private:
@@ -23,6 +24,7 @@ private:
     float startY_;
     int startZycie_;
     sf::Music damage;
+    sf::Clock healCooldown;
 
 
     public:
@@ -32,7 +34,7 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     if (!damage.openFromFile("../assets/damage.ogg")) {
         std::cerr << "Blad: nie damage.wav\n";
     }
-    damage.setVolume(50);
+    damage.setVolume(90);
     if (!texture.loadFromFile("../assets/statek1.png")) {
         std::cerr << "Blad: nie ma statek.png\n";
     }
@@ -41,6 +43,11 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     shape.setPosition(sf::Vector2f(x, y));
     shape.setTexture(&texture);
 }
+                    //DODANE
+    void updateHeal();
+                    //DODANE
+
+    sf::Color getColorByHealth() const;
 
     void moveleft(float dt)
     {
@@ -59,6 +66,29 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     void movedown(float dt) {
     y+=vy *dt;
     shape.setPosition(sf::Vector2f(x, y));
+}
+                                                                 //DODANE
+    inline void moveInput(float dt) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+        moveleft(dt);
+        }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+        moveright(dt);
+        }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+        moveup(dt);
+        }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+        movedown(dt);
+        }
+                                                                  //DODANE
 }
     void clambToBounds(float width, float height) {
     if (x < szerokosc / 2)
@@ -87,8 +117,9 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
 }
     void dodajZycie(int ile1) {
     zycie += ile1;
-    if (zycie > 3) zycie=3;
+    if (zycie > startZycie_) zycie=startZycie_;
 }
+
     void reset() {
     x = startX_;
     y = startY_;
@@ -108,5 +139,6 @@ Ship(float startX, float startY, float startSzerokosc, float startWysokosc, floa
     float getY() const{return y;}
     float getSzerokosc() const{return szerokosc;}
     float getWysokosc() const{return wysokosc;}
+    int getZyciestart() const {return startZycie_;}
     int getZycie() const{return zycie;}
 };

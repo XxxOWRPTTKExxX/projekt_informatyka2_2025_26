@@ -19,15 +19,17 @@ private:
     sf::Vector2f ballPosition;
     sf::Vector2f ballVelocity;
     std::vector<MeteorytData> meteoryty;
+    int punkty;
 
 public:
     Zapis()=default;
-    void capture(const Ship& ship, const Pilka& ball, const std::vector<Meteoryt>& met);
+    void capture(const Ship& ship, const Pilka& ball, const std::vector<Meteoryt>& met, int currentPunkty);
     int getZyciez() const {return zycie;}
     const sf::Vector2f& getShipposition() const {return shipPosition;}
     const sf::Vector2f& getBallPosition() const {return ballPosition;}
     const sf::Vector2f& getBallVelocity() const {return ballVelocity;}
     const std::vector<MeteorytData>& getMeteoryty() const {return meteoryty;}
+    int getPunkty() const { return punkty; }
 
 bool saveToFile(const std::string& zapisplik) const {
     std::ofstream file(zapisplik);
@@ -43,9 +45,11 @@ bool saveToFile(const std::string& zapisplik) const {
                                     //pilka
     file << "BALL " << ballPosition.x << " " << ballPosition.y << " "
          << ballVelocity.x << " " << ballVelocity.y << "\n";
-
+            //punkty
+        file << "POINTS " << punkty << "\n";
                                 // meteoryty
     file << "METEORYTS_COUNT " << meteoryty.size() << "\n";
+
     for (const auto& m : meteoryty) {
         file << m.x << " " << m.y << " " << m.speed << "\n";
     }
@@ -62,6 +66,7 @@ bool saveToFile(const std::string& zapisplik) const {
 
         if (file >> label >> shipPosition.x >> shipPosition.y >> zycie) {} // SHIP
         if (file >> label >> ballPosition.x >> ballPosition.y >> ballVelocity.x >> ballVelocity.y) {} // BALL
+        if (file >> label >> punkty) {} //Punkty
         if (file >> label >> meteCount) { // ilosc mete
             meteoryty.clear();
             for (int i = 0; i < meteCount; ++i) {
@@ -75,7 +80,7 @@ bool saveToFile(const std::string& zapisplik) const {
         return true;
     }
 
-    void apply(Ship& s, Pilka& b, std::vector<Meteoryt>& met) {
+    void apply(Ship& s, Pilka& b, std::vector<Meteoryt>& met, int& gamePunkty) {
         s.resetfromfile(shipPosition, zycie);                       // reset statku
         b.resetfromfile(ballPosition, ballVelocity);
         s.setZycie(getZyciez());
@@ -84,6 +89,12 @@ bool saveToFile(const std::string& zapisplik) const {
         for (const auto& m : meteoryty) {
             met.emplace_back(m.x, m.y, 15.0f, m.speed); // promień 15 przykładowo
         }
+        gamePunkty = punkty;
     }
+    //DODANE
+    static bool saveGame(const Ship& ship, const Pilka& pilka, const std::vector<Meteoryt>& meteoryty, int punkty, const std::string& filename = "zapis.txt");
+    static bool loadGame(Ship& ship, Pilka& pilka, std::vector<Meteoryt>& meteoryty, int& punkty, const std::string& filename = "zapis.txt");
+    //DODANE
 };
+
 

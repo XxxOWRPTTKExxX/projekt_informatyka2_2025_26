@@ -26,6 +26,21 @@
 			"language" : "CXX",
 			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game.cpp"
 		},
+		"CMakeFiles/projekt_informatyka2_2025_26.dir/game_event.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game_event.cpp"
+		},
+		"CMakeFiles/projekt_informatyka2_2025_26.dir/game_menager.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/game_menager.cpp"
+		},
+		"CMakeFiles/projekt_informatyka2_2025_26.dir/gamerender.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/gamerender.cpp"
+		},
 		"CMakeFiles/projekt_informatyka2_2025_26.dir/main.cpp.obj" : 
 		{
 			"language" : "CXX",
@@ -36,10 +51,20 @@
 			"language" : "CXX",
 			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/menu.cpp"
 		},
+		"CMakeFiles/projekt_informatyka2_2025_26.dir/meteoryt_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/meteoryt_system.cpp"
+		},
 		"CMakeFiles/projekt_informatyka2_2025_26.dir/score.cpp.obj" : 
 		{
 			"language" : "CXX",
 			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/score.cpp"
+		},
+		"CMakeFiles/projekt_informatyka2_2025_26.dir/ship.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/oliwi/Documents/PROJEKTY INF/projekt_informatyka2_2025_26/ship.cpp"
 		},
 		"CMakeFiles/projekt_informatyka2_2025_26.dir/zapis.cpp.obj" : 
 		{

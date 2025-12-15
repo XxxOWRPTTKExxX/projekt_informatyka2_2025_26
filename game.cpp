@@ -1,25 +1,18 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include "ship.h"
-#include "pilka.h"
-#include "meteoryt.h"
 #include "game.h"
-#include "menu.h"
-#include <fstream>
-#include "zapis.h"
-
 
 
 Game::Game()
-    :g_window(sf::VideoMode({800u, 600u}), "Gra demo na projekt (SFML 3)"),
+    :g_window(sf::VideoMode({800u, 600u}), "Gra na projekt (SFML 3)"),
     textpunktyzycia(font),
     punktytekst(font),
     wynik("Wyniki.txt:"),
-    ship(520,500,60, 60, 200, 200, 3),
-    pilka(200,200,400,-100,40)
+    ship(520,500,60, 60, 200, 200, 8),
+    pilka(200,200,400,-100,40),
+    meteorytSystem(windowWidth, windowHeight),
+    menu(windowWidth, windowHeight),
+    score()
 {
     g_window.setFramerateLimit(60);
     backgroundTexture.loadFromFile("../assets/tlo.jpg");
@@ -28,7 +21,6 @@ Game::Game()
     font.openFromFile("arial.ttf");
     textpunktyzycia.setFont(font);
     textpunktyzycia.setCharacterSize(24);
-    textpunktyzycia.setFillColor(sf::Color::White);
     punktytekst.setFont(font);
     punktytekst.setCharacterSize(24);
     punktytekst.setFillColor(sf::Color::Magenta);
@@ -41,33 +33,13 @@ Game::Game()
 
 void Game::gameLoop(Score& score)
 {
-    sf::Clock clock;
     backgroundMusic.setVolume(100);
     while (g_window.isOpen()) {
 
-        // eventy
-        while (auto event = g_window.pollEvent()) {
 
-            if (event->is<sf::Event::Closed>())
-                g_window.close();
-
-            if (auto* key = event->getIf<sf::Event::KeyPressed>()) {
-                if (key->code == sf::Keyboard::Key::Escape) {
-                    return; // WYJSCIE
-                }
-
-                                //Zapis
-                if (key->code == sf::Keyboard::Key::Z) {
-                    Zapis save;
-                    save.capture(ship, pilka, meteoryty);
-                    if (save.saveToFile("zapis.txt")) {
-                        std::cout << "Zapisano!\n";
-                    }
-                }
-            }
-        }
-
-
+       if ( handleEvents()) {
+           return;
+       }
 
 
         if (gameOver) {
@@ -75,157 +47,63 @@ void Game::gameLoop(Score& score)
             return;
         }
 
+
         float dt = clock.restart().asSeconds();
         update(dt);
         render();
+
     }
 }
 
 void Game::run() {
-    Menu menu(windowWidth, windowHeight);
-    Score score;
 
         while (g_window.isOpen()) {
-            int menuResult = menu.run(g_window);
-            if (menuResult == 2) {
-                score.showScores(g_window, font);
-
-            } else if (menuResult == 1) {
-                Zapis load;
-                if (load.loadFromFile("zapis.txt")) {
-                    load.apply(ship, pilka, meteoryty);
-                    std::cout << "Gra wczytana!\n";
-                    gameLoop(score);
-                } else {
-                    std::cerr << "Nie udało się wczytać zapisu!\n";
-                }
-            }
-            else if (menuResult == 0) {
-                gameOver = false;
-                punkty = 0;
-                meteoryty.clear();
-                ship.reset();
-                pilka.reset();
-                czasrespawnu= 0.5f;
-                if (!backgroundMusic.openFromFile("../assets/background.ogg")) {
-                  std::cerr << "Nie ma muzyki!" << std::endl;
-               } else {
-                    backgroundMusic.setLooping(true);
-                    backgroundMusic.play();
-                }
-                gameLoop(score);
-            }
+            //osobny plik game_menager.cpp do menegmentu menu
+            handleMenu(menu, score);
         }
-}
-void Game::processEvents() {
-    while (const std::optional event = g_window.pollEvent()) {
-        if (event->is<sf::Event::Closed>())
-            g_window.close();
-    }
+
 }
 void Game::update(float dt) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-        ship.moveleft(dt);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-        ship.moveright(dt);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-        ship.moveup(dt);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-        ship.movedown(dt);
-    }
-    if (clocksurvival.getElapsedTime().asSeconds() >= 1.0f) {
-        punkty+=10;
-        clocksurvival.restart();
-    }
-    if (spawnclock.getElapsedTime().asSeconds() > czasrespawnu) {
-        float x = rand() % (int)(windowWidth - 40);
-        meteoryty.emplace_back(x, -50, 15.0f, 50.0f);
-        spawnclock.restart();
-    }
+
+                        // dodane
+    ship.moveInput(dt);
+                        // dodane
+
+                    // dodane
+    updatepunkty();
+                    // dodane
+
+            // dodane, rysowanie i sprawdzanie kolizji meteorytu ma swoją klase              Zrobione //meteoryty osobna klasa
+    meteorytSystem.update(meteoryty, ship, dt, czasrespawnu);
+            // dodane
+
+
     pilka.move(dt);
-    for (int i = 0; i < meteoryty.size(); i++) {
-        meteoryty[i].update(dt);
-        if (checkCollision(meteoryty[i], ship)) {
-            ship.odejmijZycie(1);  // odejmij życie
-            meteoryty.erase(meteoryty.begin() + i);
-            i--;
-            continue;
-        }
-        if (meteoryty[i].shape.getPosition().y > windowHeight + 50) {
-            meteoryty.erase(meteoryty.begin() + i);
-            i--;
-            continue;
-        }
-    }
 
-    if (punkty >= 100) {
-        czasrespawnu = 0.3f;
-        for (auto& m : meteoryty) m.setSpeed(150.0f);
-    }
 
-    if (punkty >= 220) {
-        czasrespawnu = 0.2f;
-        for (auto& m : meteoryty) m.setSpeed(300.0f);
-    }
+                            //DODANE
+    updateDifficulty();
+                            //DODANE
 
-    if (punkty >= 400) {
-        czasrespawnu = 0.02f;
-        for (auto& m : meteoryty) m.setSpeed(800.0f);
-    }
+                        //DODANE                                                       Zrobione // dodawanie zyc daj w osobnym plik
+   ship.updateHeal();
+                        //DODANE
 
-    if (ship.getZycie() < 3) {
-        if (healcoldown.getElapsedTime().asSeconds() >= 10.0f) {
-            ship.dodajZycie(1);
-            healcoldown.restart();
-        }
-    } else {
-        healcoldown.restart();
-    }
     pilka.collideWalls(windowWidth, windowHeight);
     pilka.collideShip(ship);
-
     ship.clambToBounds(windowWidth, windowHeight);
-
     textpunktyzycia.setString("Zycia: " + std::to_string(ship.getZycie()));
     punktytekst.setString("Punkty: " + std::to_string(punkty));
-    if (ship.getZycie() <= 0) {
-        if (!gameover.openFromFile("../assets/gameover.ogg")) {
-            std::cerr << "Nie ma muzyki!" << std::endl;
-        }
-        backgroundMusic.setVolume(10);
-        gameover.play();
-        gameover.setVolume(200);
-        gameOver = true;
-        wynik.addScore(punkty);
-    }
-    if (ship.getZycie() == 2) {
-        textpunktyzycia.setFillColor(sf::Color::Green);
-    } else if (ship.getZycie() == 1) {
-        textpunktyzycia.setFillColor(sf::Color::Red);
-    } else if (ship.getZycie() == 3) {
-        textpunktyzycia.setFillColor(sf::Color::Blue);
-    }else {
-        textpunktyzycia.setFillColor(sf::Color::Transparent); // domyślny kolor
-    }
 
+
+        // co zrobic gdy przegramy
+    checkGameOver();
+
+                                                         //DODANe
+    textpunktyzycia.setFillColor(ship.getColorByHealth());
+                                                          //DODANe
 }
 
-bool Game::checkCollision(const Meteoryt& ball, const Ship& ship) {
-    return ball.shape.getGlobalBounds().findIntersection(ship.shape.getGlobalBounds()).has_value();
-}
+//kolizje w meteoryt system                 Zrobione
 
-void Game::render() {
-    g_window.clear();
-    g_window.draw(backgroundRect);
-    ship.draw(g_window);
-    for (auto& s : meteoryty) {
-        g_window.draw(s.shape);
-    }
-    g_window.draw(pilka.shape);
-    g_window.draw(textpunktyzycia);
-    g_window.draw(punktytekst);
-    g_window.display();
-}
+//usuniecie void render, przeniesione do gamerender.cpp             Zrobione

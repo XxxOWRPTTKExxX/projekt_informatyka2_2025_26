@@ -321,6 +321,7 @@ CMakeFiles\projekt_informatyka2_2025_26.dir\game.cpp.obj.ddi: \
  C:/SFML/include/SFML/Audio/SoundRecorder.hpp \
  C:/SFML/include/SFML/Audio/SoundFileFactory.hpp \
  C:/SFML/include/SFML/Audio/SoundFileFactory.inl \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/game.h \
  C:/mingw64/include/c++/14.2.0/iostream \
  C:/mingw64/include/c++/14.2.0/cmath \
  C:/mingw64/x86_64-w64-mingw32/include/math.h \
@@ -337,14 +338,14 @@ CMakeFiles\projekt_informatyka2_2025_26.dir\game.cpp.obj.ddi: \
  C:/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc \
  C:/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc \
  C:/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/ship.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/pilka.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/meteoryt.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/game.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/Score.h \
- C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/menu.h \
  C:/mingw64/include/c++/14.2.0/fstream \
  C:/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/mingw64/include/c++/14.2.0/bits/fstream.tcc \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/ship.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/pilka.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/meteoryt.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/Score.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/menu.h \
+ C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/meteoryt_system.h \
  C:/Users/oliwi/Documents/PROJEKTY\ INF/projekt_informatyka2_2025_26/zapis.h

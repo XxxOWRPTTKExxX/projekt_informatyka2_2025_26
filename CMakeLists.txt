@@ -24,6 +24,12 @@ add_executable(${PROJECT_NAME} main.cpp
         score.cpp
         zapis.h
         zapis.cpp
+        ship.cpp
+        gamerender.cpp
+        game_menager.cpp
+        meteoryt_system.h
+        meteoryt_system.cpp
+        game_event.cpp
 )
 
 # Linkujemy wszystkie potrzebne komponenty SFML

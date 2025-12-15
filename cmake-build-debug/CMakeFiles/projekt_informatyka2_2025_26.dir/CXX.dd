@@ -9,3 +9,13 @@ build CMakeFiles/projekt_informatyka2_2025_26.dir/score.cpp.obj: dyndep
 
 build CMakeFiles/projekt_informatyka2_2025_26.dir/zapis.cpp.obj: dyndep
 
+build CMakeFiles/projekt_informatyka2_2025_26.dir/ship.cpp.obj: dyndep
+
+build CMakeFiles/projekt_informatyka2_2025_26.dir/gamerender.cpp.obj: dyndep
+
+build CMakeFiles/projekt_informatyka2_2025_26.dir/game_menager.cpp.obj: dyndep
+
+build CMakeFiles/projekt_informatyka2_2025_26.dir/meteoryt_system.cpp.obj: dyndep
+
+build CMakeFiles/projekt_informatyka2_2025_26.dir/game_event.cpp.obj: dyndep
+

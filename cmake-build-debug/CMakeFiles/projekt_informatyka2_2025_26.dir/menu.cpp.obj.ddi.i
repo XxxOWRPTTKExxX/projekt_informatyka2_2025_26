@@ -117799,12 +117799,14 @@ int Menu::run(sf::RenderWindow& window) {
 
             if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
                 options[selected].setFillColor(sf::Color::Magenta);
-                if (key->code == sf::Keyboard::Key::Up) {
+                if (key->code == sf::Keyboard::Key::Up || key->code == sf::Keyboard::Key::W) {
                     selected = (selected + 2) % 3;
-                } else if (key->code == sf::Keyboard::Key::Down) {
+                } else if (key->code == sf::Keyboard::Key::Down || key->code == sf::Keyboard::Key::S) {
                     selected = (selected + 1) % 3;
                 } else if (key->code == sf::Keyboard::Key::Enter) {
                     return selected;
+                } else if (key->code == sf::Keyboard::Key::Escape) {
+                    return 3;
                 }
 
 
